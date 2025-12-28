@@ -800,16 +800,16 @@
 
     const partnerDatenbank = {
       "bruno": {
-        "companyLink": "https://mycryptoconsult.io/refer/?a=WeJcXNGL",
-        "meetLink": "https://meet.google.com"
+        "companyLink": "https://mycryptoconsult.io/refer/?a=jhonny",
+        "meetLink": "https://meet.google.com/bko-ojpo-hgf"
       },
       "solara": {
-        "companyLink": "https://mycryptoconsult.io/refer/?a=SOLARA_LINK",
-        "meetLink": "https://meet.google.com"
+        "companyLink": "https://mycryptoconsult.io/refer/?a=jhonny",
+        "meetLink": "https://meet.google.com/bko-ojpo-hgf"
       },
       "jhonny": {
-        "companyLink": "https://mycryptoconsult.io/refer/?a=JHONNY_LINK",
-        "meetLink": "https://meet.google.com"
+        "companyLink": "https://mycryptoconsult.io/refer/?a=jhonny",
+        "meetLink": "https://meet.google.com/bko-ojpo-hgf"
       }
     };
 
@@ -909,8 +909,8 @@
     function openCockpitModal(num) {
       if(num === 5) {
         const urlParams = new URLSearchParams(window.location.search);
-        const refName = urlParams.get('ref') ? urlParams.get('ref').toLowerCase() : "bruno";
-        const info = partnerDatenbank[refName] || partnerDatenbank["bruno"];
+        const refName = urlParams.get('ref') ? urlParams.get('ref').toLowerCase() : "jhonny";
+        const info = partnerDatenbank[refName] || partnerDatenbank["jhonny"];
         
         cockpitTexts[5] = `<h2>Ergebnis der ersten 4 Wochen</h2>
           <p>Wenn du dich konsequent an die Schritte 1 bis 4 hältst, kannst du bereits in den ersten 4 Wochen damit rechnen, deine ersten hunderte Dollar zu verdienen.</p>
@@ -920,10 +920,10 @@
           <p>Du hast ein Team aufgebaut. Ein echtes. Du hast deinen Leuten beigebracht, dich zu kopieren. Sie tun dasselbe wie du – und sie verdienen Geld. Und wenn deine Leute Geld verdienen, dann wächst auch dein Einkommen.</p>
           <p>Vielleicht verdienst du jetzt 2.000 €, vielleicht 5.000 € im Monat. Vielleicht mehr als in deinem alten Job.</p>
           <p style="color: #a32438; font-weight: bold; font-size: 1.6rem;">Dann beginnt deine Freiheit.</p>
-          <p>Du beginnst zu begreifen: Ich will lieber im Cockpit sitzen als unter einem Chef stehen. Du steuerst dein eigenes Flugzeug. Dein Lifestyle beginnt. Dein Next Level.</p>
+          <p>Du beginnst zu begreifen: Ich will lieber im Cockpit sitzen als unter einem Chef stehen.</p>
           <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 30px;">
-            <a href="${info.companyLink}" class="red-button" target="_blank" style="margin-top:0;">ZURÜCK INS BACKOFFICE</a>
-            <a href="${info.meetLink}" class="red-button" style="background: #202124; border: 1px solid #ffffff; margin-top:0;" target="_blank">🎥 LIVE MEETING STARTEN</a>
+            <a href="${info.companyLink}" class="red-button" target="_blank">ZURÜCK INS BACKOFFICE</a>
+            <a href="${info.meetLink}" class="red-button" style="background: #333;" target="_blank">🎬 LIVE MEETING STARTEN</a>
           </div>`;
       }
       document.getElementById('cockpit-modal-body').innerHTML = cockpitTexts[num];
@@ -933,7 +933,7 @@
     function saveLead(event) {
       event.preventDefault();
       document.getElementById('kontakt').style.display = 'none';
-      document.getElementById('freischaltung').style.display = 'block';
+      showSection('freischaltung');
     }
 
     function goToReality() {
