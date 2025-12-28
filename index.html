@@ -161,6 +161,25 @@
       background: rgba(163, 36, 56, 0.25);
     }
 
+    .welcome-banner {
+      position: absolute;
+      bottom: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      width: 100%;
+      background: transparent;
+      z-index: 500;
+    }
+
+    .welcome-banner span {
+      font-family: 'Brush Script MT', cursive, sans-serif;
+      font-size: 5.5rem;
+      color: #ffffff;
+      text-shadow: 3px 3px 20px rgba(0,0,0,0.9);
+      white-space: nowrap;
+    }
+
     /* =========================================
        4. REALITÄTS-CHECK SEKTION
        ========================================= */
@@ -252,6 +271,15 @@
       width: 95%;
       text-align: center;
       margin: 0 auto;
+    }
+
+    .vision-headline {
+      color: #a32438; 
+      font-size: 3rem; 
+      text-transform: uppercase;
+      width: 90%;
+      margin: 0 auto 40px auto;
+      word-wrap: break-word;
     }
 
     .gallery-grid {
@@ -569,9 +597,22 @@
         background-image: url("vertrieb.mobil.png") !important; 
         background-attachment: scroll !important; 
       }
+      
+      .welcome-banner {
+        bottom: 20% !important;
+      }
+      .welcome-banner span {
+        font-size: 2.8rem !important; 
+        white-space: normal; 
+      }
+
       #section-vision {
         background-attachment: scroll !important;
       }
+      .vision-headline {
+        font-size: 1.8rem !important;
+      }
+
       #section-cockpit-main { 
         background-image: url("mobilcockpit.png") !important; 
         background-attachment: scroll !important; 
@@ -592,6 +633,7 @@
       .text-container h2 { font-size: 2rem !important; }
       .text-container p { font-size: 1.1rem !important; }
       .cockpit-btn { width: 100%; }
+      .music-btn-fixed { width: 60px; height: 60px; font-size: 25px; bottom: 20px; right: 20px; }
     }
   </style>
 </head>
@@ -600,8 +642,8 @@
   <div id="welcome-overlay">
     <div class="hero-pre">
       <button class="vision-button-pre" onclick="enterSystem()">
-        <span style="display: block; font-weight: 400; opacity: 0.9; margin-bottom: 12px;">Wenn du mir nicht glaubst, dass Geld verdienen immer wichtiger wird – dann willkommen in der neuen Dimension.</span>
-        <strong>Klick – und das Genießen beginnt.</strong>
+        <span style="display: block; font-weight: 400; opacity: 0.9; margin-bottom: 12px;">Wenn du uns nicht glaubst, dass Geld verdienen immer wichtiger wird, dann schau mal…<br><br><strong>Willkommen in der neuen Dimension.</strong></span>
+        <strong>Ein Klick - und deine Geschichte beginnt.</strong>
       </button>
     </div>
   </div>
@@ -612,6 +654,9 @@
         <div class="master-face">START DER REISE</div>
         <div class="master-face master-back">JETZT EINTAUCHEN</div>
       </div>
+    </div>
+    <div class="welcome-banner">
+      <span>Schön, dass du da bist...</span>
     </div>
   </div>
 
@@ -655,7 +700,7 @@
 
   <section id="section-vision" class="page-section">
     <div class="content-box">
-      <h2 style="color: #a32438; font-size: 3rem; text-transform: uppercase;">Exklusivität & Vision</h2>
+      <h2 class="vision-headline">Exklusivität & Vision</h2>
       <div class="gallery-grid">
         <div class="gallery-item item-lifestyle" onclick="openEmotion('lifestyle')">
           <div class="item-title">LIFESTYLE</div>
@@ -799,25 +844,16 @@
     let lockMusicCheck = false;
 
     const partnerDatenbank = {
-      "bruno": {
-        "companyLink": "https://mycryptoconsult.io/refer/?a=jhonny",
-        "meetLink": "https://meet.google.com/bko-ojpo-hgf"
-      },
-      "solara": {
-        "companyLink": "https://mycryptoconsult.io/refer/?a=jhonny",
-        "meetLink": "https://meet.google.com/bko-ojpo-hgf"
-      },
-      "jhonny": {
-        "companyLink": "https://mycryptoconsult.io/refer/?a=jhonny",
-        "meetLink": "https://meet.google.com/bko-ojpo-hgf"
-      }
+      "bruno": { "companyLink": "https://mycryptoconsult.io/refer/?a=jhonny", "meetLink": "https://meet.google.com/bko-ojpo-hgf" },
+      "solara": { "companyLink": "https://mycryptoconsult.io/refer/?a=jhonny", "meetLink": "https://meet.google.com/bko-ojpo-hgf" },
+      "jhonny": { "companyLink": "https://mycryptoconsult.io/refer/?a=jhonny", "meetLink": "https://meet.google.com/bko-ojpo-hgf" }
     };
 
     const cockpitTexts = {
-      1: "<h2>Ich mache meine Liste</h2><p>Ich schreibe meine 10 wichtigsten Freunde oder Kontakte auf, die mir wirklich wichtig sind – die ich mitnehmen will auf meine Reise in ein neues Level.</p>",
-      2: "<h2>Ich treffe meine Leute</h2><p>Ich kontaktiere diese Personen persönlich. Ich erzähle ihnen begeistert von dem neuen Multimilliarden-Dollar-Projekt und zeige ihnen die Landingpage. Mein Sponsor ist bei den ersten Gesprächen dabei – unterstützend, souverän, stark.</p>",
-      3: "<h2>Ich bleibe in Bewegung</h2><p>Ich verschicke jeden Tag meine Landingpage an 5 weitere Menschen. Kein Spam. Keine Massen-Mail. Sondern echte Menschen. Echtes Momentum. Ich spreche täglich über das Projekt – mit Stolz, mit Freude.</p>",
-      4: "<h2>Ich bleibe verbunden</h2><p>Ich halte jeden Tag persönlichen Kontakt zu meinem Sponsor. Wir sprechen über meine Fortschritte, Herausforderungen, Erfolge. Ich bin nicht allein – ich bin Teil von etwas Großem.</p>",
+      1: "<h2>Button 1: Ich mache meine Liste</h2><p>Ich schreibe meine 10 wichtigsten Freunde oder Kontakte auf, die mir wirklich wichtig sind – die ich mitnehmen will auf meine Reise in ein neues Level.</p>",
+      2: "<h2>Button 2: Ich treffe meine Leute</h2><p>Ich kontaktiere diese Personen persönlich. Ich erzähle ihnen begeistert von dem neuen Multimilliarden-Dollar-Projekt und zeige ihnen die Landingpage. Mein Sponsor ist bei den ersten Gesprächen dabei – unterstützend, souverän, stark.</p>",
+      3: "<h2>Button 3: Ich bleibe in Bewegung</h2><p>Ich verschicke jeden Tag meine Landingpage an 5 weitere Menschen. Kein Spam. Keine Massen-Mail. Sondern echte Menschen. Echtes Momentum. Ich spreche täglich über das Projekt – mit Stolz, mit Freude.</p>",
+      4: "<h2>Button 4: Ich bleibe verbunden</h2><p>Ich halte jeden Tag persönlichen Kontakt zu meinem Sponsor. Wir sprechen über meine Fortschritte, Herausforderungen, Erfolge. Ich bin nicht allein – ich bin Teil von etwas Großem.</p>",
       5: "" 
     };
 
@@ -840,19 +876,11 @@
     function toggleMusic() {
       isMusicOn = !isMusicOn;
       document.getElementById('music-toggle').innerText = isMusicOn ? '🔊' : '🎵';
-      if (!isMusicOn) {
-        stopAllTracks();
-        currentTrackName = null;
-      } else {
-        playCurrentTrack();
-      }
+      if (!isMusicOn) { stopAllTracks(); currentTrackName = null; } 
+      else { playCurrentTrack(); }
     }
 
-    function stopAllTracks() {
-      audioTop.pause();
-      scGallery.pause();
-      scCockpit.pause();
-    }
+    function stopAllTracks() { audioTop.pause(); scGallery.pause(); scCockpit.pause(); }
 
     function playCurrentTrack() {
       if (!isMusicOn || lockMusicCheck) return;
@@ -886,9 +914,9 @@
       document.querySelectorAll('.section, .cockpit-modal-overlay').forEach(s => s.style.display = 'none');
       if (document.body.classList.contains('no-scroll')) {
         document.body.classList.remove('no-scroll');
-        const scrollTarget = savedScrollPos;
+        const target = savedScrollPos;
         document.body.style.top = '';
-        window.scrollTo({ top: scrollTarget, behavior: 'instant' });
+        window.scrollTo({ top: target, behavior: 'instant' });
       }
       setTimeout(() => { lockMusicCheck = false; playCurrentTrack(); }, 600);
     }
@@ -912,19 +940,17 @@
         const refName = urlParams.get('ref') ? urlParams.get('ref').toLowerCase() : "jhonny";
         const info = partnerDatenbank[refName] || partnerDatenbank["jhonny"];
         
-        cockpitTexts[5] = `<h2>Ergebnis der ersten 4 Wochen</h2>
-          <p>Wenn du dich konsequent an die Schritte 1 bis 4 hältst, kannst du bereits in den ersten 4 Wochen damit rechnen, deine ersten hunderte Euros zu verdienen.</p>
+        cockpitTexts[5] = `<h2>Button 5: Ergebnis der ersten 4 Wochen</h2>
+          <p>Wenn du dich konsequent an die Schritte 1 bis 4 hältst, kannst du bereits in den ersten 4 Wochen damit rechnen, deine ersten hunderte Dollar zu verdienen.</p>
           <p><strong>Und was passiert nach 3 Monaten?</strong></p>
           <p>Dein Team wächst. Deine Wirkung wächst. Du hast deine Abläufe gefunden. Die ersten vierstelligen Einnahmen sind realistisch – vielleicht schon erreicht. Du hast Klarheit, du hast Struktur. Du siehst: Es funktioniert.</p>
           <p><strong>Und was ist nach 6 Monaten?</strong></p>
           <p>Du hast ein Team aufgebaut. Ein echtes. Du hast deinen Leuten beigebracht, dich zu kopieren. Sie tun dasselbe wie du – und sie verdienen Geld. Und wenn deine Leute Geld verdienen, dann wächst auch dein Einkommen.</p>
           <p>Vielleicht verdienst du jetzt 2.000 €, vielleicht 5.000 € im Monat. Vielleicht mehr als in deinem alten Job.</p>
           <p style="color: #a32438; font-weight: bold; font-size: 1.6rem;">Dann beginnt deine Freiheit.</p>
-          <p>Du beginnst zu begreifen: Ich will lieber im Cockpit sitzen als unter einem Chef stehen.</p>
-          <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 30px;">
-            <a href="${info.companyLink}" class="red-button" target="_blank">ZURÜCK INS BACKOFFICE</a>
-            <a href="${info.meetLink}" class="red-button" style="background: #333;" target="_blank">🎬 LIVE MEETING STARTEN</a>
-          </div>`;
+          <p>Du beginnst zu begreifen: Ich will lieber im Cockpit sitzen als unter einem Chef stehen. Du steuerst dein eigenes Flugzeug. Dein Lifestyle beginnt. Dein Next Level.</p>
+          <a href="${info.companyLink}" target="_blank" class="red-button">ZUM BACKOFFICE</a>
+          <a href="${info.meetLink}" target="_blank" class="red-button" style="background: #ffffff; color: #000000; margin-top: 15px;">ZUM LIVE CALL</a>`;
       }
       document.getElementById('cockpit-modal-body').innerHTML = cockpitTexts[num];
       showSection('cockpit-modal');
@@ -932,16 +958,12 @@
 
     function saveLead(event) {
       event.preventDefault();
-      document.getElementById('kontakt').style.display = 'none';
       showSection('freischaltung');
     }
 
     function goToReality() {
       hideAll();
-      window.scrollTo({
-        top: document.getElementById('section-reality').offsetTop,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: document.getElementById('section-reality').offsetTop, behavior: 'smooth' });
     }
   </script>
 </body>
