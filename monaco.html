@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <meta property="og:title" content="Room 3 the International | Experience">
+    <meta property="og:description" content="Exklusive Einblicke in die Welt von Room 3.">
+    <meta property="og:image" content="room3logo.png">
+    <meta property="og:type" content="website">
+
+    <title>Room 3 the International | Global VIP Experience</title>
+    <style>
+        :root {
+            --gold: #d4af37;
+            --white: #ffffff;
+            --black: #000000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- ANIMATIONEN --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInGold {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* --- VORSCHALTSEITE (OVERLAY) --- */
+        #welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 9999;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1.5s ease, visibility 1.5s;
+        }
+
+        .overlay-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .overlay-content {
+            text-align: center;
+            max-width: 900px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            margin: 20px;
+            z-index: 2;
+        }
+
+        .gold-accent {
+            display: block;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            animation: fadeIn 2s ease forwards;
+        }
+
+        .overlay-content h1 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            line-height: 1.2;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .intro-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #ddd;
+            opacity: 0;
+            animation: fadeIn 2s ease forwards 1s;
+        }
+
+        .enter-button {
+            margin-top: 40px;
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            padding: 20px 40px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.5s;
+            opacity: 0;
+            animation: fadeIn 2s ease forwards 2.5s;
+        }
+
+        .enter-button:hover {
+            background: var(--gold);
+            color: #000;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        }
+
+        .overlay-hidden {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none;
+        }
+
+        /* --- HAUPTSEITE --- */
+        .site-logo {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 5000;
+            width: 120px;
+            height: auto;
+        }
+
+        .page-segment {
+            scroll-snap-align: start;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: #000;
+        }
+
+        .hero-wrapper {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 1;
+        }
+
+        .hero-content-layer {
+            position: relative;
+            z-index: 10;
+            padding-left: 8%;
+            width: 100%;
+        }
+
+        .hero-animation {
+            opacity: 0;
+            animation: slideInGold 1.8s forwards ease-out;
+            max-width: 800px;
+        }
+
+        .branding-title {
+            display: block;
+            font-size: 1.4rem; 
+            font-weight: 700;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 15px rgba(0,0,0,1);
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 20px rgba(0,0,0,1);
+        }
+
+        h1 span {
+            color: var(--gold);
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: #fff;
+            max-width: 550px;
+            font-weight: 300;
+            border-left: 2px solid var(--gold);
+            padding-left: 20px;
+            text-shadow: 2px 2px 15px rgba(0,0,0,1);
+        }
+
+        .details-area {
+            background: var(--black);
+            padding: 100px 8%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 60px;
+            position: relative;
+            z-index: 20;
+        }
+
+        .feature-card {
+            border-left: 2px solid var(--gold);
+            padding: 20px 30px;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .feature-card h3 { color: var(--gold); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
+        .feature-card p { color: #888; line-height: 1.8; font-size: 0.95rem; }
+
+        /* --- MOBIL OPTIMIERUNG --- */
+        @media (max-width: 768px) {
+            .hero-wrapper {
+                background: #000 !important;
+            }
+            .hero-image {
+                object-fit: contain !important;
+                height: 100% !important;
+                width: 100% !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+            }
+
+            .hero-content-layer {
+                padding-left: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+                z-index: 20 !important;
+            }
+
+            .hero-animation { text-align: center; padding: 0 20px; width: 100%; }
+            h1 { font-size: 2.2rem !important; }
+            .branding-title { font-size: 0.8rem !important; letter-spacing: 3px !important; }
+            .hero-description { font-size: 1rem !important; margin: 0 auto; border-left: none; padding-left: 0; }
+            .site-logo { width: 80px !important; top: 15px !important; left: 15px !important; }
+            .details-area { padding: 40px 10% !important; display: block !important; }
+            .feature-card { margin-bottom: 20px; }
+        }
+
+        #smart-sound-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 5000;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--gold);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: 0.5s;
+        }
+
+        iframe { width: 1px; height: 1px; opacity: 0; position: absolute; left: -9999px; }
+    </style>
+</head>
+<body>
+
+    <div id="welcome-overlay">
+        <picture>
+            <source srcset="vipmobil.png?v=2" media="(max-width: 768px)">
+            <img src="vip.png?v=2" alt="VIP Entrance" class="overlay-bg">
+        </picture>
+        <div class="overlay-content">
+            <span class="gold-accent">Herzlichen Glückwunsch!</span>
+            <h1>Willkommen im VIP-Club von<br><span>Room 3 the international</span></h1>
+            <div class="intro-text">
+                <p>Du hast dich qualifiziert und bist ab jetzt Mitglied in unserem exklusiven VIP-Club.</p>
+                <p>Wir möchten mit dir ein paar Impressionen teilen, wie sich dein Leben verändern könnte, wenn du diesen Weg, den du bereits eingeschlagen hast, bis zum Ende weitergehst.</p>
+            </div>
+            <button class="enter-button" onclick="unlockExperience()">Öffne die Tür und tritt ein</button>
+        </div>
+    </div>
+
+    <a href="index.html"><img src="room3logo.png" alt="Room 3 Logo" class="site-logo"></a>
+
+    <iframe id="sc-jet" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/m-sol-records/elegant-deep-house-luxurious-chill-lounge-vibes-mix-2025&auto_play=false" frameborder="no" allow="autoplay"></iframe>
+    <iframe id="sc-monaco" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/dj-quercus/vibey-house-tech-house-deep-house-melodic-house-mix-1&auto_play=false" frameborder="no" allow="autoplay"></iframe>
+    <iframe id="sc-mexico" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/arminvanbuuren/sonic-samba-rising-star-remix&auto_play=false" frameborder="no" allow="autoplay"></iframe>
+
+    <div id="smart-sound-toggle" onclick="handleSound()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#d4af37"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+    </div>
+
+    <div class="page-segment" id="seg-jet">
+        <div class="hero-wrapper">
+            <picture>
+                <source srcset="jetmobil.png?v=2" media="(max-width: 768px)">
+                <img src="jet.png?v=2" alt="Private Jet" class="hero-image">
+            </picture>
+            <div class="hero-content-layer">
+                <div class="hero-animation">
+                    <span class="branding-title">Member of Room 3 the international</span>
+                    <h1>Above the<br><span>Clouds</span></h1>
+                    <p class="hero-description">Wo Zeit zur Nebensache wird und Komfort keine Grenzen kennt.</p>
+                </div>
+            </div>
+        </div>
+        <div class="details-area">
+            <div class="feature-card"><h3>The Cabin</h3><p>Höchste Diskretion und Privatsphäre über den Wolken.</p></div>
+            <div class="feature-card"><h3>Global Reach</h3><p>Jeder Ort der Welt wird zu Ihrem persönlichen Vorgarten.</p></div>
+        </div>
+    </div>
+
+    <div class="page-segment" id="seg-monaco">
+        <div class="hero-wrapper">
+            <picture>
+                <source srcset="monaconeu.png?v=2" media="(max-width: 768px)">
+                <img src="monaco.png?v=2" alt="Monaco Yacht" class="hero-image">
+            </picture>
+            <div class="hero-content-layer">
+                <div class="hero-animation">
+                    <span class="branding-title">Member of Room 3 the international</span>
+                    <h1>The Monaco<br><span>Elite</span></h1>
+                    <p class="hero-description">Wo Legenden vor Anker gehen und Diskretion zur Kunstform wird.</p>
+                </div>
+            </div>
+        </div>
+        <div class="details-area">
+            <div class="feature-card"><h3>The Marina</h3><p>Exklusiver Zugang zum Hafen von Monte Carlo.</p></div>
+            <div class="feature-card"><h3>The Paddock</h3><p>Hinter den Kulissen der Formel 1.</p></div>
+        </div>
+    </div>
+
+    <div class="page-segment" id="seg-mexico">
+        <div class="hero-wrapper">
+            <picture>
+                <source srcset="stadionneu.png?v=2" media="(max-width: 768px)">
+                <img src="stadion.png?v=2" alt="Mexico Stadium" class="hero-image">
+            </picture>
+            <div class="hero-content-layer">
+                <div class="hero-animation">
+                    <span class="branding-title">Member of Room 3 the international</span>
+                    <h1>Aztec<br><span>Legacy</span></h1>
+                    <p class="hero-description">Wenn die Energie von 80.000 Menschen zur Kulisse Ihrer privaten Suite wird.</p>
+                </div>
+            </div>
+        </div>
+        <div class="details-area">
+            <div class="feature-card"><h3>The Sonic Stadium</h3><p>Eintauchen in die pure Energie der Massen.</p></div>
+            <div class="feature-card"><h3>The Arrival</h3><p>Sicherheit und Stil auf höchstem Niveau.</p></div>
+        </div>
+    </div>
+
+    <script src="https://w.soundcloud.com/player/api.js"></script>
+    <script>
+        var widgetJet = SC.Widget(document.getElementById('sc-jet'));
+        var widgetMonaco = SC.Widget(document.getElementById('sc-monaco'));
+        var widgetMexico = SC.Widget(document.getElementById('sc-mexico'));
+        var isPlaying = false;
+        var currentArea = 'jet';
+
+        function unlockExperience() {
+            widgetJet.play(); widgetJet.pause();
+            widgetMonaco.play(); widgetMonaco.pause();
+            widgetMexico.play(); widgetMexico.pause();
+            document.getElementById('welcome-overlay').classList.add('overlay-hidden');
+            document.getElementById('smart-sound-toggle').style.opacity = "1";
+            setTimeout(function() { isPlaying = true; widgetJet.play(); }, 300);
+        }
+
+        window.addEventListener('scroll', function() {
+            var monacoPos = document.getElementById('seg-monaco').offsetTop;
+            var mexicoPos = document.getElementById('seg-mexico').offsetTop;
+            var scrollPos = window.scrollY + (window.innerHeight / 2);
+            if (scrollPos >= mexicoPos) {
+                if (currentArea !== 'mexico') { currentArea = 'mexico'; if (isPlaying) { widgetJet.pause(); widgetMonaco.pause(); widgetMexico.play(); } }
+            } else if (scrollPos >= monacoPos) {
+                if (currentArea !== 'monaco') { currentArea = 'monaco'; if (isPlaying) { widgetJet.pause(); widgetMexico.pause(); widgetMonaco.play(); } }
+            } else {
+                if (currentArea !== 'jet') { currentArea = 'jet'; if (isPlaying) { widgetMonaco.pause(); widgetMexico.pause(); widgetJet.play(); } }
+            }
+        });
+
+        function handleSound() {
+            if (!isPlaying) {
+                if (currentArea === 'jet') widgetJet.play();
+                else if (currentArea === 'monaco') widgetMonaco.play();
+                else widgetMexico.play();
+                isPlaying = true;
+            } else {
+                widgetJet.pause(); widgetMonaco.pause(); widgetMexico.pause();
+                isPlaying = false;
+            }
+        }
+    </script>
+</body>
+</html>
