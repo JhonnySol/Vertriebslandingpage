@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <link rel="icon" type="image/png" href="room3logo.png">
+    <title>Room 3 the international | ACADEMY</title>
+
+    <style>
+        :root {
+            --gold: #d4af37;
+            --white: #ffffff;
+            --black: #000000;
+            --academy-blue: #002366; 
+            --gold-gradient: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+        }
+
+        /* --- GLOBAL STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        html, body {
+            background-color: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- NAVIGATION --- */
+        .nav-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+        }
+
+        .logo-link img {
+            width: 120px;
+            transition: 0.3s;
+        }
+
+        .back-link {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            border: 1px solid rgba(212,175,55,0.4);
+            padding: 12px 25px;
+            transition: 0.3s;
+            background: rgba(0,35,102,0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .back-link:hover {
+            background: var(--academy-blue);
+            border-color: var(--gold);
+        }
+
+        /* --- HERO SEKTION --- */
+        .academy-hero {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .academy-label {
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 12px;
+            font-weight: 900;
+            font-size: 1.8rem;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+
+        h1 span {
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- MODULE BLOCKS --- */
+        .module-block {
+            padding: 100px 8%;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(212,175,55,0.1);
+        }
+
+        .module-bg-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+        }
+
+        .module-bg-layer img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .module-grid {
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 400px));
+            gap: 40px;
+            width: 100%;
+        }
+
+        .module-card {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(25px);
+            padding: 50px 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.5s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card:hover {
+            border-color: var(--gold);
+            background: rgba(0, 0, 0, 0.5);
+            transform: translateY(-10px);
+        }
+
+        .module-card h3 {
+            color: var(--gold);
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .module-card p {
+            line-height: 1.8;
+            color: #fff;
+            font-size: 1.05rem;
+            margin-bottom: 30px;
+        }
+
+        /* --- CONTENT POPUP --- */
+        .content-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(15px);
+        }
+
+        .content-box {
+            width: 90%;
+            max-width: 800px;
+            background: #111;
+            border: 1px solid var(--gold);
+            position: relative;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--gold);
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* --- ADDITIONAL SECTIONS --- */
+        .reality-section {
+            padding: 120px 8%;
+            background: #000;
+            text-align: center;
+        }
+
+        .reality-title {
+            font-size: 3.5rem;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        .reality-title span {
+            color: var(--gold);
+        }
+
+        .vision-section {
+            padding: 100px 8%;
+            background: #050505;
+            position: relative;
+        }
+
+        .vision-box {
+            border: 1px solid var(--gold);
+            padding: 60px;
+            text-align: center;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .gallery-section {
+            padding: 80px 2%;
+            background: #000;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 16/9;
+            overflow: hidden;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: 0.6s;
+        }
+
+        .gallery-item:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.1);
+        }
+
+        .cockpit-section {
+            padding: 120px 8%;
+            background: linear-gradient(to bottom, #000, #001133);
+            text-align: center;
+        }
+
+        .cockpit-card {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid var(--gold);
+            padding: 80px 40px;
+            background: rgba(255,255,255,0.02);
+            backdrop-filter: blur(20px);
+        }
+
+        .btn-submit {
+            width: 100%;
+            max-width: 300px;
+            padding: 18px;
+            background: var(--gold-gradient);
+            border: none;
+            color: #000;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 40px;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(212,175,55,0.4);
+        }
+
+        /* --- SOUND CONTROL --- */
+        #smart-sound-toggle {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            z-index: 5000;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--academy-blue); 
+            border: 2px solid var(--gold);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.4s;
+            box-shadow: 0 0 30px rgba(0,35,102,0.6);
+        }
+
+        iframe#sc-academy { 
+            width: 1px; 
+            height: 1px; 
+            opacity: 0; 
+            position: absolute; 
+            left: -9999px; 
+            visibility: hidden; 
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            .nav-header { padding: 20px; }
+            .module-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="nav-header">
+        <a href="index.html" class="logo-link">
+            <img src="room3logo.png" alt="Room 3 the international">
+        </a>
+        <a href="index.html" class="back-link">BACK TO MAIN</a>
+    </header>
+
+    <section class="academy-hero">
+        <picture>
+            <source srcset="lernenmobil.png" media="(max-width: 768px)">
+            <img src="lernen.png" alt="Academy Hero" class="hero-bg">
+        </picture>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="academy-label">ROOM 3 - ACADEMY</span>
+            <h1>The Road to <span>Freedom</span></h1>
+        </div>
+    </section>
+
+    <section class="module-block">
+        <div class="module-bg-layer">
+            <picture>
+                <source srcset="modul1mobil.png" media="(max-width: 768px)">
+                <img src="modul1.png" alt="The Foundation">
+            </picture>
+        </div>
+        <div class="module-grid">
+            <div class="module-card" onclick="openModule(1)">
+                <h3>01 Welcome</h3>
+                <p>Verstehe die Vision hinter Room 3 the international und wie diese Community dein Leben verändern wird.</p>
+            </div>
+            <div class="module-card" onclick="openModule(2)">
+                <h3>02 Mindset</h3>
+                <p>Erfolg beginnt im Kopf. Wir programmieren dein Denken auf Wachstum, Disziplin und Freiheit.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="module-block">
+        <div class="module-bg-layer">
+            <picture>
+                <source srcset="modul2mobil.png" media="(max-width: 768px)">
+                <img src="modul2.png" alt="The Strategy">
+            </picture>
+        </div>
+        <div class="module-grid">
+            <div class="module-card" onclick="openModule(3)">
+                <h3>03 The First 72h</h3>
+                <p>Dein Schlachtplan. Was genau du in den ersten 72 Stunden tun musst, um sofort Ergebnisse zu sehen.</p>
+            </div>
+            <div class="module-card" onclick="openModule(4)">
+                <h3>04 Kommunikation</h3>
+                <p>Lerne die Kunst der Einladung. Wie du Menschen begeisterst, ohne jemals wie ein Verkäufer zu wirken.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="reality-section">
+        <h2 class="reality-title">Deine neue <span>Realität</span></h2>
+        <p style="max-width: 800px; margin: 0 auto; color: #888; font-size: 1.2rem; line-height: 1.8;">
+            Wir bauen keine Netzwerke. Wir bauen Menschen, die Netzwerke bewegen. Room 3 the international ist der Ort, an dem Ambition auf Strategie trifft.
+        </p>
+    </section>
+
+    <section class="vision-section">
+        <div class="vision-box">
+            <h2 style="text-transform: uppercase; color: var(--gold); letter-spacing: 5px;">Global Vision 2026</h2>
+            <p style="margin-top: 25px; font-size: 1.1rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Room 3 the international expandiert weltweit. Unsere Mission ist es, die größte Elite-Community für finanzielle und persönliche Freiheit zu schaffen.
+            </p>
+        </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="bild1.png" alt="Vision 1"></div>
+            <div class="gallery-item"><img src="bild2.png" alt="Vision 2"></div>
+            <div class="gallery-item"><img src="bild3.png" alt="Vision 3"></div>
+            <div class="gallery-item"><img src="bild4.png" alt="Vision 4"></div>
+        </div>
+    </section>
+
+    <section class="cockpit-section">
+        <div class="cockpit-card">
+            <h2 style="color: var(--gold); letter-spacing: 5px; text-transform: uppercase;">Partner Cockpit</h2>
+            <p style="margin-top: 20px; color: #ccc;">Exklusiver Zugang zu allen Tools, Dokumenten und dem globalen Netzwerk.</p>
+            <button class="btn-submit">Login Intern</button>
+        </div>
+    </section>
+
+    <div id="content-overlay" class="content-overlay">
+        <div class="content-box">
+            <span class="close-btn" onclick="closeModule()">Schließen X</span>
+            <h2 id="popup-title" style="color: var(--gold); margin-bottom: 25px; text-transform: uppercase; letter-spacing: 3px;"></h2>
+            <div id="popup-text" style="font-size: 1.1rem; line-height: 1.8; color: #fff; text-align: left; margin-bottom: 30px; border-top: 1px solid #333; padding-top: 20px;"></div>
+            <button onclick="closeModule()" style="padding: 15px 30px; background: var(--gold-gradient); border: none; cursor: pointer; font-weight: 800; text-transform: uppercase; color: #000;">Lektion verstanden</button>
+        </div>
+    </div>
+
+    <iframe id="sc-academy" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/szokebeatrice/maldives-relaxing-chill-out-luxury-lounge&auto_play=false" frameborder="no" allow="autoplay"></iframe>
+
+    <div id="smart-sound-toggle" onclick="handleSound()">
+        <svg id="speaker-icon" width="28" height="28" viewBox="0 0 24 24" fill="#d4af37" style="opacity: 0.6;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+    </div>
+
+    <script src="https://w.soundcloud.com/player/api.js"></script>
+    <script>
+        // MODUL DATEN
+        const moduleContent = {
+            1: { 
+                title: "01 Welcome", 
+                text: "Willkommen in der Academy von Room 3 the international. Dies ist der Startpunkt deiner Reise. Wir legen hier das Fundament für alles, was folgt. Verstehe, dass Erfolg kein Zufall ist, sondern das Ergebnis eines klaren Systems." 
+            },
+            2: { 
+                title: "02 Mindset", 
+                text: "Dein Mindset ist der Motor. Ohne die richtige Einstellung wird die beste Strategie scheitern. Wir arbeiten hier an deiner mentalen Stärke, deiner Disziplin und deiner langfristigen Vision." 
+            },
+            3: { 
+                title: "03 The First 72h", 
+                text: "Die ersten 72 Stunden sind entscheidend für dein Momentum. Wir zeigen dir hier exakt, welche Schritte du gehen musst, um sofort sichtbare Ergebnisse in deinem Business zu erzielen." 
+            },
+            4: { 
+                title: "04 Kommunikation", 
+                text: "Kommunikation ist die wichtigste Fähigkeit im Business. Lerne, wie du die Vision von Room 3 authentisch und kraftvoll teilst, ohne Druck auszuüben, sondern durch reine Begeisterung." 
+            }
+        };
+
+        // POPUP LOGIK
+        function openModule(id) {
+            const data = moduleContent[id];
+            document.getElementById('popup-title').innerText = data.title;
+            document.getElementById('popup-text').innerText = data.text;
+            document.getElementById('content-overlay').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModule() {
+            document.getElementById('content-overlay').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // SOUND LOGIK (SoundCloud API)
+        var widget = SC.Widget(document.getElementById('sc-academy'));
+        var isPlaying = false;
+        var widgetReady = false;
+
+        widget.bind(SC.Widget.Events.READY, function() {
+            widgetReady = true;
+        });
+
+        function handleSound() {
+            if (!widgetReady) return;
+            const icon = document.getElementById('speaker-icon');
+            if (!isPlaying) {
+                widget.play();
+                isPlaying = true;
+                icon.style.opacity = "1";
+                icon.style.filter = "drop-shadow(0 0 8px #d4af37)";
+            } else {
+                widget.pause();
+                isPlaying = false;
+                icon.style.opacity = "0.6";
+                icon.style.filter = "none";
+            }
+        }
+    </script>
+</body>
+</html>
