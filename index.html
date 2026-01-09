@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bist du bereit für dein Next Level? 🚀 | Room 3 the international</title>
+  
+  <meta property="og:title" content="Bist du bereit für dein Next Level? 🚀">
+  <meta property="og:description" content="Die Welt 2026 verändert sich rasant. Werde vom Passagier zum Piloten deiner eigenen Geschichte. Dein Cockpit wartet schon...">
+  <meta property="og:image" content="https://room-3.live/room3logo.png?v=2026">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://room-3.live">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" type="image/png" href="room3logo.png">
+  
+  <script src="https://w.soundcloud.com/player/api.js"></script>
+  
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'de',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <style>
+    /* 1. BASIS LAYOUT & RESET */
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #000000;
+      color: #ffffff;
+      scroll-behavior: auto; 
+      overflow-x: hidden;
+    }
+
+    /* FIX FÜR SCREENLOCK - Verhindert Springen */
+    body.no-scroll {
+      overflow: hidden !important;
+      height: 100vh;
+      position: fixed;
+      width: 100%;
+    }
+
+    #google_translate_element {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      z-index: 200000; 
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      border-radius: 15px;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    /* --- VERBESSERTER GOOGLE TRANSLATE MOBILE SCROLL FIX --- */
+    .goog-te-menu-frame {
+      max-width: 100% !important;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8) !important;
+    }
+
+    /* Erzwingt das Scrollen im Auswahlmenü */
+    .goog-te-menu2 {
+      max-width: 100% !important;
+      overflow: scroll !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    .goog-te-banner-frame.skiptranslate {
+      display: none !important;
+    }
+    
+    body {
+      top: 0px !important;
+    }
+
+    @media (max-width: 480px) {
+      #google_translate_element {
+        top: 15px;
+        right: 15px;
+        transform: scale(0.9);
+      }
+      
+      /* Zentriert das Iframe auf dem Handy und macht es scrollbar */
+      iframe.goog-te-menu-frame {
+        width: 90% !important;
+        left: 5% !important;
+        top: 70px !important;
+        height: auto !important;
+        max-height: 75vh !important;
+      }
+    }
+    /* --- ENDE FIX --- */
+
+    /* 2. VORSCHALTSEITE (OVERLAY) */
+    #welcome-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 50000;
+      background: #000000;
+      transition: opacity 1s ease, visibility 1s;
+      overflow: hidden;
+    }
+
+    .hero-pre {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: url("vorseite.png") no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 480px) {
+      .hero-pre {
+        background: url("mobil.vorseite.png") no-repeat center center/cover;
+      }
+    }
+
+    .vision-button-pre {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 800px;
+      padding: 30px 45px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 25px;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      color: #ffffff;
+      font-size: 20px;
+      line-height: 1.5;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+      transition: all 0.4s ease;
+    }
+
+    .vision-button-pre:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateX(-50%) scale(1.02);
+    }
+
+    /* 3. HAUPT-SEKTIONEN */
+    .page-section {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #section-top {
+      background: url("vertriebneu.web.png") no-repeat center center/cover;
+      background-attachment: fixed;
+    }
+
+    .master-circle-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 340px;
+      height: 340px;
+      perspective: 1200px;
+      z-index: 1000;
+      cursor: pointer;
+    }
+
+    .master-circle {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: spinMaster 12s linear infinite;
+    }
+
+    @keyframes spinMaster {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
+    .master-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backface-visibility: hidden;
+      padding: 45px;
+      text-align: center;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-size: 20px;
+      background: rgba(163, 36, 56, 0.12);
+      border: 2px solid rgba(163, 36, 56, 0.6);
+      box-shadow: 0 0 45px rgba(163, 36, 56, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .master-back {
+      transform: rotateY(180deg);
+      background: rgba(163, 36, 56, 0.25);
+    }
+
+    .welcome-banner {
+      position: absolute;
+      bottom: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      width: 100%;
+      background: transparent;
+      z-index: 500;
+    }
+
+    .welcome-banner span {
+      font-family: 'Brush Script MT', cursive, sans-serif;
+      font-size: 5.5rem;
+      color: #ffffff;
+      text-shadow: 3px 3px 20px rgba(0,0,0,0.9);
+      white-space: nowrap;
+    }
+
+    /* 4. REALITÄTS-CHECK */
+    #section-reality {
+      background: #000000;
+      padding: 120px 20px;
+      min-height: 100vh;
+    }
+
+    .reality-box {
+      max-width: 1300px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .reality-box h2 {
+      color: #a32438;
+      font-size: 3.5rem;
+      margin-bottom: 60px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+    }
+
+    .reality-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 40px;
+    }
+
+    .reality-card {
+      background: rgba(255, 255, 255, 0.01);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 50px 40px;
+      border-radius: 35px;
+      border: 1px solid rgba(163, 36, 56, 0.2);
+      text-align: left;
+      transition: all 0.5s ease;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      hyphens: auto;
+    }
+
+    .reality-card:hover {
+      border-color: #a32438;
+      background: rgba(163, 36, 56, 0.12);
+      transform: translateY(-15px);
+    }
+
+    .reality-card h3 {
+      color: #a32438;
+      font-size: 1.8rem;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .reality-card p {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+
+    .source-tag {
+      display: block;
+      font-size: 0.8rem;
+      opacity: 0.5;
+      margin-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      padding-top: 15px;
+      font-style: italic;
+    }
+
+    /* 5. VISION & GALERIE */
+    #section-vision {
+      background: url("edel.png") no-repeat center center/cover;
+      background-attachment: fixed;
+      padding: 120px 20px;
+    }
+
+    .content-box {
+      background: rgba(10, 10, 10, 0.6);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 50px;
+      padding: 80px 50px;
+      max-width: 1100px;
+      width: 95%;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    .vision-headline {
+      color: #a32438; 
+      font-size: 3rem; 
+      text-transform: uppercase;
+      width: 90%;
+      margin: 0 auto 40px auto;
+      word-wrap: break-word;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin: 60px 0;
+    }
+
+    .gallery-item {
+      position: relative;
+      background: rgba(255,255,255,0.04);
+      height: 180px;
+      border-radius: 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      overflow: hidden;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.08);
+      border-color: #a32438;
+      box-shadow: 0 0 30px rgba(163, 36, 56, 0.5);
+      z-index: 10;
+    }
+
+    .item-lifestyle { background: url("lifestyle.png") no-repeat center center/cover !important; }
+    .item-freiheit { background: url("freiheit.png") no-repeat center center/cover !important; }
+    .item-passion { background: url("passion.png") no-repeat center center/cover !important; }
+    .item-business { background: url("business.png") no-repeat center center/cover !important; }
+    .item-vision { background: url("vision.png") no-repeat center center/cover !important; }
+    .item-community { background: url("community.png") no-repeat center center/cover !important; }
+
+    .gallery-item .item-title {
+      font-weight: 900;
+      font-size: 1.6rem;
+      letter-spacing: 3px;
+      color: #ffffff;
+      z-index: 5;
+      text-shadow: 0 2px 10px rgba(0,0,0,1);
+    }
+
+    /* 6. BUTTONS */
+    .red-button {
+      background: #a32438;
+      color: #ffffff;
+      border: none;
+      padding: 24px 40px;
+      border-radius: 20px;
+      font-size: 24px; 
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 25px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.3s, transform 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-align: center;
+    }
+
+    .red-button:hover {
+      background: #c52d44;
+      transform: scale(1.02);
+    }
+
+    /* 7. FOOTER & SOCIALS */
+    .merged-footer {
+      width: 100%;
+      background: #000000; 
+      padding: 100px 20px;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: auto;
+      z-index: 10;
+    }
+
+    .footer-logo-main {
+      width: 600px; 
+      max-width: 95%;
+      margin: 0 auto 60px auto;
+      display: block;
+      background: transparent; 
+      border: none;
+      outline: none;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      filter: drop-shadow(0 0 25px rgba(163, 36, 56, 0.3));
+    }
+
+    .footer-domain {
+      margin-bottom: 50px;
+    }
+
+    .footer-domain a {
+      font-size: 1.6rem;
+      letter-spacing: 6px;
+      color: #ffffff;
+      opacity: 0.8;
+      text-transform: uppercase;
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 10px;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .footer-domain a:hover {
+      opacity: 1;
+      color: #a32438;
+      transform: scale(1.05);
+      text-shadow: 0 0 15px rgba(163, 36, 56, 0.6);
+    }
+
+    .footer-socials {
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .social-icon-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+      width: 100px;
+    }
+
+    .social-icon-btn:hover {
+      transform: translateY(-5px);
+    }
+
+    .icon-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+
+    .icon-circle img {
+      width: 35px;
+      height: 35px;
+      object-fit: contain;
+    }
+
+    #glamster-logo-img {
+      width: 100% !important;
+      height: 100% !important;
+      transform: scale(1.3);
+      object-fit: contain;
+    }
+
+    .bg-wa { background-color: #25D366; }
+    .bg-tg { background-color: #0088cc; }
+    .bg-ig { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+    .bg-gl { background-color: transparent !important; box-shadow: none !important; border: none !important; } 
+
+    .social-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #ffffff;
+      opacity: 0.9;
+      line-height: 1.2;
+    }
+
+    .coming-soon-badge {
+      font-size: 0.65rem;
+      color: #a32438;
+      font-weight: bold;
+      margin-top: 4px;
+      letter-spacing: 1px;
+    }
+
+    /* 8. MOBILE ANPASSUNGEN */
+    @media (max-width: 480px) {
+      .music-btn-fixed {
+        bottom: 160px !important; 
+        left: 20px !important;     
+        right: auto !important;
+        width: 60px !important;
+        height: 60px !important;
+        font-size: 25px !important;
+      }
+      .welcome-banner {
+        bottom: 10% !important;
+      }
+      .welcome-banner span {
+        font-size: 2.8rem !important;
+        white-space: normal;
+        padding: 0 20px;
+      }
+      #section-top { 
+        background-image: url("vertriebmobil.neu.png") !important; 
+        background-attachment: scroll !important; 
+      }
+      #section-vision {
+        background-attachment: scroll !important;
+      }
+      .vision-headline {
+        font-size: 1.8rem !important;
+      }
+      #section-cockpit-main { 
+        background-image: url("mobilcockpit.png") !important; 
+        background-attachment: scroll !important; 
+      }
+      .cockpit-btn {
+        width: 100%;
+        font-size: 16px !important;
+        padding: 15px 20px !important;
+      }
+      .master-circle-container { 
+        width: 260px !important; 
+        height: 260px !important; 
+      }
+      .gallery-grid { 
+        grid-template-columns: 1fr !important; 
+        gap: 15px !important;
+      }
+      .gallery-item { 
+        height: 140px !important; 
+      }
+      .reality-box h2 { font-size: 2rem !important; }
+      .text-container {
+          padding: 40px 20px !important;
+          width: 95% !important;
+          margin: 20px auto !important;
+      }
+      .text-container h2 { font-size: 2.2rem !important; }
+      .text-container p { 
+          font-size: 1.2rem !important; 
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+          hyphens: auto;
+      }
+      .glass-box {
+          padding: 40px 20px !important;
+          width: 95% !important;
+      }
+      .glass-box p {
+          font-size: 1.4rem !important;
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+          hyphens: auto;
+      }
+      .social-icon-btn { width: 80px; }
+      .icon-circle { width: 50px; height: 50px; }
+      .icon-circle img { width: 30px; height: 30px; }
+      .footer-logo-main { width: 280px !important; } 
+    }
+
+    /* 9. MODAL OVERLAYS */
+    .section, .cockpit-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 20000;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      overflow-y: auto;
+      padding: 60px 20px;
+    }
+
+    .text-container, .cockpit-modal-content {
+      max-width: 900px;
+      margin: 40px auto;
+      background: rgba(20, 20, 20, 0.3);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      padding: 70px;
+      border-radius: 40px;
+      border: 1px solid rgba(163, 36, 56, 0.5);
+      text-align: center;
+      box-shadow: 0 0 60px rgba(163, 36, 56, 0.3);
+    }
+
+    .text-container h2, .cockpit-modal-content h2 {
+      font-size: 3rem; 
+      color: #a32438;
+      margin-bottom: 35px;
+      text-transform: uppercase;
+    }
+
+    .text-container p, .cockpit-modal-content p {
+      font-size: 1.6rem; 
+      line-height: 1.8;
+      margin-bottom: 30px;
+      color: #eeeeee;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 24px;
+      margin-bottom: 20px;
+      border-radius: 15px;
+      border: 1px solid #333333;
+      background: #000000;
+      color: #ffffff;
+      font-size: 20px; 
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 15px;
+      margin: 25px 0;
+      color: #ffffff;
+      font-size: 1.1rem; 
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .checkbox-container input {
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+
+    /* EMOTION POPUP */
+    #emotion-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      z-index: 60000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .emotion-content {
+      max-width: 1000px;
+      width: 100%;
+      text-align: center;
+      background: rgba(20, 20, 20, 0.4);
+      padding: 50px;
+      border-radius: 40px;
+      border: 1px solid rgba(163, 36, 56, 0.3);
+      animation: fadeIn 0.8s ease;
+    }
+
+    .emotion-img-frame {
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 35px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .emotion-img-frame img {
+      width: 100%;
+      display: block;
+    }
+
+    .emotion-text {
+      font-size: 1.7rem; 
+      line-height: 1.6;
+      font-style: italic;
+      color: #ffffff;
+      padding: 0 20px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 10. COCKPIT SEKTION */
+    #section-cockpit-main {
+      background: url("cockpit.png") no-repeat center center/cover;
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 120px;
+      position: relative;
+    }
+
+    .cockpit-counter-box {
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      padding: 15px 40px;
+      border-radius: 50px;
+      display: inline-block;
+      margin-bottom: 40px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      text-align: center;
+    }
+
+    .counter-label {
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: #ffffff;
+      font-weight: bold;
+      opacity: 0.9;
+    }
+
+    .counter-number {
+      font-size: 2.2rem;
+      color: #00ff41; 
+      font-weight: 900;
+      margin-left: 15px;
+      text-shadow: 0 0 10px rgba(0, 255, 65, 0.7), 0 0 20px rgba(0, 255, 65, 0.4);
+    }
+
+    .glass-box {
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 45px;
+      padding: 80px;
+      max-width: 1200px;
+      width: 90%;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      text-align: center;
+      margin-bottom: 80px;
+      z-index: 10;
+    }
+
+    .glass-box p {
+      font-size: 1.9rem; 
+      line-height: 1.9;
+      font-style: italic;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .cockpit-btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 60px;
+    }
+
+    .cockpit-btn {
+      min-width: 200px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      padding: 20px 30px;
+      border-radius: 15px;
+      font-size: 20px; 
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .cockpit-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-3px);
+    }
+
+    .cockpit-btn.highlight {
+      background: #a32438;
+      border-color: #a32438;
+    }
+
+    /* KOMMANDOZENTRALE DESIGN */
+    .command-center {
+      width: 100%;
+      padding: 100px 20px;
+      background: radial-gradient(circle at center, #0a0a0a 0%, #000000 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* MARKETING TERMINAL (SETUP) */
+    .terminal-setup {
+      max-width: 1200px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      padding: 40px;
+      margin-bottom: 60px;
+      text-align: left;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .terminal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: end;
+    }
+
+    @media (max-width: 768px) {
+      .terminal-grid { grid-template-columns: 1fr; }
+    }
+
+    .terminal-label {
+      display: block;
+      color: #a32438;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    .terminal-input-wrap {
+      position: relative;
+    }
+
+    .terminal-input {
+      width: 100%;
+      background: #000;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 15px 20px;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .terminal-input:focus {
+      border-color: #a32438;
+      outline: none;
+      box-shadow: 0 0 15px rgba(163, 36, 56, 0.3);
+    }
+
+    .command-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .command-card {
+      background: rgba(20, 20, 20, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 40px;
+      padding: 60px 40px;
+      text-align: center;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    /* Goldenes Pulsieren für VIP */
+    .card-vip {
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      animation: goldBreathe 4s infinite alternate;
+    }
+
+    @keyframes goldBreathe {
+      0% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.1); border-color: rgba(212, 175, 55, 0.2); }
+      100% { box-shadow: 0 0 50px rgba(212, 175, 55, 0.4); border-color: rgba(212, 175, 55, 0.7); }
+    }
+
+    .command-card:hover {
+      transform: translateY(-15px) scale(1.02);
+      background: rgba(30, 30, 30, 0.8);
+    }
+
+    .command-card h3 {
+      font-size: 2.2rem;
+      letter-spacing: 5px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    .command-card p {
+      font-size: 1.2rem;
+      opacity: 0.7;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .command-badge {
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.1);
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      color: #a32438;
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      .command-grid { grid-template-columns: 1fr; }
+    }
+
+    .music-btn-fixed {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      width: 80px;
+      height: 80px;
+      background: #a32438;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #ffffff;
+      border: 3px solid #ffffff;
+      font-size: 35px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      z-index: 100000;
+      transition: all 0.3s ease;
+    }
+
+    /* CUSTOM NOTIFY STYLING */
+    #custom-notify-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      z-index: 999999;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .notify-box {
+      max-width: 500px;
+      width: 100%;
+      background: rgba(20,20,20,0.6);
+      border: 2px solid #a32438;
+      border-radius: 30px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 0 50px rgba(163, 36, 56, 0.4);
+      animation: notifyPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes notifyPop {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .notify-box h2 {
+      color: #a32438;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+    .notify-box p {
+      font-size: 1.3rem;
+      line-height: 1.5;
+      margin-bottom: 30px;
+    }
+
+    /* RESET BUTTON IM FOOTER */
+    .test-reset-btn {
+      display: inline-block;
+      margin-top: 40px;
+      padding: 8px 20px;
+      background: #222;
+      color: #666;
+      border: 1px solid #333;
+      border-radius: 5px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s;
+      user-select: none;
+    }
+    .test-reset-btn:hover {
+      background: #333;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div id="google_translate_element"></div>
+
+  <div id="custom-notify-overlay">
+    <div class="notify-box">
+      <h2 id="notify-title">Hinweis</h2>
+      <p id="notify-message">Nachricht hier...</p>
+      <button class="red-button" style="padding: 15px 30px; font-size: 18px;" onclick="closeNotify()">OKAY</button>
+    </div>
+  </div>
+
+  <div id="welcome-overlay">
+    <div class="hero-pre">
+      <button class="vision-button-pre" onclick="enterSystem()">
+        <span style="display: block; font-weight: 400; opacity: 0.9; margin-bottom: 12px;">Wenn du uns nicht glaubst, dass Geldverdienen immer wichtiger wird, dann schau mal…<br><br><strong>Willkommen in der neuen Dimension.</strong></span>
+        <strong>Ein Klick - und deine Geschichte beginnt.</strong>
+      </button>
+    </div>
+  </div>
+
+  <div id="section-top" class="page-section">
+    <div class="master-circle-container" onclick="startJourney()">
+      <div class="master-circle">
+        <div class="master-face">START DER REISE</div>
+        <div class="master-face master-back">JETZT EINTAUCHEN</div>
+      </div>
+    </div>
+    <div class="welcome-banner">
+      <span>Schön, dass du da bist...</span>
+    </div>
+  </div>
+
+  <section id="section-reality" class="page-section">
+    <div class="reality-box">
+      <h2>REALITÄTS-CHECK 2026</h2>
+      <div class="reality-grid">
+        <div class="reality-card">
+          <h3>Einkaufswagen</h3>
+          <p>2002 war der Wagen für 100 € noch dreiviertel voll. 2010 nur noch die Hälfte. Heute, 2026, bedecken 100 € gerade mal den Boden. Der reale Wertverlust ist für jeden spürbar.</p>
+          <span class="source-tag">Quelle: Statistisches Bundesamt 2025</span>
+        </div>
+        <div class="reality-card">
+          <h3>Altersarmut</h3>
+          <p>Über 3,5 Millionen Menschen über 65 in der DACH-Region leben an der Armutsgrenze. Die Tendenz steigt rasant – besonders bei alleinstehenden Frauen.</p>
+          <span class="source-tag">Quelle: Destatis, Statistik Austria, BFS Schweiz</span>
+        </div>
+        <div class="reality-card">
+          <h3>Wohn- & Mietfalle</h3>
+          <p>Mieten in Großstädten stiegen seit 2005 um über 80 %. Ein Drittel des Einkommens verschwindet heute oft allein für die Miete. Das Leben wird zum Luxusgut.</p>
+          <span class="source-tag">Quelle: Immowelt, Bundesamt für Statistik</span>
+        </div>
+        <div class="reality-card">
+          <h3>Gesundheitsmarkt</h3>
+          <p>Der Supplementmarkt in DACH beträgt jährlich über 70 Milliarden Euro. Gesundheit ist das wichtigste Gut der Zukunft. Menschen investieren massiv in Prävention.</p>
+          <span class="source-tag">Quelle: Statista 2025</span>
+        </div>
+        <div class="reality-card">
+          <h3>Energiekosten</h3>
+          <p>Strompreise stiegen von 18 Cent (2005) auf ca. 42 Cent (2026) pro kWh. Die finanzielle Belastung für Haushalte erreicht Rekordwerte und drückt die Kaufkraft.</p>
+          <span class="source-tag">Quelle: Bundesnetzagentur 2025</span>
+        </div>
+        <div class="reality-card">
+          <h3>Einsamkeit</h3>
+          <p>Über 40 % der Menschen fühlen sich regelmäßig einsam. Psychische Belastungen und Burnout steigen massiv an. Wir brauchen neue Gemeinschaften und Zusammenhalt.</p>
+          <span class="source-tag">Quelle: DAK-Gesundheitsreport, OECD</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="section-vision" class="page-section">
+    <div class="content-box">
+      <h2 class="vision-headline">Exklusivität & Vision</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item item-lifestyle" onclick="openEmotion('lifestyle')">
+          <div class="item-title">LIFESTYLE</div>
+        </div>
+        <div class="gallery-item item-freiheit" onclick="openEmotion('freiheit')">
+          <div class="item-title">FREIHEIT</div>
+        </div>
+        <div class="gallery-item item-passion" onclick="openEmotion('passion')">
+          <div class="item-title">PASSION</div>
+        </div>
+        <div class="gallery-item item-business" onclick="openEmotion('business')">
+          <div class="item-title">BUSINESS</div>
+        </div>
+        <div class="gallery-item item-vision" onclick="openEmotion('vision')">
+          <div class="item-title">VISION</div>
+        </div>
+        <div class="gallery-item item-community" onclick="openEmotion('community')">
+          <div class="item-title">COMMUNITY</div>
+        </div>
+      </div>
+      <button class="red-button" style="width: auto; padding: 22px 60px; margin-top: 50px;" onclick="window.scrollTo({top: document.getElementById('section-cockpit-main').offsetTop, behavior: 'smooth'})">↓ ZUM COCKPIT</button>
+    </div>
+  </section>
+
+  <div id="emotion-overlay">
+    <div class="emotion-content" onclick="event.stopPropagation()">
+      <div class="emotion-img-frame"><img id="emotion-img" src="" alt="Emotion"></div>
+      <div id="emotion-text" class="emotion-text"></div>
+      <button class="red-button" style="width: auto; margin-top: 30px;" onclick="closeEmotion()">ZURÜCK</button>
+    </div>
+  </div>
+
+  <section id="section-cockpit-main">
+    <div class="cockpit-counter-box">
+      <span class="counter-label">BOARDING LIST - COMIMG SOON!:</span>
+      <span id="live-partner-counter" class="counter-number">...</span>
+    </div>
+
+    <div class="glass-box">
+      <p>
+        Stell dir vor: Du bist der Kapitän. Du sitzt im Cockpit. Du hast den breiten Schubregler in der Hand.
+        Mit einem festen Griff schiebst du ihn nach vorne. Du givst Vollgas. Das Flugzeug setzt sich in Bewegung.
+        Tonnen von Gewicht rasen über die Startbahn. Du wirst in den Sitz gepresst. Alles beschleunigt. Und dann hebst du ab.
+        Du hebst ab in dein neues Leben. In dein neues Level.
+      </p>
+      <div class="cockpit-btn-row">
+        <button class="cockpit-btn" onclick="openCockpitModal(1)">SYSTEM-CHECK</button>
+        <button class="cockpit-btn" onclick="openCockpitModal(2)">START-IMPULS</button>
+        <button class="cockpit-btn" onclick="openCockpitModal(3)">BESCHLEUNIGUNG</button>
+        <button class="cockpit-btn" onclick="openCockpitModal(4)">KURS HALTEN</button>
+        <button class="cockpit-btn highlight" onclick="openCockpitModal(5)">ZIEL-ANKUNFT</button>
+      </div>
+    </div>
+
+    <section id="section-command-center" class="command-center">
+      <h2 style="color: #ffffff; letter-spacing: 8px; margin-bottom: 20px; text-transform: uppercase;">The Command Center</h2>
+      <p style="color: rgba(255,255,255,0.6); margin-bottom: 50px; letter-spacing: 2px;">DEINE MARKETING-SCHALTZENTRALE</p>
+
+      <div class="terminal-setup">
+        <div class="terminal-grid">
+          <div>
+            <label class="terminal-label">1. Deine Company-Referral-ID</label>
+            <div class="terminal-input-wrap">
+              <input type="text" id="company-ref-id" class="terminal-input" placeholder="Deine ID oder dein Link..." oninput="generatePersonalLinks()">
+            </div>
+          </div>
+          <div>
+            <label class="terminal-label">2. Dein Room 3 Marketing-Link</label>
+            <div class="terminal-input-wrap">
+              <input type="text" id="room3-personal-link" class="terminal-input" readonly style="background: #111; color: #a32438; font-weight: bold;">
+              <button onclick="copyToClipboard('room3-personal-link')" style="position: absolute; right: 5px; top: 5px; padding: 10px; background: #a32438; border: none; border-radius: 8px; color: #fff; cursor: pointer; font-size: 12px;">KOPIEREN</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="command-grid">
+        <div class="command-card" onclick="secureAction('academy')">
+          <div class="command-badge">WISSEN IST MACHT</div>
+          <h3 style="color: #ffffff;">ACADEMY</h3>
+          <p>Erhalte Zugriff auf exklusive Trainings, Strategien und das gebündelte Wissen der Room 3 Elite.</p>
+          <button class="red-button" style="font-size: 16px; padding: 15px;">ENTER ACADEMY</button>
+        </div>
+        
+        <div class="command-card" onclick="secureAction('backoffice')">
+          <div class="command-badge">MEIN GESCHÄFT</div>
+          <h3 style="color: #ffffff;">MY BACKOFFICE</h3>
+          <p>Direkter Zugriff auf deinen persönlichen Bereich bei der Company. Verwalte dein Team und deinen Erfolg.</p>
+          <button class="red-button" style="font-size: 16px; padding: 15px;">OPEN BACKOFFICE</button>
+        </div>
+
+        <div class="command-card" onclick="secureAction('livecall')">
+          <div class="command-badge">TEAM SPIRIT</div>
+          <h3 style="color: #ffffff;">ELITE LIVE-CALL</h3>
+          <p>Komm in den direkten Austausch. Sei live dabei, wenn wir gemeinsam die Strategien für 2026 planen.</p>
+          <button class="red-button" style="font-size: 16px; padding: 15px;">JOIN LIVE CALL</button>
+        </div>
+
+        <div class="command-card card-vip" onclick="secureAction('vip')">
+          <div class="command-badge" style="color: #d4af37;">INNER CIRCLE</div>
+          <h3 style="color: #d4af37;">VIP LIFESTYLE</h3>
+          <p>Die Belohnung für deine Arbeit. Einblick in die Welt, die dich erwartet. Exklusiv ab 3 direkten Partnern.</p>
+          <button class="red-button" style="background: #d4af37; color: #000; font-size: 16px; padding: 15px;">VISUALIZE SUCCESS</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="merged-footer">
+      <img src="room3logo.png" alt="Room 3 the international" class="footer-logo-main">
+
+      <div class="footer-domain"><a href="https://room-3.live">room-3.live</a></div>
+      
+      <div class="footer-socials">
+        <a id="link-whatsapp" href="#" target="_blank" class="social-icon-btn">
+          <div class="icon-circle bg-wa"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA"></div>
+          <span class="social-label">WhatsApp</span>
+        </a>
+        <a id="link-telegram" href="#" target="_blank" class="social-icon-btn">
+          <div class="icon-circle bg-tg"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="TG"></div>
+          <span class="social-label">Telegram</span>
+        </a>
+        <a id="link-instagram" href="https://instagram.com" target="_blank" class="social-icon-btn">
+          <div class="icon-circle bg-ig"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="IG"></div>
+          <span class="social-label">Instagram</span>
+        </a>
+        <a id="link-glamster" href="javascript:void(0)" onclick="showNotify('Coming Soon', 'Die Zukunft der Social Economy.')" class="social-icon-btn">
+          <div class="icon-circle bg-gl"><img src="glamster.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/d/d7/Placeholder_white.svg'" id="glamster-logo-img" alt="GL"></div>
+          <span class="social-label">Glamster</span>
+          <span class="coming-soon-badge">Coming Soon</span>
+        </a>
+      </div>
+
+      <div style="opacity: 0.5; font-size: 1rem; letter-spacing: 2px; text-transform: uppercase;">
+        &copy; 2026 Room 3 the international. ALL RIGHTS RESERVED.
+      </div>
+
+      <div class="test-reset-btn" onclick="performTestReset()">
+          TEST-RESET
+      </div>
+
+    </footer>
+  </section>
+
+  <div id="heute" class="section">
+    <div class="text-container">
+      <h2>Kennst du das?</h2>
+      <p>Du wachst auf – aber ohne energie. Dein Alltag dreht sich im Kreis. Rechnungen, Pflichten, zu wenig Luft zum Atmen.</p>
+      <p>Du weißt, dass du mehr könntest – aber es fehlt der Plan. Kein Chef, kein System, kein Politiker hat dir je geholfen. Vielleicht spürst du es: So kann es nicht ewig weitergehen.</p>
+      <button class="red-button" onclick="showSection('jetzt')">Was sich ändern darf →</button>
+    </div>
+  </div>
+
+  <div id="jetzt" class="section">
+    <div class="text-container">
+      <h2>Was sich ändern darf</h2>
+      <p>Stell dir vor, es gäbe etwas Neues. Keine krassen Versprechen. Keine Show. Sondern ein echtes System, das du in deinem Tempo entdecken kannst.</p>
+      <p>Etwas, das leise beginnt – aber Großes bewegen kann. Ohne Risiko. Ohne Vorkenntnisse. Aber mit echtem Potenzial für deine persönliche und finanzielle Freiheit.</p>
+      <button class="red-button" onclick="showSection('morgen')">Was jetzt möglich ist →</button>
+    </div>
+  </div>
+
+  <div id="morgen" class="section">
+    <div class="text-container">
+      <h2>Was jetzt möglich ist</h2>
+      <p>Wir stehen am Anfang von etwas, das größer ist als jede einzelne Idee. Wir haben uns zusammengeschlossen, um etwas zu erschaffen, das genau dort ansetzt, wo sich zwei gigantische Märkte überschneiden: <br>Gesundheit & Künstliche Intelligenz.</p>
+      <p>Es geht nicht um theoretische Produkte. Es geht um echte Bedürfnisse. Immer wenn Unternehmen etwas schaffen, das Menschen wirklich wollen, ist Einkommen kein Zufall. Dann ist Erfolg vorprogrammiert.</p>
+      <button class="red-button" onclick="showSection('kontakt')">WILLST DU DABEI SEIN? JA!</button>
+    </div>
+  </div>
+
+  <div id="kontakt" class="section">
+    <div class="text-container">
+      <h2>Trag dich ein</h2>
+      <form id="google-form" onsubmit="saveLead(event)">
+        <input type="text" name="name" id="lead-name" class="input-field" placeholder="Vorname / Nachname" required>
+        <input type="email" name="email" id="lead-email" class="input-field" placeholder="E-Mail" required>
+        <input type="tel" name="tel" id="lead-tel" class="input-field" placeholder="WhatsApp-Nummer" required>
+        
+        <label class="checkbox-container">
+          <input type="checkbox" name="newsletter" id="newsletter-check" checked>
+          <span>Ja, ich möchte mit Newslettern und Updates versorgt werden und stimme der Datenschutzerklärung zu.</span>
+        </label>
+        <input type="hidden" name="referrer" id="referrer-field" value="Direkt">
+        <button type="submit" id="submit-button" class="red-button">DATEN ABSENDEN</button>
+        <button type="button" class="red-button" style="background: #333333; margin-top: 15px;" onclick="hideAll()">ZURÜCK</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="freischaltung" class="section">
+    <div class="text-container">
+      <h2 style="color: #a32438;">Fast geschafft! ✨</h2>
+      <p style="font-size: 1.8rem; line-height: 1.6;">Nur noch ein Schritt: Bitte bestätige deine E-Mail-Adresse im Posteingang.</p>
+      <p>Bitte schau jetzt in dein Postfach (auch im Spam-Ordner) und klicke auf den Bestätigungs-Link. Erst danach wird dein Zugang aktiviert.</p>
+      <p style="font-size: 1.1rem; color: #a32438; font-weight: bold; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; margin-top: 20px;">
+        Wichtiger Hinweis: Du erhältst gleich eine E-Mail auf Deutsch. Solltest du eine andere Sprache benötigen, kopiere den Text einfach in Google Translate.
+      </p>
+      <button class="red-button" onclick="goToReality()">JETZT ZUM REALITÄTS-CHECK</button>
+    </div>
+  </div>
+
+  <div id="vip-psych-overlay" class="section">
+    <div class="text-container" style="border-color: #d4af37; box-shadow: 0 0 50px rgba(212,175,55,0.4);">
+      <h2 style="color: #d4af37;">EINBLICK IN DEINE ZUKUNFT</h2>
+      <p>Du stehst an der Schwelle zum exklusiven VIP-Bereich von <strong>Room 3 the international</strong>. Dies ist ein Ort der Vision und der Belohnung für diejenigen, die vorangehen.</p>
+      <p>Dieser Zugang ist Partnern vorbehalten, die bereits <strong>3 direkte Partner</strong> in ihre Freiheit begleitet haben. Er zeigt dir, wie dein Leben aussehen kann, wenn du konsequent an deinem Erfolg arbeitest.</p>
+      
+      <div style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; margin-bottom: 30px; text-align: left;">
+        <input type="text" id="vip-confirm-name" class="input-field" placeholder="Dein vollständiger Name...">
+        <label class="checkbox-container">
+          <input type="checkbox" id="vip-confirm-check">
+          <span>Ich bestätige an Eides statt, dass ich mindestens 3 direkte Partner gesponsert habe und bereit bin für das nächste Level.</span>
+        </label>
+      </div>
+
+      <p style="font-size: 1.1rem; font-style: italic; opacity: 0.7;">Erfolg im Network basiert auf Integrität. Wenn du noch nicht so weit bist, nutze die Academy, um dorthin zu kommen.</p>
+
+      <button class="red-button" style="background: #d4af37; color: #000;" onclick="validateVIP()">VISION FREISCHALTEN</button>
+      <button class="red-button" style="background: #333333; margin-top: 15px;" onclick="hideAll()">NOCH NICHT BEREIT</button>
+    </div>
+  </div>
+
+  <div id="cockpit-modal" class="cockpit-modal-overlay">
+    <div class="cockpit-modal-content" style="text-align: left;">
+      <div id="cockpit-modal-body"></div>
+      <button class="red-button" style="background: #333333; width: 100%;" onclick="hideAll()">ZURÜCK ZUM COCKPIT</button>
+    </div>
+  </div>
+
+  <div class="music-control-group">
+    <div class="music-btn-fixed" onclick="toggleMusic()" id="music-toggle">🎵</div>
+  </div>
+  
+  <audio id="bgMusic" loop preload="auto">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+  </audio>
+
+  <div style="display:none;">
+    <iframe id="sc-gallery" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/nicosuffis/6-hours-sssssssssssssserious-1&auto_play=false"></iframe>
+    <iframe id="sc-cockpit" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://soundcloud.com/dj_eszr/neon-tide&auto_play=false"></iframe>
+  </div>
+
+  <script>
+    let savedScrollPos = 0;
+    
+    const audioTop = document.getElementById('bgMusic');
+    const scGallery = SC.Widget(document.getElementById('sc-gallery'));
+    const scCockpit = SC.Widget(document.getElementById('sc-cockpit'));
+    
+    let isMusicOn = false;
+    let currentTrackName = null;
+    let lockMusicCheck = false;
+
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbw7n60jRgd-hmWZHJyMAZ42rcjuQQS_opAOYYg1QTaSNPYEXBxnx_FkHh2C-LaV0Z1a/exec';
+
+    const partnerDatenbank = {
+      "bruno": { 
+        "companyLink": "https://mycryptoconsult.io/refer/?a=jhonny", 
+        "meetLink": "https://meet.google.com/bko-ojpo-hgf",
+        "wa": "491702009263",
+        "tg": "dein_telegram_name",
+        "defaultCount": 337
+      },
+      "solara": { 
+        "companyLink": "https://mycryptoconsult.io/refer/?a=jhonny", 
+        "meetLink": "https://meet.google.com/bko-ojpo-hgf",
+        "wa": "491702009263",
+        "tg": "dein_telegram_name",
+        "defaultCount": 337
+      },
+      "jhonny": { 
+        "companyLink": "https://mycryptoconsult.io/refer/?a=jhonny", 
+        "meetLink": "https://meet.google.com/bko-ojpo-hgf",
+        "wa": "491702009263",
+        "tg": "dein_telegram_name",
+        "defaultCount": 337
+      }
+    };
+
+    const galleryData = {
+      'lifestyle': { img: 'lifestyle.png', text: 'Lifestyle ist nicht das, was du besitzt, sondern wie du dich fühlst, wenn du die Freiheit hast, jeden Start selbst zu gestalten.' },
+      'freiheit': { img: 'freiheit.png', text: 'Freiheit ist, wenn du dort bist, wo du sein willst – jederzeit.' },
+      'passion': { img: 'passion.png', text: 'Wenn du mit deinem ganzen Körper fühlst, was du tust.' },
+      'business': { img: 'business.png', text: 'Manche Räume verändern alles – weil du spürst, dass hier etwas beginnt.' },
+      'vision': { img: 'vision.png', text: 'Du siehst noch nichts – aber du spürst, dass etwas Großes kommt.' },
+      'community': { img: 'community.png', text: 'Wenn Community zur Bewegung wird.' }
+    };
+
+    window.addEventListener('load', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const ref = urlParams.get('ref') ? urlParams.get('ref').toLowerCase() : "jhonny";
+      if (ref) document.getElementById('referrer-field').value = ref;
+      
+      const savedLink = localStorage.getItem('room3_company_link');
+      if(savedLink) {
+        document.getElementById('company-ref-id').value = savedLink;
+        generatePersonalLinks();
+      }
+
+      const info = partnerDatenbank[ref] || partnerDatenbank["jhonny"];
+      document.getElementById('link-whatsapp').href = `https://wa.me/${info.wa}?text=Hallo%20ich%20komme%20über%20room-3.live`;
+      document.getElementById('link-telegram').href = `https://t.me/${info.tg}`;
+      
+      updatePartnerCounter(info.defaultCount);
+    });
+
+    function getCurrentLanguage() {
+      const langSelector = document.querySelector('.goog-te-combo');
+      if (langSelector) {
+        return langSelector.value; 
+      }
+      return 'de';
+    }
+
+    function showNotify(title, message, lockScroll = true) {
+        document.getElementById('notify-title').innerText = title;
+        document.getElementById('notify-message').innerText = message;
+        document.getElementById('custom-notify-overlay').style.display = 'flex';
+        
+        if(lockScroll) {
+            document.body.classList.add('no-scroll');
+        }
+    }
+
+    function closeNotify() {
+        document.getElementById('custom-notify-overlay').style.display = 'none';
+        const otherSections = document.querySelectorAll('.section, .cockpit-modal-overlay, #emotion-overlay');
+        let anyOpen = false;
+        otherSections.forEach(s => { if(s.style.display === 'block' || s.style.display === 'flex') anyOpen = true; });
+        
+        if (!anyOpen) {
+            document.body.classList.remove('no-scroll');
+        }
+    }
+
+    function generatePersonalLinks() {
+      const input = document.getElementById('company-ref-id').value.trim();
+      const output = document.getElementById('room3-personal-link');
+      
+      if(input) {
+        localStorage.setItem('room3_company_link', input);
+        const cleanName = input.split('/').pop().split('=').pop(); 
+        output.value = `https://room-3.live?ref=${cleanName}`;
+      } else {
+        output.value = "";
+      }
+    }
+
+    function copyToClipboard(id) {
+      const copyText = document.getElementById(id);
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(copyText.value);
+      showNotify("Kopiert", "Dein persönlicher Link wurde in die Zwischenablage kopiert!", false);
+    }
+
+    function secureAction(type) {
+      const registered = localStorage.getItem('room3_isRegistered') === 'true';
+      if (!registered) {
+        showNotify("Zugriff verweigert", "Bitte trage dich erst im Kontaktformular ein, um diesen Bereich freizuschalten.");
+        showSection('kontakt');
+        return;
+      }
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const ref = urlParams.get('ref') ? urlParams.get('ref').toLowerCase() : "jhonny";
+      const info = partnerDatenbank[ref] || partnerDatenbank["jhonny"];
+      const personalCompanyLink = localStorage.getItem('room3_company_link') || info.companyLink;
+      
+      const currentLang = getCurrentLanguage();
+      let langSuffix = (currentLang && currentLang !== 'de') ? `?lang=${currentLang}` : "";
+
+      if (type === 'academy') {
+        window.open(`academy.html${langSuffix}`, '_blank');
+      } else if (type === 'backoffice') {
+        window.open(personalCompanyLink, '_blank');
+      } else if (type === 'livecall') {
+        window.open(info.meetLink, '_blank');
+      } else if (type === 'vip') {
+        showSection('vip-psych-overlay');
+      }
+    }
+
+    function validateVIP() {
+      const vipNameInput = document.getElementById('vip-confirm-name').value.trim().toLowerCase();
+      const contactName = (localStorage.getItem('room3_leadName') || "").trim().toLowerCase();
+      const isRegistered = localStorage.getItem('room3_isRegistered') === 'true';
+      const check = document.getElementById('vip-confirm-check').checked;
+
+      if (!isRegistered || contactName === "") {
+        showNotify("Fehler", "Du bist noch nicht im System registriert. Bitte fülle zuerst das Kontaktformular aus.");
+        hideAll();
+        setTimeout(() => {
+            showSection('kontakt');
+        }, 100);
+        return;
+      }
+
+      if(vipNameInput === "") {
+        showNotify("Eingabe fehlt", "Bitte gib deinen vollständigen Namen ein.");
+        return;
+      }
+
+      if(!check) {
+        showNotify("Bestätigung fehlt", "Bitte bestätige deine Qualifikation durch das Häkchen, um fortzufahren.");
+        return;
+      }
+
+      if(vipNameInput === contactName) {
+        hideAll();
+        const currentLang = getCurrentLanguage();
+        let langSuffix = (currentLang && currentLang !== 'de') ? `?lang=${currentLang}` : "";
+        window.open(`monaco.html${langSuffix}`, '_blank');
+      } else {
+        showNotify("Prüfung fehlgeschlagen", "Der eingegebene Name stimmt nicht mit deiner Registrierung überein. Bitte nutze den Namen aus dem Kontaktformular.");
+      }
+    }
+
+    function updatePartnerCounter(count) {
+      const counterElement = document.getElementById('live-partner-counter');
+      if (counterElement) counterElement.innerText = count.toLocaleString('de-DE');
+    }
+
+    function enterSystem() {
+      scGallery.play(); scGallery.pause();
+      scCockpit.play(); scCockpit.pause();
+      document.getElementById('welcome-overlay').style.opacity = '0';
+      setTimeout(() => { document.getElementById('welcome-overlay').style.visibility = 'hidden'; }, 1000);
+    }
+
+    function toggleMusic() {
+      isMusicOn = !isMusicOn;
+      document.getElementById('music-toggle').innerText = isMusicOn ? '🔊' : '🎵';
+      if (!isMusicOn) { 
+        stopAllTracks(); 
+        currentTrackName = null; 
+      } else { 
+        currentTrackName = null; 
+        playCurrentTrack(); 
+      }
+    }
+
+    function stopAllTracks() { audioTop.pause(); scGallery.pause(); scCockpit.pause(); }
+
+    function playCurrentTrack() {
+      if (!isMusicOn || lockMusicCheck) return;
+      const scrollPos = window.pageYOffset;
+      const visionTop = document.getElementById('section-vision').offsetTop;
+      const cockpitTop = document.getElementById('section-cockpit-main').offsetTop;
+      
+      let target = 'top';
+      if (scrollPos >= cockpitTop - 350) target = 'cockpit';
+      else if (scrollPos >= visionTop - 350) target = 'vision';
+      
+      if (currentTrackName !== target) {
+        stopAllTracks();
+        currentTrackName = target;
+        if (target === 'top') {
+            audioTop.currentTime = 3; 
+            audioTop.play();
+        }
+        else if (target === 'vision') scGallery.play();
+        else if (target === 'cockpit') scCockpit.play();
+      }
+    }
+
+    window.addEventListener('scroll', playCurrentTrack);
+
+    function startJourney() {
+      const registered = localStorage.getItem('room3_isRegistered') === 'true';
+      if (registered) goToReality(); else showSection('heute');
+    }
+
+    function showSection(id) {
+      lockMusicCheck = true;
+      savedScrollPos = window.pageYOffset;
+      document.body.style.top = `-${savedScrollPos}px`;
+      document.body.classList.add('no-scroll');
+      document.getElementById(id).style.display = 'block';
+    }
+
+    function hideAll() {
+      document.querySelectorAll('.section, .cockpit-modal-overlay, #emotion-overlay').forEach(s => s.style.display = 'none');
+      if (document.body.classList.contains('no-scroll')) {
+        document.body.classList.remove('no-scroll');
+        document.body.style.top = '';
+        window.scrollTo(0, savedScrollPos);
+      }
+      setTimeout(() => { lockMusicCheck = false; playCurrentTrack(); }, 600);
+    }
+
+    function openEmotion(key) {
+      lockMusicCheck = true;
+      savedScrollPos = window.pageYOffset;
+      const data = galleryData[key];
+      document.getElementById('emotion-img').src = data.img;
+      document.getElementById('emotion-text').innerText = data.text;
+      
+      document.body.style.top = `-${savedScrollPos}px`;
+      document.body.classList.add('no-scroll');
+      document.getElementById('emotion-overlay').style.display = 'flex';
+    }
+
+    function closeEmotion() { hideAll(); }
+
+    function openCockpitModal(num) {
+      let content = "";
+      const registered = localStorage.getItem('room3_isRegistered') === 'true';
+
+      if (num === 1) {
+        content = `<h2>First-Class Boarding</h2><p>Ich eröffne meine First Class Crew. Ein Flugzeug hebt nur ab, wenn die Crew steht. Ich wähle die ersten 10 Plätze in meinem Cockpit für die Menschen aus, die ich bei diesem Start unbedingt dabeihaben will.</p>`;
+      } else if (num === 2) {
+        content = `<h2>START-IMPULS</h2><p>Ich kontaktiere diese Personen persönlich. Ich erzähle ihnen begeistert von dem neuen Multimilliarden-Dollar-Projekt und zeige ihnen die Landingpage. Mein Sponsor ist bei den ersten Gesprächen dabei – unterstützend, souverän, stark.</p>`;
+      } else if (num === 3) {
+        content = `<h2>BESCHLEUNIGUNG</h2><p>Ich bleibe in Bewegung: Ich verschicke jeden Tag meine Landingpage an 5 weitere Menschen. Kein Spam. Keine Massen-Mail. Sondern echte Menschen. Echtes Momentum. Ich spreche täglich über das Projekt – mit Stolz, mit Freude.</p>`;
+      } else if (num === 4) {
+        content = `<h2>KURS HALTEN</h2><p>Ich halte jeden Tag persönlichen Kontakt zu meinem Sponsor. Wir sprechen über meine Fortschritte, Herausforderungen und Erfolge. Ich bin nicht allein – ich bin Teil von etwas Großem.</p>`;
+      } else if (num === 5) {
+        if(!registered) {
+          content = `<h2>Zugang gesperrt</h2><p>Bitte trage dich erst ein, um diesen Bereich freizuschalten.</p>
+                     <button class="red-button" onclick="hideAll(); showSection('kontakt')">JETZT EINTRAGEN</button>`;
+        } else {
+          content = `<h2>Ergebnis der ersten 4 Wochen</h2>
+            <p>Wenn du dich konsequent an die Schritte 1 bis 4 hältst, kannst du bereits in den ersten 4 Wochen damit rechnen, deine ersten hundert Euro zu verdienen.</p>
+            <p><strong>Und was passiert nach 3 Monaten?</strong></p>
+            <p>Dein Team wächst. Deine Wirkung wächst. Du hast deine Abläufe gefunden. Du kannst bereits bei einem Einkommen von ca. 2.000 € bis 5.000 € monatlich stehen. Du hast Klarheit, du hast Struktur. Du siehst: Es funktioniert.</p>
+            <p><strong>Und was ist nach 6 Monaten?</strong></p>
+            <p>Du hast ein Team aufgebaut. Ein echtes. Du hast deinen Leuten beigebracht, dich zu kopieren. Sie tun dasselbe wie du – und sie verdienen Geld. Und wenn deine Leute Geld verdienen, dann wächst auch dein Einkommen.</p>
+            <p style="color: #a32438; font-weight: bold; font-size: 1.6rem;">Dann beginnt deine Freiheit.</p>
+            <p>Du beginnst zu begreifen: Ich will lieber im Cockpit sitzen als unter einem Chef stehen. Du steuerst dein eigenes Flugzeug. Dein Lifestyle beginnt. Dein Next Level.</p>
+            <button class="red-button" style="background: #a32438;" onclick="goToCommandCenter()">ZUR KOMMANDOZENTRALE</button>`;
+        }
+      }
+      document.getElementById('cockpit-modal-body').innerHTML = content;
+      showSection('cockpit-modal');
+    }
+
+    function goToCommandCenter() {
+      hideAll();
+      setTimeout(() => {
+        const cmd = document.getElementById('section-command-center');
+        if(cmd) cmd.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+
+    function saveLead(event) {
+      event.preventDefault();
+      const btn = document.getElementById('submit-button');
+      const nameVal = document.getElementById('lead-name').value.trim();
+      
+      btn.disabled = true; 
+      btn.innerText = 'WIRD GESENDET...';
+      
+      const formData = new URLSearchParams();
+      formData.append("name", nameVal);
+      formData.append("email", document.getElementById('lead-email').value);
+      formData.append("tel", document.getElementById('lead-tel').value);
+      formData.append("newsletter", document.getElementById('newsletter-check').checked ? "JA" : "NEIN");
+      formData.append("referrer", document.getElementById('referrer-field').value);
+      
+      fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
+      .then(() => { 
+        localStorage.setItem('room3_isRegistered', 'true'); 
+        localStorage.setItem('room3_leadName', nameVal); 
+        hideAll(); 
+        showSection('freischaltung'); 
+      })
+      .catch(() => { 
+        localStorage.setItem('room3_isRegistered', 'true'); 
+        localStorage.setItem('room3_leadName', nameVal); 
+        hideAll(); 
+        showSection('freischaltung'); 
+      });
+    }
+
+    function goToReality() {
+      hideAll();
+      window.scrollTo({ top: document.getElementById('section-reality').offsetTop, behavior: 'smooth' });
+    }
+
+    function performTestReset() {
+      localStorage.removeItem('room3_isRegistered');
+      localStorage.removeItem('room3_company_link');
+      localStorage.removeItem('room3_leadName');
+      window.scrollTo(0, 0);
+      setTimeout(() => { location.reload(); }, 100);
+    }
+  </script>
+</body>
+</html>
