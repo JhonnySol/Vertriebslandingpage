@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <link rel="icon" type="image/png" href="room3logo.png">
+    <title>Room 3 the international | ACADEMY</title>
+
+    <style>
+        :root {
+            --accent-color: #a32438; 
+            --white: #ffffff;
+            --black: #000000;
+            --academy-dark: #0a0a0a; 
+            --accent-gradient: linear-gradient(to right, #801a2a, #a32438, #d42f4a, #a32438, #801a2a);
+        }
+
+        /* --- GLOBAL STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        html, body {
+            background-color: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- GOOGLE TRANSLATE FIX (STRENG NACH VIP-VORLAGE) --- */
+        body {
+            top: 0 !important;
+            position: static !important;
+        }
+
+        .skiptranslate > iframe {
+            display: none !important;
+            visibility: hidden !important;
+        }
+
+        #google_translate_element {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            z-index: 10001;
+            background: rgba(0,0,0,0.7);
+            padding: 5px;
+            border-radius: 4px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(163, 36, 56, 0.5);
+        }
+
+        /* Verstecke Google Banner komplett */
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+
+        /* Entferne Google Tooltips und "Original anzeigen" */
+        .goog-tooltip { display: none !important; }
+        .goog-tooltip:hover { display: none !important; }
+        .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
+        
+        /* Entferne Google Branding Text */
+        .goog-te-gadget {
+            color: transparent !important;
+            font-size: 0 !important;
+        }
+        
+        .goog-te-gadget .goog-te-combo {
+            color: #fff !important;
+            background: #111 !important;
+            border: 1px solid var(--accent-color) !important;
+            padding: 6px !important;
+            font-size: 13px !important;
+            border-radius: 2px;
+            outline: none;
+        }
+
+        body.popup-open {
+            overflow: hidden !important;
+            touch-action: none;
+        }
+
+        /* --- NAVIGATION --- */
+        .nav-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+        }
+
+        .logo-link img {
+            width: 120px;
+            transition: 0.3s;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-right: 180px; /* Platz für das Google Widget halten */
+        }
+
+        .back-link {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            border: 1px solid rgba(163, 36, 56, 0.4);
+            padding: 10px 20px;
+            transition: 0.3s;
+            background: rgba(163, 36, 56, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        /* --- HERO SEKTION --- */
+        .academy-hero {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .academy-label {
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 12px;
+            font-weight: 900;
+            font-size: 1.8rem;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+
+        h1 span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- MODULE BLOCKS --- */
+        .module-block {
+            padding: 100px 8%;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(163, 36, 56, 0.1);
+        }
+
+        .module-bg-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+        }
+
+        .module-bg-layer img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .module-grid {
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 400px));
+            gap: 40px;
+            width: 100%;
+        }
+
+        .module-card {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(25px);
+            padding: 50px 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.5s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .module-card:hover {
+            border-color: var(--accent-color);
+            background: rgba(0, 0, 0, 0.6);
+            transform: translateY(-10px);
+        }
+
+        .module-card h3 {
+            color: var(--accent-color);
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .module-card p {
+            line-height: 1.8;
+            color: #fff;
+            font-size: 1.05rem;
+            margin-bottom: 30px;
+        }
+
+        /* --- CONTENT POPUP --- */
+        .content-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.98);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(15px);
+        }
+
+        .content-box {
+            width: 90%;
+            max-width: 850px;
+            max-height: 85vh;
+            overflow-y: auto;
+            background: #050505;
+            border: 1px solid var(--accent-color);
+            position: relative;
+            padding: 60px 50px;
+            text-align: left;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            z-index: 10001;
+        }
+
+        .popup-highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .popup-list {
+            list-style: none;
+            margin: 25px 0;
+        }
+
+        .popup-list li {
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 18px;
+            line-height: 1.7;
+        }
+
+        .popup-list li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-size: 0.8rem;
+            top: 5px;
+        }
+
+        /* --- COCKPIT STYLES --- */
+        .cockpit-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--accent-color);
+            color: white;
+            text-align: center;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+        }
+
+        .reality-section {
+            padding: 120px 8%;
+            background: #000;
+            text-align: center;
+        }
+
+        .reality-title {
+            font-size: 3.5rem;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        .reality-title span {
+            color: var(--accent-color);
+        }
+
+        .cockpit-section {
+            padding: 120px 8%;
+            background: linear-gradient(to bottom, #000, #1a0508);
+            text-align: center;
+        }
+
+        .cockpit-card {
+            max-width: 900px;
+            margin: 0 auto;
+            border: 1px solid var(--accent-color);
+            padding: 80px 40px;
+            background: rgba(255,255,255,0.02);
+            backdrop-filter: blur(20px);
+        }
+
+        .btn-submit {
+            width: 100%;
+            max-width: 300px;
+            padding: 18px;
+            background: var(--accent-gradient);
+            border: none;
+            color: #fff;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        #protected-cockpit { display: none; text-align: center; }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+       .resource-card {
+            border: 1px solid rgba(163, 36, 56, 0.3);
+            padding: 40px 30px;
+            background: rgba(255,255,255,0.03);
+            transition: 0.4s;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .resource-card:hover {
+            border-color: var(--accent-color);
+            background: rgba(163, 36, 56, 0.08);
+            transform: translateY(-5px);
+        }
+
+        .coming-soon-badge {
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--accent-gradient);
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 900;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .res-icon { font-size: 2.5rem; margin-bottom: 20px; filter: drop-shadow(0 0 10px var(--accent-color)); }
+        .res-title { color: var(--accent-color); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 1.1rem; margin-bottom: 10px; }
+        .res-desc { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
+
+        iframe#sc-academy { width: 1px; height: 1px; opacity: 0; position: absolute; left: -9999px; visibility: hidden; }
+
+        @media (max-width: 1024px) {
+            .nav-controls { margin-right: 20px; }
+            #google_translate_element { position: relative; top: 0; right: 0; margin-top: 15px; }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            .content-box { padding: 40px 20px; width: 95%; }
+            .nav-header { padding: 20px; }
+            .module-card { background: rgba(0, 0, 0, 0.2) !important; backdrop-filter: blur(10px); }
+            .cockpit-card { background: rgba(255, 255, 255, 0.01) !important; backdrop-filter: blur(8px); }
+        }
+    </style>
+</head>
+<body onclick="startAudio()" onscroll="startAudio()">
+
+    <div id="google_translate_element"></div>
+
+    <header class="nav-header">
+        <div class="logo-link">
+            <img src="room3logo.png" alt="Room 3 the international">
+        </div>
+        <div class="nav-controls">
+            <a href="index.html#section-cockpit-main" class="back-link" id="backBtn">WO ES BEGONNEN HAT</a>
+        </div>
+    </header>
+
+    <section class="academy-hero">
+        <picture>
+            <source srcset="lernenmobil.png" media="(max-width: 768px)">
+            <img src="lernen.png" alt="Academy Hero" class="hero-bg">
+        </picture>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="academy-label">ROOM 3 - ACADEMY</span>
+            <h1 id="heroTitle">Der Weg zur <span>Freiheit</span></h1>
+        </div>
+    </section>
+
+    <section class="module-block">
+        <div class="module-bg-layer">
+            <picture>
+                <source srcset="modul1mobil.png" media="(max-width: 768px)">
+                <img src="modul1.png" alt="Vision">
+            </picture>
+        </div>
+        <div class="module-grid" style="grid-template-columns: 1fr; max-width: 600px; margin: 0 auto;">
+            <div class="module-card" onclick="openModule(0)">
+                <h3 id="m0-t">00 Die Vision</h3>
+                <p id="m0-p">Entdecke, warum dieses System dein Leben verändern wird.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="module-block">
+        <div class="module-bg-layer">
+            <picture>
+                <source srcset="modul1amobil.png" media="(max-width: 768px)">
+                <img src="modul1a.png" alt="Foundation">
+            </picture>
+        </div>
+        <div class="module-grid">
+            <div class="module-card" onclick="openModule(1)">
+                <h3 id="m1-t">01 Willkommen</h3>
+                <p id="m1-p">Verstehe die Vision hinter Room 3 the international.</p>
+            </div>
+            <div class="module-card" onclick="openModule(2)">
+                <h3 id="m2-t">02 Einstellung</h3>
+                <p id="m2-p">Erfolg beginnt im Kopf. Fokus und Disziplin.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="module-block">
+        <div class="module-bg-layer">
+            <picture>
+                <source srcset="modul2mobil.png" media="(max-width: 768px)">
+                <img src="modul2.png" alt="Strategy">
+            </picture>
+        </div>
+        <div class="module-grid">
+            <div class="module-card" onclick="openModule(3)">
+                <h3 id="m3-t">03 Die ersten 72h</h3>
+                <p id="m3-p">Dein Schlachtplan für den sofortigen Start.</p>
+            </div>
+            <div class="module-card" onclick="openModule(4)">
+                <h3 id="m4-t">04 Kommunikation</h3>
+                <p id="m4-p">Die Kunst der Einladung und Begeisterung.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="module-block">
+        <div class="module-bg-layer">
+            <picture>
+                <source srcset="modul3mobil.png" media="(max-width: 768px)">
+                <img src="modul3.png" alt="Expansion">
+            </picture>
+        </div>
+        <div class="module-grid">
+            <div class="module-card" onclick="openModule(5)">
+                <h3 id="m5-t">05 Führung</h3>
+                <p id="m5-p">Führe dein Team zum globalen Erfolg.</p>
+            </div>
+            <div class="module-card" onclick="openModule(6)">
+                <h3 id="m6-t">06 Duplikation</h3>
+                <p id="m6-p">Der magische Schlüssel für unendliches Wachstum.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="reality-section">
+        <h2 class="reality-title" id="realityTitle">Deine neue <span>Realität</span></h2>
+    </section>
+
+    <section class="cockpit-section" id="cockpit">
+        <div class="cockpit-card">
+            <div id="login-view">
+                <h2 id="cockpitTitle" style="color: var(--accent-color); letter-spacing: 5px; text-transform: uppercase; margin-bottom: 30px;">Partner Cockpit</h2>
+                <button class="btn-submit" id="loginBtn" onclick="showLoginPopup()">Login Intern</button>
+            </div>
+
+            <div id="protected-cockpit">
+                <h2 id="welcomeBackTitle" style="color: var(--accent-color); letter-spacing: 5px; text-transform: uppercase;">Willkommen zurück</h2>
+                <p id="welcomeBackDesc" style="margin-bottom: 30px; color: rgba(255,255,255,0.8);">Hier findest du deine exklusiven Arbeitsmaterialien.</p>
+                
+                <div class="resource-grid">
+                    <div class="resource-card" onclick="openResource('leitfaden')">
+                        <div class="res-icon">📄</div>
+                        <div id="res-t1" class="res-title">Leitfaden</div>
+                        <div id="res-d1" class="res-desc">Dein Skript für erfolgreiche Gespräche & Einladungen.</div>
+                    </div>
+                    
+                    <div class="resource-card" onclick="openResource('praesentation')">
+                        <div class="res-icon">📊</div>
+                        <div id="res-t2" class="res-title">Präsentation</div>
+                        <div id="res-d2" class="res-desc">Die Room 3 Vision als professionelle Vorlage für Termine.</div>
+                    </div>
+
+                    <div class="resource-card" style="cursor: default;">
+                        <div class="coming-soon-badge">Soon</div>
+                        <div class="res-icon">🎬</div>
+                        <div id="res-t3" class="res-title">Video Training</div>
+                        <div id="res-d3" class="res-desc">Exklusive Video-Coachings (In Vorbereitung).</div>
+                    </div>
+                </div>
+
+                <button id="logoutBtn" onclick="logout()" style="background: transparent; border: 1px solid rgba(255,0,0,0.5); color: #ff4444; margin-top: 50px; padding: 12px 25px; cursor: pointer; text-transform: uppercase; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;">Logout</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="content-overlay" class="content-overlay">
+        <div class="content-box">
+            <span class="close-btn" onclick="closeModule()">X</span>
+            <div id="popup-inner-content">
+                <h2 id="popup-title" style="color: var(--accent-color); margin-bottom: 25px; text-transform: uppercase;"></h2>
+                <div id="popup-text" style="font-size: 1.15rem; line-height: 1.8; color: #fff;"></div>
+                <div style="text-align: center; margin-top: 50px; padding-bottom: 20px;">
+                    <button id="understoodBtn" onclick="closeModule()" class="btn-submit">Verstanden</button>
+                </div>
+            </div>
+            
+            <div id="login-form-content" style="display: none; text-align: center;">
+                <h2 id="loginTitle" style="color: var(--accent-color); margin-bottom: 25px; text-transform: uppercase;">Partner Login</h2>
+                <input type="password" id="partner-pw" class="cockpit-input" placeholder="PASSWORT">
+                <p id="login-error" style="color: #ff4444; display: none; margin-bottom: 15px;">Falsches Passwort.</p>
+                <button id="loginSubmitBtn" class="btn-submit" onclick="checkPassword()">Anmelden</button>
+            </div>
+        </div>
+    </div>
+
+    <iframe id="sc-academy" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/szokebeatrice/maldives-relaxing-chill-out-luxury-lounge&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false" frameborder="no" allow="autoplay"></iframe>
+
+    <div id="smart-sound-toggle" onclick="handleSound()" style="position: fixed; bottom: 40px; right: 40px; z-index: 5000; width: 70px; height: 70px; border-radius: 50%; background: #1a0508; border: 2px solid var(--accent-color); cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(163, 36, 56, 0.5);">
+        <svg id="speaker-icon" width="28" height="28" viewBox="0 0 24 24" fill="#a32438"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+    </div>
+
+    <script src="https://w.soundcloud.com/player/api.js"></script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'de',
+                includedLanguages: 'de,en,fr,el,it,pl,pt,es,tr',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+        let isAudioStarted = false;
+        let isPlaying = false; 
+        const MASTER_PW = "R3GOLD2026";
+
+        const moduleContents = {
+            DE: {
+                0: `<span class="popup-highlight">DIE VISION HINTER DIESEM SYSTEM</span>
+                    Dieses System ist dein digitaler Klon und der Schlüssel zu deinem globalen Wachstum. Es wurde entwickelt, um dir drei Dinge zu ermöglichen:
+                    <br><br>
+                    <strong>1. Radikale Zeitersparnis durch Automatisierung</strong>
+                    <br>
+                    Du willst nicht jedem neuen Partner einzeln erklären müssen, wie man eine Namensliste schreibt. Das System übernimmt die Einarbeitung deiner Partner. Dein Business wächst auch dann, wenn du gerade schläfst.
+                    <br><br>
+                    <strong>2. Maximale Duplikation (Der McDonald's Effekt)</strong>
+                    <br>
+                    Ein Geschäft wird nur dann global groß, wenn es so einfach ist, dass es jeder kopieren kann. Ein Partner in New York muss exakt das Gleiche tun wie ein Partner in Berlin. Klare Leitfäden eliminieren Fehlerquellen.
+                    <br><br>
+                    <strong>3. Professionalität & Vertrauen</strong>
+                    <br>
+                    Ein geschütztes Cockpit und ein durchgestyltes System erhöhen das Vertrauen deiner Partner sofort. Du ziehst keine Glücksritter an, sondern echte Leader.
+                    <br><br>
+                    <strong>Die Vision 2026:</strong> Wir bauen hier das Zentrum einer weltweiten Bewegung. Kurzfristig ist es die Anlaufstelle für deine ersten 100 Partner. Langfristig ist es dein Weg in die echte Freiheit, während das System stabil Generationen von Partnern durchläuft.`,
+                1: `<span class="popup-highlight">WILLKOMMEN BEI ROOM 3 THE INTERNATIONAL</span>
+                    Schön, dass du da bist! Egal, wo du gerade stehst – ob du Hausfrau bist, Student, Rentner oder angestellt: Room 3 the international ist dein Weg in die finanzielle Unabhängigkeit. Hier zählen nicht deine Zeugnisse, sondern dein Wille.
+                    <br><br>
+                    <strong>Das ist jetzt für dich zu tun:</strong>
+                    <ul class="popup-list">
+                        <li><strong>Schritt 1:</strong> Atme tief durch. Du hast die richtige Entscheidung getroffen.</li>
+                        <li><strong>Schritt 2:</strong> Gehe diese Academy Modul für Modul durch. Springe nicht hin und her.</li>
+                        <li><strong>Schritt 3:</strong> Hab keine Angst vor Fehlern. Wir haben dieses System so gebaut, dass es für dich funktioniert, wenn du einfach nur die Schritte nachmacht.</li>
+                    </ul>
+                    Du bist ab heute nicht mehr allein. Wir bauen das hier gemeinsam auf. Willkommen in der Familie!`,
+                2: `<span class="popup-highlight">MINDSET: DEIN KOPF ENTSCHEIDET</span>
+                    Bevor wir über Geld und Technik reden, müssen wir über deine Einstellung sprechen. Das ist der wichtigste Teil deiner gesamten Ausbildung.
+                    <br><br>
+                    <strong>Was du ab heute wissen musst:</strong>
+                    <ul class="popup-list">
+                        <li><strong>Werde zum Schüler:</strong> Vergiss alles, was du über "harte Arbeit" gelernt hast. Sei bereit, neu zu lernen, wie Erfolg wirklich funktioniert.</li>
+                        <li><strong>Geduld & Ausdauer:</strong> Ein Imperium wird nicht an einem Tag erbaut. Geb dir selbst die Zeit, zu wachsen.</li>
+                        <li><strong>Keine Ausreden:</strong> Wir suchen keine Gründe, warum etwas nicht geht – wir suchen Wege, wie es funktioniert.</li>
+                    </ul>`,
+                3: `<span class="popup-highlight">DER SCHLACHTPLAN: DEINE ERSTEN 72 STUNDEN</span>
+                    Momentum ist der Schlüssel. In den ersten 3 Tagen legst du den Grundstein für dein gesamtes Business.
+                    <ul class="popup-list">
+                        <li><strong>Namensliste:</strong> Schreibe 20 Personen auf, die du kennst. Analysiere nicht – schreib sie einfach auf.</li>
+                        <li><strong>Der Mentor-Call:</strong> Ruf die Person an, die dich registriert hat. Plant gemeinsam die ersten Schritte.</li>
+                        <li><strong>Terminfokus:</strong> Versuche innerhalb der ersten 72 Stunden deine ersten 3 Info-Gespräche zu führen.</li>
+                    </ul>`,
+                4: `<span class="popup-highlight">KOMMUNIKATION: BEGEISTERN STATT ÜBERZEUGEN</span>
+                    Kommunikation ist kein Verkauf, sondern Informationsweitergabe.
+                    <ul class="popup-list">
+                        <li><strong>Neugier wecken:</strong> "Ich habe da was angefangen, das musst du dir unbedingt ansehen."</li>
+                        <li><strong>Keine Details am Telefon:</strong> Der Zweck des Anrufs ist der Termin, nicht die Präsentation.</li>
+                        <li><strong>Deine Begeisterung:</strong> Deine Energie zählt mehr als dein Wissen.</li>
+                    </ul>`,
+                5: `<span class="popup-highlight">FÜHRUNG: VOM PARTNER ZUM LEADER</span>
+                    Führung bei Room 3 bedeutet Diener-Mentalität. Hilf deinem Team, die gleichen Erfolge zu erzielen wie du.
+                    <ul class="popup-list">
+                        <li><strong>Vorbild sein:</strong> Tu das, was du von anderen verlangst.</li>
+                        <li><strong>Ehrlichkeit:</strong> Baue Beziehungen auf, die auf Vertrauen basieren.</li>
+                        <li><strong>Beständigkeit:</strong> Sei der Fels in der Brandung für deine Partner.</li>
+                    </ul>`,
+                6: `<span class="popup-highlight">DUPLIKATION: DAS GEHEIMNIS DER FREIHEIT</span>
+                    Echte Freiheit im Network Marketing entsteht nur durch Duplikation. Es ist völlig egal, was für dich funktioniert. Wichtig ist nur, was für jeden funktioniert. Wer alles selbst macht, bleibt ein Sklave seines eigenen Geschäfts. Wer dupliziert, gewinnt Zeit und Freiheit.
+                    <br><br>
+                    <strong>Warum Duplikation der Schlüssel ist:</strong> 
+                    Duplikation bedeutet, dass dein Team in der Lage ist, die gleichen einfachen Schritte auszuführen wie du – auch wenn du gerade nicht anwesend bist. Es ist die einzige Möglichkeit, ein weltweites Netzwerk aufzubauen, das organisch und stabil wächst.
+                    <br><br>
+                    <strong>Die goldenen Regeln der Duplikation:</strong>
+                    <ul class="popup-list">
+                        <li><strong>Einfachheit gewinnt:</strong> Halte alles so simpel, dass es ein 10-Jähriger kopieren könnte. Komplexität ist der Feind des Wachstums. Wenn ein Prozess zu kompliziert ist, wird ihn niemand nachmachen.</li>
+                        <li><strong>System statt Talent:</strong> Sei ein Systemnutzer, kein Super-Verkäufer. Ein System kann jeder nutzen, Talent ist nicht kopierbar. Verlasse dich auf Werkzeuge (Videos, Leitfäden), nicht auf deine eigene Redegewandtheit.</li>
+                        <li><strong>Wissensweitergabe:</strong> Bring deinem Team nicht nur bei, wie sie Kunden gewinnen. Bring ihnen bei, wie sie ihren eigenen Partnern beibringen, wie man Kunden gewinnt.</li>
+                        <li><strong>Standardisierung:</strong> Nutze immer die gleichen Präsentationen und Abläufe. So weiß jeder Partner jederzeit genau, was der nächste Schritt ist.</li>
+                    </ul>
+                    Wahre Freiheit erreichst du erst dann, wenn du Menschen ausgebildet hast, die wiederum Menschen ausbilden. Das ist die Magie von Room 3 the international.`,
+                'leitfaden': `<span class="popup-highlight">DER PROFI-LEITFADEN: MENSCHEN GEWINNEN</span>
+                    Hier ist die exakte Strategie, wie du im Alltag oder am Telefon Partner gewinnst.
+                    <br><br>
+                    <strong>Phase 1: Der Smalltalk</strong>
+                    <br>
+                    Beginne locker. 2-3 Sätze reichen, um die Atmosphäre zu entspannen.
+                    <br><br>
+                    <strong>Phase 2: Die Antwort-Position</strong>
+                    <br>
+                    Frage: <i style="color:var(--accent-color)">"Und what do you do for a living right now?"</i>. 
+                    Warte auf die Gegenfrage: <i style="color:var(--accent-color)">"Und was machst du?"</i>.
+                    <br><br>
+                    <strong>Phase 3: Die Neugier-Antwort</strong>
+                    <br>
+                    <i>"Ich helfe Menschen dabei, sich nebenbei ein zweites Standbein im Bereich Freiheit und Lifestyle aufzubauen, damit sie nicht mehr nur für Rechnungen arbeiten müssen."</i>
+                    <br><br>
+                    <strong>Phase 4: Der Abschluss (Nummerntausch)</strong>
+                    <br>
+                    <i>"Ich kann dir das hier nicht zwischen Tür und Angel erklären. Lass uns kurz die Nummern tauschen. Ich schick dir mal was zu – schau es dir in Ruhe an. Wenn es passt, ist gut, wenn nicht, auch kein Thema."</i>
+                    <br><br>
+                    <strong>Phase 5: Termin-Fixierung</strong>
+                    <br>
+                    <i>"Ich melde mich morgen nochmal kurz, wenn du es gesehen hast. Wann passt es dir besser? Morgens oder Abend?"</i>
+                    <br><br>
+                    <span style="color:#ff4444; font-weight:bold;">DIE GOLDENEN REGELN:</span>
+                    <ul class="popup-list">
+                        <li><strong>Kein Vollquatschen:</strong> Gib niemals alle Infos sofort raus.</li>
+                        <li><strong>Haltung:</strong> Du hast die Lösung. Wenn er nicht will, sein Verlust.</li>
+                        <li><strong>Angst überwinden:</strong> Du fragst nur nach dem Stand, du verkaufst nichts am Telefon!</li>
+                    </ul>`,
+                'praesentation': `<span class="popup-highlight">ROOM 3 VISION (DIE VOLLE GESPRÄCHSFÜHRUNG)</span>
+                    Dies ist dein roter faden für professionelle Präsentationen (Zoom oder Live):
+                    <br><br>
+                    <strong>1. Identifikation (Den Schmerzpunkt finden)</strong>
+                    <br>
+                    Bevor du startest, musst du wissen, warum die Person etwas ändern will. Frage: "Wenn du heute eine Sache in deinem Leben sofort ändern könntest – wäre es mehr Zeit für die Familie, mehr Geld am Ende des Monats oder die Freiheit, von überall zu arbeiten?" Höre aktiv zu. Diese Antwort ist dein Anker für das gesamte Gespräch.
+                    <br><br>
+                    <strong>2. Die Brücke zu Room 3 the international</strong>
+                    <br>
+                    "Genau deshalb wurde Room 3 gegründet. Wir sind eine internationale Bewegung von Menschen, die nicht mehr bereit sind, Zeit gegen Geld zu tauschen. Wir haben ein System entwickelt, das es jedem – egal mit welcher Vorgeschichte – ermöglicht, sich global ein Netzwerk aufzubauen."
+                    <br><br>
+                    <strong>3. Die drei Säulen des Erfolgs</strong>
+                    <ul class="popup-list">
+                        <li><strong>Die Academy:</strong> Wir bilden dich aus. Du bekommst das Know-how Schritt für Schritt.</li>
+                        <li><strong>Das Netzwerk:</strong> Du bist Teil einer Gemeinschaft. Wir wachsen zusammen.</li>
+                        <li><strong>Scalability:</strong> Dein Business kennt keine geografischen Grenzen.</li>
+                    </ul>
+                    <br>
+                    <strong>4. Die Vision 2026</strong>
+                    <br>
+                    "Wir sind gerade in der spannendsten Phase. Bis 2026 wollen wir tausende Familien in die finanzielle Freiheit führen. Wir suchen jetzt die Köpfe, die bereit sind, mit uns diese Geschichte zu schreiben. Bist du bereit für den nächsten Schritt?"
+                    <br><br>
+                    <strong>5. Der Abschluss (Call to Action)</strong>
+                    <br>
+                    Frage niemals: "Was hältst du davon?". Frage: "Was hat dir am besten gefallen: Die Vision der Freiheit, das einfache System der Academy oder die Möglichkeit, dir global ein Team aufzubauen?"`
+            }
+        };
+
+        function openModule(id) {
+            document.getElementById('login-form-content').style.display = 'none';
+            document.getElementById('popup-inner-content').style.display = 'block';
+            const titles = ["00 Die Vision", "01 Willkommen", "02 Einstellung", "03 Die ersten 72h", "04 Kommunikation", "05 Führung", "06 Duplikation"];
+            document.getElementById('popup-title').innerText = titles[id];
+            document.getElementById('popup-text').innerHTML = moduleContents.DE[id];
+            document.body.classList.add('popup-open');
+            document.getElementById('content-overlay').style.display = 'flex';
+        }
+
+        function openResource(type) {
+            document.getElementById('login-form-content').style.display = 'none';
+            document.getElementById('popup-inner-content').style.display = 'block';
+            const titles = { leitfaden: 'Leitfaden', praesentation: 'Präsentation' };
+            document.getElementById('popup-title').innerText = titles[type];
+            document.getElementById('popup-text').innerHTML = moduleContents.DE[type];
+            document.body.classList.add('popup-open');
+            document.getElementById('content-overlay').style.display = 'flex';
+        }
+
+        function showLoginPopup() {
+            document.getElementById('popup-inner-content').style.display = 'none';
+            document.getElementById('login-form-content').style.display = 'block';
+            document.body.classList.add('popup-open');
+            document.getElementById('content-overlay').style.display = 'flex';
+        }
+
+        function checkPassword() {
+            if(document.getElementById('partner-pw').value === MASTER_PW) {
+                closeModule();
+                document.getElementById('login-view').style.display = 'none';
+                document.getElementById('protected-cockpit').style.display = 'block';
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+        }
+
+        function logout() {
+            document.getElementById('login-view').style.display = 'block';
+            document.getElementById('protected-cockpit').style.display = 'none';
+            document.getElementById('partner-pw').value = '';
+        }
+
+        function closeModule() {
+            document.getElementById('content-overlay').style.display = 'none';
+            document.body.classList.remove('popup-open');
+        }
+
+        var iframe = document.getElementById('sc-academy');
+        var widget = SC.Widget(iframe);
+        
+        function startAudio() { 
+            if (!isAudioStarted) { 
+                widget.setVolume(0);
+                widget.play(); 
+                setTimeout(() => {
+                    widget.seekTo(3000); 
+                    widget.setVolume(100);
+                    isPlaying = true;
+                    document.getElementById('speaker-icon').style.opacity = "1";
+                }, 500);
+                isAudioStarted = true; 
+            } 
+        }
+
+        function handleSound() {
+            if (!isPlaying) { 
+                widget.play(); 
+                isPlaying = true; 
+                document.getElementById('speaker-icon').style.opacity = "1"; 
+            } else { 
+                widget.pause(); 
+                isPlaying = false; 
+                document.getElementById('speaker-icon').style.opacity = "0.5"; 
+            }
+        }
+    </script>
+</body>
+</html>
