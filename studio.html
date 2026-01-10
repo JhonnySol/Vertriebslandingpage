@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="google" content="notranslate">
+    <title class="skiptranslate">Room 3 STUDIO | Dein Kontrollzentrum</title>
+
+    <link rel="icon" type="image/png" href="room3logo.png">
+    
+    <script src="https://w.soundcloud.com/player/api.js" type="text/javascript"></script>
+
+    <style>
+        :root {
+            --primary-gold: #d4af37;
+            --glass-bg: rgba(5, 5, 5, 0.45); 
+            --border-gold: rgba(212, 175, 55, 0.4);
+            --status-red: #ff4b2b;
+            --status-yellow: #ffcc00;
+            --status-green: #00ff41;
+        }
+
+        /* FINALER GOOGLE SPINNER & BANNER KILLER */
+        /* Wir blockieren die Container-Klassen und IDs, die Google für das Laden nutzt */
+        #google_translate_element img, 
+        .goog-te-spinner-pos,
+        .goog-te-spinner,
+        .VIpgJd-Zvi9ab-aZ21z-HNc9id-pZ91ed,
+        .VIpgJd-Zvi9ab-aZ21z-HNc9id,
+        #goog-gt-tt, 
+        .goog-te-balloon-frame,
+        .goog-te-banner-frame,
+        .VIpgJd-Zvi9ab-OR9sP-bgnd {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        /* Verhindert, dass Google Platz für den Banner oben reserviert */
+        body { top: 0px !important; position: static !important; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        section#main-studio {
+            width: 100%;
+            min-height: 100vh;
+            background: url('studio.png') no-repeat center center / cover;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .studio-logo-small {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 140px;
+            z-index: 100;
+        }
+
+        header {
+            text-align: center;
+            padding: 100px 20px 40px;
+            z-index: 10;
+        }
+
+        header h1 {
+            font-size: 4rem;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            font-weight: 900;
+            text-shadow: 0 10px 40px rgba(0,0,0,0.9);
+        }
+
+        .white-text { color: #ffffff !important; }
+        .gold-text { color: var(--primary-gold) !important; }
+
+        .subtitle {
+            font-size: 1rem;
+            letter-spacing: 8px;
+            opacity: 0.9;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 35px;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 20px 150px;
+            z-index: 5;
+        }
+
+        .control-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-gold);
+            border-radius: 45px;
+            padding: 45px;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+            position: relative;
+        }
+
+        .card-icon { font-size: 2.5rem; color: var(--primary-gold); margin-bottom: 25px; }
+
+        .control-card h3 {
+            font-size: 1.7rem;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .status-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            padding: 10px 20px;
+            border-radius: 15px;
+            width: fit-content;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .status-dot { width: 12px; height: 12px; border-radius: 50%; animation: pulse-status 2s infinite; }
+        .dot-red { background: var(--status-red); box-shadow: 0 0 15px var(--status-red); }
+        .dot-yellow { background: var(--status-yellow); box-shadow: 0 0 15px var(--status-yellow); }
+        .dot-green { background: var(--status-green); box-shadow: 0 0 15px var(--status-green); }
+
+        @keyframes pulse-status { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        .status-label { font-size: 0.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
+        .text-red { color: var(--status-red); }
+        .text-yellow { color: var(--status-yellow); }
+        .text-green { color: var(--status-green); }
+
+        .input-group { margin-bottom: 25px; }
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.8rem;
+            color: var(--primary-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .studio-input {
+            width: 100%;
+            background: rgba(0,0,0,0.8);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 18px;
+            border-radius: 15px;
+            color: #fff;
+            font-size: 1.1rem;
+            outline: none;
+        }
+
+        .auto-save-msg {
+            font-size: 0.7rem;
+            color: var(--status-green);
+            margin-top: 8px;
+            font-weight: bold;
+            display: none;
+            text-transform: uppercase;
+        }
+
+        .btn-gold {
+            background: var(--primary-gold);
+            color: #000;
+            border: none;
+            padding: 20px;
+            border-radius: 20px;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .btn-stop {
+            background: var(--status-red);
+            color: #fff;
+            border: none;
+            padding: 20px;
+            border-radius: 20px;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            width: 100%;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .sponsor-badge-floating {
+            position: fixed;
+            bottom: 30px;
+            left: 10px; 
+            background: rgba(0,0,0,0.9);
+            border: 1px solid var(--border-gold);
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 99999;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+        }
+
+        .sc-player-fixed-right {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99999;
+        }
+
+        .music-btn-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.9);
+            border: 3px solid var(--primary-gold);
+            color: var(--primary-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        #google_translate_element { 
+            position: fixed; 
+            top: 30px; 
+            right: 30px; 
+            z-index: 10001; 
+        }
+
+        #sc-widget-hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <section id="main-studio">
+        
+        <img src="room3logo.png" alt="Logo" class="studio-logo-small skiptranslate">
+        
+        <div id="google_translate_element"></div>
+
+        <header>
+            <h1><span class="white-text skiptranslate">Room 3</span> <span class="gold-text">Studio</span></h1>
+            <p class="subtitle">DEIN KONTROLLZENTRUM</p>
+        </header>
+
+        <div class="dashboard-grid">
+            
+            <div class="control-card">
+                <div class="card-icon skiptranslate">📡</div>
+                <div class="status-box">
+                    <div id="status-dot" class="status-dot dot-red"></div>
+                    <span id="status-text" class="status-label text-red">STANDBY</span>
+                </div>
+                <h3>Elite Meet <span>Zentrale</span></h3>
+                <div class="input-group">
+                    <label>DEIN GOOGLE MEET LINK</label>
+                    <input type="text" id="meet-code" class="studio-input skiptranslate" placeholder="https://meet.google.com/..." oninput="autoSaveLink()">
+                    <div id="save-indicator" class="auto-save-msg">Link automatisch gespeichert!</div>
+                </div>
+                <button class="btn-gold" id="start-btn" onclick="startMeeting()">LIVE CALL STARTEN</button>
+                <button class="btn-stop" id="stop-btn" onclick="stopMeeting()">CALL BEENDEN</button>
+                <button class="btn-outline" id="copy-meet-btn" onclick="copyMeetLink()">LINK KOPIEREN</button>
+            </div>
+
+            <div class="control-card">
+                <div class="card-icon skiptranslate">👤</div>
+                <h3>Sponsor <span>Profil</span></h3>
+                <div class="input-group">
+                    <label>DEIN ÖFFENTLICHER NAME</label>
+                    <input type="text" id="display-name" class="studio-input skiptranslate" placeholder="Name" oninput="updatePersonalLink()">
+                </div>
+                <div class="input-group">
+                    <label>MYCOINTAINER REF-LINK</label>
+                    <input type="text" id="myc-ref" class="studio-input skiptranslate" placeholder="https://..." oninput="updatePersonalLink()">
+                </div>
+                <button class="btn-gold" id="save-profile-btn" onclick="saveProfileManually()">PROFIL SPEICHERN</button>
+            </div>
+
+            <div class="control-card">
+                <div class="card-icon skiptranslate">🚀</div>
+                <h3>Marketing <span>Link</span></h3>
+                <div class="input-group">
+                    <label>DEIN PERSONALISIERTER LINK</label>
+                    <input type="text" id="personal-url" class="studio-input skiptranslate" readonly style="color: var(--primary-gold);">
+                </div>
+                <button class="btn-outline" id="copy-marketing-btn" onclick="copyPersonalLink()">LINK KOPIEREN</button>
+            </div>
+
+        </div>
+
+        <div class="sponsor-badge-floating">
+            <div id="badge-dot" style="width: 12px; height: 12px; border-radius: 50%; background: var(--status-red);"></div>
+            <div>
+                <span id="badge-status-label" style="font-size: 0.6rem; color: var(--primary-gold); display: block; font-weight: 900;">STATUS: STANDBY</span>
+                <span id="badge-name" class="skiptranslate">Laden...</span>
+            </div>
+        </div>
+
+        <div class="sc-player-fixed-right">
+            <div class="music-btn-circle" id="m-btn-studio" onclick="toggleStudioMusic()">🎵</div>
+        </div>
+
+    </section>
+
+    <div id="sc-widget-hidden">
+        <iframe id="sc-widget" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
+            src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/astateoftrance/a-state-of-trance-2025-mix-2-in-the-club&auto_play=false">
+        </iframe>
+    </div>
+
+    <script>
+        let isMusicPlaying = false;
+        let sessionLive = false;
+        let meetWindow = null;
+        let saveTimeout;
+
+        window.onload = function() {
+            document.getElementById('display-name').value = localStorage.getItem('room3_leadName') || "";
+            document.getElementById('meet-code').value = localStorage.getItem('room3_meetCode') || "";
+            document.getElementById('myc-ref').value = localStorage.getItem('room3_company_link') || "";
+            updatePersonalLink();
+            refreshStatus();
+        };
+
+        function autoSaveLink() {
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => {
+                const val = document.getElementById('meet-code').value.trim();
+                localStorage.setItem('room3_meetCode', val);
+                document.getElementById('save-indicator').style.display = "block";
+                setTimeout(() => { document.getElementById('save-indicator').style.display = "none"; }, 2000);
+                refreshStatus();
+            }, 800);
+        }
+
+        function saveProfileManually() {
+            localStorage.setItem('room3_leadName', document.getElementById('display-name').value);
+            localStorage.setItem('room3_company_link', document.getElementById('myc-ref').value);
+            const btn = document.getElementById('save-profile-btn');
+            btn.innerText = "GESPEICHERT!";
+            setTimeout(() => { btn.innerText = "PROFIL SPEICHERN"; }, 1500);
+            updatePersonalLink();
+        }
+
+        function refreshStatus() {
+            if (sessionLive) return;
+            const code = document.getElementById('meet-code').value.trim();
+            const dot = document.getElementById('status-dot');
+            const txt = document.getElementById('status-text');
+            const bDot = document.getElementById('badge-dot');
+            const bLbl = document.getElementById('badge-status-label');
+
+            if (code.length > 5) {
+                dot.className = "status-dot dot-yellow";
+                txt.innerText = "BEREIT ZUM STARTEN";
+                txt.className = "status-label text-yellow";
+                bDot.style.background = "var(--status-yellow)";
+                bLbl.innerText = "STATUS: BEREIT";
+            } else {
+                dot.className = "status-dot dot-red";
+                txt.innerText = "STANDBY";
+                txt.className = "status-label text-red";
+                bDot.style.background = "var(--status-red)";
+                bLbl.innerText = "STATUS: STANDBY";
+            }
+        }
+
+        function startMeeting() {
+            const link = document.getElementById('meet-code').value.trim();
+            if(!link) return alert("Kein Link vorhanden!");
+            const widget = SC.Widget(document.getElementById('sc-widget'));
+            widget.pause();
+            isMusicPlaying = false;
+            document.getElementById('m-btn-studio').innerText = "🎵";
+            sessionLive = true;
+            document.getElementById('status-dot').className = "status-dot dot-green";
+            document.getElementById('status-text').innerText = "DU BIST LIVE";
+            document.getElementById('status-text').className = "status-label text-green";
+            document.getElementById('badge-dot').style.background = "var(--status-green)";
+            document.getElementById('badge-status-label').innerText = "STATUS: LIVE";
+            document.getElementById('start-btn').style.display = "none";
+            document.getElementById('stop-btn').style.display = "block";
+            meetWindow = window.open(link, '_blank');
+        }
+
+        function stopMeeting() {
+            sessionLive = false;
+            if (meetWindow) meetWindow.close();
+            document.getElementById('start-btn').style.display = "block";
+            document.getElementById('stop-btn').style.display = "none";
+            refreshStatus();
+        }
+
+        function toggleStudioMusic() {
+            const widget = SC.Widget(document.getElementById('sc-widget'));
+            const btn = document.getElementById('m-btn-studio');
+            if (!isMusicPlaying) { widget.play(); isMusicPlaying = true; btn.innerText = "🎧"; } 
+            else { widget.pause(); isMusicPlaying = false; btn.innerText = "🎵"; }
+        }
+
+        function updatePersonalLink() {
+            const name = document.getElementById('display-name').value || "User";
+            const myc = document.getElementById('myc-ref').value.trim();
+            const encoded = myc ? btoa(myc) : "";
+            document.getElementById('personal-url').value = "https://room-3.live?ref=" + name.toLowerCase() + (encoded ? "&cid="+encoded : "");
+            document.getElementById('badge-name').innerText = name;
+        }
+
+        function copyMeetLink() { navigator.clipboard.writeText(document.getElementById('meet-code').value); }
+        function copyPersonalLink() { navigator.clipboard.writeText(document.getElementById('personal-url').value); }
+    </script>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() { 
+            new google.translate.TranslateElement({ 
+                pageLanguage: 'de', 
+                includedLanguages: 'de,en,el,fr,it,es,tr,pl,pt',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element'); 
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+</html>
