@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>Room 3 STUDIO | Dein Maschinenraum</title>
+
+    <link rel="icon" type="image/png" href="room3logo.png">
+    
+    <script src="https://w.soundcloud.com/player/api.js" type="text/javascript"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <style>
+        :root {
+            --primary-gold: #d4af37;
+            --glass-bg: rgba(0, 0, 0, 0.4); 
+            --border-gold: rgba(212, 175, 55, 0.4);
+            --status-red: #ff4b2b;
+            --status-yellow: #ffcc00;
+            --status-green: #00ff41;
+            
+            --gold-light: #fff9ab;
+            --gold-mid: #d4af37;
+            --gold-dark: #8a6d3b;
+        }
+
+        /* --- PRÄZISE GOOGLE TRANSLATE SPERRE --- */
+        html { 
+            padding-top: 0 !important; 
+            margin-top: 0 !important; 
+        }
+        
+        body { 
+            top: 0px !important; 
+            position: static !important; 
+            padding-top: 0 !important;
+            margin-top: 0 !important;
+        }
+
+        .goog-te-banner-frame, 
+        .goog-te-banner,
+        .VIpgJd-Zvi9ab-OR9sP-bgnd,
+        iframe[id*=':1.container'],
+        iframe[id*=':2.container'] {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            opacity: 0 !important;
+        }
+
+        .skiptranslate:not(#google_translate_element) {
+            display: none !important;
+        }
+
+        #google_translate_element { 
+            position: fixed; 
+            top: 25px; 
+            right: 25px; 
+            z-index: 10001 !important; 
+            display: block !important;
+            visibility: visible !important;
+        }
+
+        .goog-te-gadget-simple {
+            background-color: rgba(0,0,0,0.85) !important;
+            border: 1px solid var(--primary-gold) !important;
+            padding: 10px 15px !important;
+            border-radius: 12px !important;
+            cursor: pointer !important;
+        }
+
+        .goog-te-gadget-simple span {
+            color: #fff !important;
+            font-weight: bold !important;
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            color: #ffffff;
+            overflow: hidden !important; 
+        }
+
+        /* --- STUDIO LAYOUT --- */
+        section#main-studio {
+            width: 100%;
+            height: 100vh;
+            background: url('studio.png') no-repeat center center / cover;
+            background-attachment: fixed;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .studio-logo-fixed {
+            position: absolute;
+            top: 20px;
+            left: 30px; 
+            width: 350px;
+            height: 110px;
+            background: url('room3logo.png') no-repeat left center;
+            background-size: contain;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        header {
+            text-align: center;
+            padding: 45px 20px 0px;
+            z-index: 10;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            font-weight: 900;
+            text-shadow: 0 5px 30px rgba(0,0,0,1);
+        }
+
+        .white-text { 
+            color: #ffffff !important; 
+        }
+
+        .gold-text { 
+            color: var(--primary-gold) !important; 
+        }
+
+        .subtitle {
+            font-size: 2.2rem;
+            letter-spacing: 8px;
+            margin-top: 15px;
+            text-transform: uppercase;
+            color: #000000;
+            font-weight: 950;
+            text-shadow: 1px 1px 0px #fff, -1px -1px 0px #fff, 1px -1px 0px #fff, -1px 1px 0px #fff;
+            display: inline-block;
+        }
+
+        /* --- REAKTOR BEREICH --- */
+        .reaktor-center {
+            position: absolute;
+            top: 62%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+        }
+
+        .reaktor-label {
+            font-size: 1.4rem;
+            letter-spacing: 8px;
+            color: #000000;
+            text-transform: uppercase;
+            font-weight: 900;
+            margin-bottom: 8px;
+            text-shadow: 1px 1px 0px #fff, -1px -1px 0px #fff, 1px -1px 0px #fff, -1px 1px 0px #fff;
+            font-style: italic;
+        }
+
+        .reaktor-count-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .reaktor-count {
+            font-size: 13rem;
+            font-weight: 950;
+            font-family: 'Arial Black', Gadget, sans-serif;
+            background: linear-gradient(
+                to bottom, 
+                #8a6d3b 0%, 
+                #d4af37 22%, 
+                #fff9ab 45%, 
+                #ffcc00 50%, 
+                #d4af37 55%, 
+                #8a6d3b 78%, 
+                #5e4c25 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 5px 0px rgba(0,0,0,0.8)) 
+                    drop-shadow(0 15px 30px rgba(0,0,0,1));
+            line-height: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .reaktor-count::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                115deg, 
+                transparent 0%, 
+                transparent 40%, 
+                rgba(255, 249, 171, 0.8) 50%, 
+                transparent 60%, 
+                transparent 100%
+            );
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine-gold 4s infinite linear;
+            z-index: 2;
+        }
+
+        @keyframes shine-gold {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .count-update-flash {
+            animation: ultimate-gold-flash 0.8s ease-out forwards;
+        }
+
+        @keyframes ultimate-gold-flash {
+            0% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.1); filter: brightness(1.5) drop-shadow(0 0 40px #fff9ab); }
+            100% { transform: scale(1); filter: brightness(1); }
+        }
+
+        /* --- DASHBOARD GRID --- */
+        .dashboard-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1800px;
+            margin: auto;
+            padding: 0 40px;
+            z-index: 5;
+            position: absolute;
+            top: 58%; 
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .control-card {
+            width: 410px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border-gold);
+            border-radius: 40px;
+            padding: 18px 25px 22px; 
+            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- SPERR-MECHANIK & ÜBERLAGERUNG --- */
+        .locked-overlay-trigger {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 50;
+            cursor: pointer;
+            display: none;
+        }
+
+        .is-locked .locked-overlay-trigger {
+            display: block;
+        }
+
+        .is-locked .btn-gold, 
+        .is-locked .btn-outline, 
+        .is-locked .studio-input, 
+        .is-locked textarea {
+            opacity: 0.2 !important;
+            filter: grayscale(1) !important;
+            pointer-events: none !important;
+        }
+
+        .is-locked .studio-input {
+            color: transparent !important;
+            background: rgba(40,40,40,0.5) !important;
+        }
+
+        /* --- ZUGRIFF GESPERRT POPUP (SCREENSHOT STYLE) --- */
+        .popup-overlay-dark {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 1999999;
+        }
+
+        #access-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 480px;
+            background: #000000;
+            border: 2px solid #8B2323;
+            border-radius: 35px;
+            z-index: 2000000;
+            padding: 50px 30px;
+            text-align: center;
+            box-shadow: 0 0 60px rgba(139, 35, 35, 0.4);
+        }
+
+        #access-popup h2 {
+            color: #8B2323;
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        #access-popup p {
+            color: #ffffff;
+            font-size: 1.15rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+
+        .btn-verstanden {
+            background: #8B2323;
+            color: #ffffff;
+            border: none;
+            padding: 20px;
+            border-radius: 20px;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            width: 100%;
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            transition: transform 0.2s ease;
+        }
+
+        /* --- STUDIO STANDARDS --- */
+        .card-icon { 
+            font-size: 1.6rem; 
+            color: var(--primary-gold); 
+            margin-bottom: 10px; 
+        }
+
+        .control-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .status-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding: 6px 15px;
+            border-radius: 12px;
+            width: fit-content;
+            background: rgba(0,0,0,0.6);
+        }
+
+        .status-dot { 
+            width: 10px; 
+            height: 10px; 
+            border-radius: 50%; 
+            animation: pulse-status 2s infinite; 
+        }
+        
+        .dot-red { background: var(--status-red); box-shadow: 0 0 15px var(--status-red); }
+        .dot-yellow { background: var(--status-yellow); box-shadow: 0 0 15px var(--status-yellow); }
+        .dot-green { background: var(--status-green); box-shadow: 0 0 15px var(--status-green); }
+
+        @keyframes pulse-status { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        .status-label { 
+            font-size: 0.7rem; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+        }
+        
+        .text-red { color: var(--status-red); }
+        .text-yellow { color: var(--status-yellow); }
+        .text-green { color: var(--status-green); }
+
+        .input-group { 
+            margin-bottom: 10px; 
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 0.6rem;
+            color: var(--primary-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .studio-input {
+            width: 100%;
+            background: rgba(0,0,0,0.85);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            padding: 10px;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-gold {
+            background: var(--primary-gold);
+            color: #000;
+            border: none;
+            padding: 12px;
+            border-radius: 15px;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            margin-bottom: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-stop {
+            background: #ff8c00;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 15px;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            margin-bottom: 6px;
+            display: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            transition: all 0.3s ease;
+        }
+
+        .broadcast-extension {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        textarea.broadcast-textarea {
+            width: 100%;
+            height: 70px;
+            background: rgba(0,0,0,0.85);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            padding: 10px;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            resize: none;
+            font-family: inherit;
+            margin-bottom: 8px;
+        }
+
+        .premium-buzzer-box {
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid var(--primary-gold);
+            padding: 12px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .premium-buzzer-box .label {
+            font-size: 0.55rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .premium-buzzer-box .project-name {
+            font-size: 1rem;
+            font-weight: 900;
+            color: var(--primary-gold);
+            display: block;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .gold-buzzer-btn {
+            display: block;
+            background: linear-gradient(145, #d4af37, #b8860b);
+            color: #000;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: 900;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.75rem;
+        }
+
+        .sponsor-badge-floating {
+            position: fixed;
+            bottom: 25px;
+            left: 25px; 
+            background: rgba(0,0,0,0.9);
+            border: 1px solid var(--border-gold);
+            padding: 12px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 100 !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .btn-exit-studio {
+            height: 60px;
+            padding: 0 30px;
+            background: rgba(0,0,0,0.9);
+            border: 2px solid var(--primary-gold);
+            border-radius: 50px;
+            color: var(--primary-gold);
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .music-btn-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.9);
+            border: 2px solid var(--primary-gold);
+            color: var(--primary-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        /* --- INFO POPUP --- */
+        #big-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 450px;
+            background: linear-gradient(145, #1a1a1a, #000);
+            border: 2px solid var(--primary-gold);
+            border-radius: 40px;
+            z-index: 1000000;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0 0 100px rgba(0,0,0,1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+        }
+
+        #big-popup.active { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        
+        .popup-overlay { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.85); 
+            backdrop-filter: blur(10px); 
+            z-index: 999999; 
+        }
+        
+        .popup-overlay.active { display: block; }
+        
+        .btn-popup-close { 
+            background: var(--primary-gold); 
+            color: #000; 
+            border: none; 
+            padding: 20px; 
+            border-radius: 20px; 
+            font-weight: 900; 
+            cursor: pointer; 
+            text-transform: uppercase; 
+            width: 100%; 
+            margin-top: 30px; 
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="popup-overlay-dark" id="p-overlay"></div>
+    <div id="access-popup">
+        <h2>ZUGRIFF GESPERRT</h2>
+        <p>Bitte trage zuerst deinen Company Referral Link im Terminal ein, um diesen Bereich freizuschalten.</p>
+        <button class="btn-verstanden" onclick="closeAccessPopup()">VERSTANDEN</button>
+    </div>
+
+    <div class="popup-overlay" id="overlay" onclick="closePopup()"></div>
+    <div id="big-popup">
+        <h2 id="popup-title">INFO</h2>
+        <p id="popup-text">DATEN VERARBEITET</p>
+        <button class="btn-popup-close" onclick="closePopup()">OK</button>
+    </div>
+
+    <div class="studio-logo-fixed"></div>
+
+    <section id="main-studio">
+        
+        <div id="google_translate_element"></div>
+
+        <header>
+            <h1><span class="white-text">Room 3</span> <span class="gold-text">Studio</span></h1>
+            <p class="subtitle">DEIN MASCHINENRAUM</p>
+        </header>
+
+        <div class="reaktor-center">
+            <div class="reaktor-label">The Magic Cyclone</div>
+            <div class="reaktor-count-wrapper">
+                <div class="reaktor-count" id="partner-count-display" data-text="0">0</div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            
+            <div class="control-card" id="meeting-card">
+                <div class="locked-overlay-trigger" onclick="showAccessPopup()"></div>
+                
+                <div class="card-icon">📡</div>
+                <div class="status-box">
+                    <div id="status-dot" class="status-dot dot-red"></div>
+                    <span id="status-text" class="status-label text-red">STANDBY</span>
+                </div>
+                <h3>Meetingpoint</h3>
+                
+                <div class="input-group">
+                    <label>DEIN GOOGLE MEET LINK</label>
+                    <input type="text" id="meet-code" class="studio-input" placeholder="https://meet.google.com/..." oninput="autoSaveLink()">
+                </div>
+                
+                <button class="btn-gold" id="start-btn" onclick="startMeeting()">LIVE CALL STARTEN</button>
+                <button class="btn-stop" id="stop-btn" onclick="stopMeeting()">CALL BEENDEN</button>
+                
+                <div class="input-group" style="margin-top: 10px;">
+                    <label>YOUTUBE STREAM LINK</label>
+                    <input type="text" id="youtube-link" class="studio-input" placeholder="https://youtube.com/live/..." oninput="autoSaveYoutube()">
+                </div>
+                <button class="btn-gold" id="yt-btn" onclick="startYoutubeLive()" style="background: #ff0000; color: #fff;">YOUTUBE SIGNAL STARTEN</button>
+
+                <button class="btn-outline" id="copy-meet-btn" onclick="copyToClipboard('meet-code', 'MEET-LINK KOPIERT', 'BEREIT ZUM VERSCHICKEN')" style="margin-top: 6px;">MEET-LINK KOPIEREN</button>
+
+                <div class="broadcast-extension">
+                    <h3>Global Broadcast</h3>
+                    <div class="input-group">
+                        <label>PUSH-NACHRICHT AN ALLE</label>
+                        <textarea id="broadcast-message" class="broadcast-textarea" placeholder="Deine Nachricht hier eintippen..."></textarea>
+                    </div>
+                    <button class="btn-gold" id="push-btn" onclick="sendGlobalBroadcast()" style="background: var(--gold-dark); color: #fff; font-size: 0.75rem;">SENDEN (PUSH & LIVE)</button>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="card-icon">👤</div>
+                <h3>Executive <span class="gold-text">Profile</span></h3>
+                
+                <div class="premium-buzzer-box">
+                    <span class="label">DEIN EXKLUSIVER ZUGANG ZUM BACKOFFICE VON:</span>
+                    <span class="project-name" id="project-display-name">MUSTERKOMPANIE</span>
+                    <a href="#" id="sponsor-link-btn" class="gold-buzzer-btn" target="_blank">HIER KLICKEN & STARTEN</a>
+                </div>
+                
+                <div class="input-group">
+                    <label>1. DEIN ÖFFENTLICHER NAME</label>
+                    <input type="text" id="display-name" class="studio-input" placeholder="Name" oninput="updatePersonalLink()">
+                </div>
+                
+                <div class="input-group">
+                    <label>2. DEIN COMPANY REF-LINK</label>
+                    <input type="text" id="myc-ref" class="studio-input" placeholder="https://..." oninput="updatePersonalLink()">
+                </div>
+                
+                <div class="input-group">
+                    <label>3. DEIN ROOM 3 MARKETING-LINK</label>
+                    <input type="text" id="personal-url" class="studio-input" readonly style="color: var(--primary-gold); border-color: var(--primary-gold);">
+                </div>
+                
+                <button class="btn-gold" onclick="saveProfileManually()">PROFIL SPEICHERN</button>
+                <button class="btn-outline" id="copy-marketing-btn" onclick="copyToClipboard('personal-url', 'MARKETING LINK KOPIERT', 'BEREIT ZUM VERSCHICKEN')">MARKETING LINK KOPIEREN</button>
+            </div>
+
+        </div>
+
+        <div class="sponsor-badge-floating">
+            <div id="badge-dot" style="width: 12px; height: 12px; border-radius: 50%; background: var(--status-red);"></div>
+            <div>
+                <span id="badge-status-label" style="font-size: 0.6rem; color: var(--primary-gold); display: block; font-weight: 900;">STATUS: STANDBY</span>
+                <span id="badge-name">Laden...</span>
+            </div>
+        </div>
+
+        <div class="control-cluster-right" style="position:fixed; bottom:25px; right:25px; display:flex; gap:15px; z-index:100;">
+            <a href="index.html" class="btn-exit-studio">
+                <span>ZURÜCK ZUR STARTSEITE</span>
+            </a>
+            <div class="music-btn-circle" id="m-btn-studio" onclick="toggleStudioMusic()">🎵</div>
+        </div>
+
+    </section>
+
+    <div id="sc-widget-hidden" style="display:none;">
+        <iframe id="sc-widget" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
+            src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/astateoftrance/a-state-of-trance-2025-mix-2-in-the-club&auto_play=false&show_artwork=false&visual=false">
+        </iframe>
+    </div>
+
+    <script>
+        // --- CONFIG ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyD_CBo-q85-OC5WjSr-2MwaBybMCOde0R8",
+            authDomain: "room-3-the-international.firebaseapp.com",
+            databaseURL: "https://room-3-the-international-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "room-3-the-international",
+            storageBucket: "room-3-the-international.firebasestorage.app",
+            messagingSenderId: "823235896788",
+            appId: "1:823235896788:web:bff060409e3f8c9bb2e241"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let isMusicPlaying = false;
+        let sessionLive = false;
+        let meetWindow = null;
+        let saveTimeout;
+        let syncCheck = null;
+
+        // --- SPERR LOGIK POPUP ---
+        function showAccessPopup() {
+            document.getElementById('p-overlay').style.display = 'block';
+            document.getElementById('access-popup').style.display = 'block';
+        }
+
+        function closeAccessPopup() {
+            document.getElementById('p-overlay').style.display = 'none';
+            document.getElementById('access-popup').style.display = 'none';
+        }
+
+        function updateVisualLockState() {
+            const companyLink = document.getElementById('myc-ref').value.trim();
+            const meetingCard = document.getElementById('meeting-card');
+            
+            if (!companyLink || companyLink === "") {
+                meetingCard.classList.add('is-locked');
+            } else {
+                meetingCard.classList.remove('is-locked');
+            }
+        }
+
+        // --- COUNTER ANIMATION ---
+        function animateStudioCounter(targetValue) {
+            const el = document.getElementById('partner-count-display');
+            const duration = 2500; 
+            const startTime = performance.now();
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeOut = 1 - Math.pow(1 - progress, 5);
+                const currentValue = Math.floor(easeOut * targetValue);
+                
+                el.innerText = currentValue;
+                el.setAttribute('data-text', currentValue);
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    el.innerText = targetValue;
+                    el.setAttribute('data-text', targetValue);
+                    el.classList.add('count-update-flash');
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
+        // --- INITIALISIERUNG ---
+        window.onload = function() {
+            // Werte laden
+            document.getElementById('display-name').value = localStorage.getItem('room3_leadName') || "";
+            document.getElementById('meet-code').value = localStorage.getItem('room3_meetCode') || "";
+            document.getElementById('myc-ref').value = localStorage.getItem('room3_company_link') || "";
+            document.getElementById('youtube-link').value = localStorage.getItem('room3_youtubeLink') || "";
+            
+            updatePersonalLink();
+            refreshStatus();
+            updateVisualLockState();
+
+            // Firebase Reaktor Sync
+            database.ref('partnerCount').on('value', (snapshot) => {
+                const count = snapshot.val() || 0;
+                animateStudioCounter(count);
+            });
+
+            // Google Translate Init
+            setTimeout(() => {
+                if (typeof googleTranslateElementInit === 'function') {
+                    const script = document.createElement('script');
+                    script.type = 'text/javascript';
+                    script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+                    document.body.appendChild(script);
+                }
+            }, 1000);
+
+            // Google Fix Observer
+            const observer = new MutationObserver(() => {
+                if (document.body.style.top !== "0px") document.body.style.top = "0px";
+                if (document.documentElement.style.paddingTop !== "0px") document.documentElement.style.paddingTop = "0px";
+            });
+            observer.observe(document.documentElement, { attributes: true, childList: true, subtree: true });
+        };
+
+        // --- POPUP STEUERUNG ---
+        function showBigPopup(title, text) {
+            document.getElementById('popup-title').innerText = title;
+            document.getElementById('popup-text').innerText = text;
+            document.getElementById('overlay').classList.add('active');
+            document.getElementById('big-popup').classList.add('active');
+        }
+
+        function closePopup() {
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('big-popup').classList.remove('active');
+        }
+
+        // --- SPEICHER LOGIK ---
+        function autoSaveLink() {
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => {
+                localStorage.setItem('room3_meetCode', document.getElementById('meet-code').value.trim());
+                refreshStatus();
+            }, 800);
+        }
+
+        function autoSaveYoutube() {
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => {
+                localStorage.setItem('room3_youtubeLink', document.getElementById('youtube-link').value.trim());
+            }, 800);
+        }
+
+        function saveProfileManually() {
+            localStorage.setItem('room3_leadName', document.getElementById('display-name').value);
+            localStorage.setItem('room3_company_link', document.getElementById('myc-ref').value);
+            updatePersonalLink();
+            updateVisualLockState();
+            showBigPopup("VIELEN DANK", "DATEN WURDEN GESPEICHERT");
+        }
+
+        function updatePersonalLink() {
+            const name = document.getElementById('display-name').value || "User";
+            const myc = document.getElementById('myc-ref').value.trim();
+            const encoded = myc ? btoa(myc) : "";
+            const currentPath = window.location.href.split('studio.html')[0];
+            const fullLink = currentPath + "index.html?ref=" + encodeURIComponent(name) + (encoded ? "&cid="+encoded : "");
+            
+            document.getElementById('personal-url').value = fullLink;
+            document.getElementById('badge-name').innerText = name.toUpperCase();
+            document.getElementById('sponsor-link-btn').href = myc || "#";
+            
+            updateVisualLockState();
+        }
+
+        // --- BROADCAST & LIVE ---
+        function sendGlobalBroadcast() {
+            const msg = document.getElementById('broadcast-message').value.trim();
+            const senderName = document.getElementById('display-name').value || "Moderator";
+
+            if(!msg) return showBigPopup("FEHLER", "BITTE NACHRICHT EINGEBEN");
+            
+            database.ref('globalBroadcast').set({
+                message: msg,
+                sender: senderName,
+                timestamp: Date.now()
+            }).then(() => {
+                showBigPopup("BROADCAST", "PUSH-SIGNAL AN ALLE PARTNER GESENDET");
+                document.getElementById('broadcast-message').value = "";
+            });
+        }
+
+        function startYoutubeLive() {
+            const ytLink = document.getElementById('youtube-link').value.trim();
+            const senderName = document.getElementById('display-name').value || "Moderator";
+            
+            if(!ytLink) return showBigPopup("FEHLER", "KEIN YOUTUBE LINK VORHANDEN");
+
+            database.ref('youtubeLive').set({
+                link: ytLink,
+                active: true,
+                sender: senderName,
+                timestamp: Date.now()
+            }).then(() => {
+                showBigPopup("YOUTUBE LIVE", "SIGNAL AN ALLE PARTNER ÜBERTRAGEN");
+            });
+        }
+
+        function refreshStatus() {
+            if (sessionLive) return;
+            const code = document.getElementById('meet-code').value.trim();
+            const dot = document.getElementById('status-dot');
+            const txt = document.getElementById('status-text');
+            const bDot = document.getElementById('badge-dot');
+            const bLbl = document.getElementById('badge-status-label');
+
+            if (code.length > 5) {
+                dot.className = "status-dot dot-yellow";
+                txt.innerText = "BEREIT ZUM STARTEN";
+                txt.className = "status-label text-yellow";
+                bDot.style.background = "var(--status-yellow)";
+                bLbl.innerText = "STATUS: BEREIT";
+            } else {
+                dot.className = "status-dot dot-red";
+                txt.innerText = "STANDBY";
+                txt.className = "status-label text-red";
+                bDot.style.background = "var(--status-red)";
+                bLbl.innerText = "STATUS: STANDBY";
+            }
+        }
+
+        // --- MEETING LOGIK ---
+        function startMeeting() {
+            const link = document.getElementById('meet-code').value.trim();
+            if(!link) return;
+            
+            const widget = SC.Widget(document.getElementById('sc-widget'));
+            widget.pause();
+            isMusicPlaying = false;
+            document.getElementById('m-btn-studio').innerText = "🎵";
+            
+            sessionLive = true;
+            document.getElementById('status-dot').className = "status-dot dot-green";
+            document.getElementById('status-text').innerText = "DU BIST LIVE";
+            document.getElementById('status-text').className = "status-label text-green";
+            document.getElementById('badge-dot').style.background = "var(--status-green)";
+            document.getElementById('badge-status-label').innerText = "STATUS: LIVE";
+            
+            document.getElementById('start-btn').style.display = "none";
+            document.getElementById('stop-btn').style.display = "block";
+            
+            meetWindow = window.open(link, '_blank');
+            
+            if (syncCheck) clearInterval(syncCheck);
+            syncCheck = setInterval(() => {
+                if (!meetWindow || meetWindow.closed) {
+                    stopMeeting();
+                }
+            }, 500);
+        }
+
+        function stopMeeting() {
+            sessionLive = false;
+            if (syncCheck) clearInterval(syncCheck);
+            if (meetWindow && !meetWindow.closed) meetWindow.close();
+            document.getElementById('start-btn').style.display = "block";
+            document.getElementById('stop-btn').style.display = "none";
+            refreshStatus();
+        }
+
+        // --- UTILS ---
+        function toggleStudioMusic() {
+            const widget = SC.Widget(document.getElementById('sc-widget'));
+            const btn = document.getElementById('m-btn-studio');
+            if (!isMusicPlaying) { 
+                widget.play(); 
+                isMusicPlaying = true; 
+                btn.innerText = "🎧"; 
+            } else { 
+                widget.pause(); 
+                isMusicPlaying = false; 
+                btn.innerText = "🎵"; 
+            }
+        }
+
+        function copyToClipboard(inputId, popupTitle, popupMsg) {
+            const copyText = document.getElementById(inputId);
+            navigator.clipboard.writeText(copyText.value).then(() => {
+                showBigPopup(popupTitle, popupMsg);
+            });
+        }
+
+        function googleTranslateElementInit() { 
+            new google.translate.TranslateElement({ 
+                pageLanguage: 'de', 
+                includedLanguages: 'de,en,el,fr,it,es,tr,pl,pt',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element'); 
+        }
+    </script>
+</body>
+</html>
