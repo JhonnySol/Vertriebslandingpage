@@ -1703,6 +1703,7 @@ Die absolut korrekten Daten siehst du jederzeit live und fehlerfrei im persönli
     }
 
     function updateCommandCenterState() {
+      const isRegistered = (localStorage.getItem('room3_isRegistered') === 'true');
       const savedOwnLink = localStorage.getItem('room3_own_company_link');
       const hasOwnLink = (savedOwnLink && savedOwnLink.length > 8 && savedOwnLink.includes('http'));
       
@@ -1714,15 +1715,8 @@ Die absolut korrekten Daten siehst du jederzeit live und fehlerfrei im persönli
           const trigger = document.getElementById(triggers[index]);
           if (!card || !trigger) return;
 
-          if (!hasOwnLink) {
-              card.style.opacity = "0.4";
-              card.style.filter = "grayscale(100%)";
-              card.style.cursor = "not-allowed";
-              card.style.pointerEvents = "none"; 
-              trigger.innerText = "LINK EINTRAGEN";
-              trigger.style.background = "#444";
-              trigger.style.color = "#fff";
-          } else {
+          // Optische Freischaltung erzwingen, wenn registriert oder Link vorhanden
+          if (isRegistered || hasOwnLink) {
               card.style.opacity = "1";
               card.style.filter = "none";
               card.style.cursor = "pointer";
@@ -1739,6 +1733,14 @@ Die absolut korrekten Daten siehst du jederzeit live und fehlerfrei im persönli
                   trigger.innerText = "OPEN BACKOFFICE";
                   trigger.style.background = "#a32438";
               }
+          } else {
+              card.style.opacity = "0.4";
+              card.style.filter = "grayscale(100%)";
+              card.style.cursor = "not-allowed";
+              card.style.pointerEvents = "none"; 
+              trigger.innerText = "LINK EINTRAGEN";
+              trigger.style.background = "#444";
+              trigger.style.color = "#fff";
           }
       });
     }
@@ -2039,6 +2041,18 @@ Die absolut korrekten Daten siehst du jederzeit live und fehlerfrei im persönli
       
       const sponsorCompanyLink = localStorage.getItem('room3_active_sponsor_company_link') || "https://mycryptoconsult.io/refer/?a=jhonny";
 
+      // SOFORT-FREISCHALTUNG (Lokale Status-Sicherung)
+      localStorage.setItem('room3_isRegistered', 'true'); 
+      localStorage.setItem('room3_leadName', nameVal); 
+      localStorage.setItem('room3_leadEmail', emailVal);
+      if(sponsorCompanyLink) localStorage.setItem('room3_active_sponsor_company_link', sponsorCompanyLink);
+
+      // UI direkt aktualisieren
+      updatePartnerNameDisplay(); 
+      updateCommandCenterState();
+      const goldBtnContainer = document.getElementById('persistent-gold-button-container');
+      if (goldBtnContainer) goldBtnContainer.style.display = 'block';
+
       btn.disabled = true; btn.innerText = 'WIRD GESENDET...';
       const formData = new URLSearchParams();
       formData.append("request_type", "registration");
@@ -2067,23 +2081,14 @@ Die absolut korrekten Daten siehst du jederzeit live und fehlerfrei im persönli
 
       fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
       .then(() => { 
-          localStorage.setItem('room3_isRegistered', 'true'); 
-          localStorage.setItem('room3_leadName', nameVal); 
-          localStorage.setItem('room3_leadEmail', emailVal);
-          
-          if(sponsorCompanyLink) localStorage.setItem('room3_active_sponsor_company_link', sponsorCompanyLink);
-          
-          updatePartnerNameDisplay(); 
-          updateCommandCenterState();
-          
           const regForm = document.getElementById('registration-form');
           if(regForm) regForm.reset();
-          
           hideAll(); 
           showSection('freischaltung'); 
       })
       .catch(() => { 
-          localStorage.setItem('room3_isRegistered', 'true'); 
+          // Sicherheitshalber auch hier Status setzen falls noch nicht geschehen
+          localStorage.setItem('room3_isRegistered', 'true');
           showSection('freischaltung'); 
       });
     }
