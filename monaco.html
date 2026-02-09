@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <link rel="icon" type="image/png" href="room3logo.png">
+
+    <meta property="og:title" content="Room 3 the International | Experience">
+    <meta property="og:description" content="Exklusive Einblicke in die Welt von Room 3.">
+    <meta property="og:image" content="room3logo.png">
+    <meta property="og:type" content="website">
+
+    <title>Room 3 the International | Global VIP Experience</title>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <style>
+        :root {
+            --gold: #d4af37;
+            --white: #ffffff;
+            --black: #000000;
+            --dark-grey: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: auto !important;
+            overflow-x: hidden;
+            background-color: #000000;
+        }
+
+        body {
+            background-color: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            overscroll-behavior-y: none;
+            top: 0 !important;
+        }
+
+        /* --- GOOGLE TRANSLATE STYLING --- */
+        #google_translate_element {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            z-index: 10001;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 5px;
+            border-radius: 4px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+
+        .goog-te-gadget-icon {
+            display: none !important;
+        }
+
+        .goog-tooltip {
+            display: none !important;
+        }
+
+        .goog-tooltip:hover {
+            display: none !important;
+        }
+
+        .goog-text-highlight {
+            background-color: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+        
+        .goog-te-gadget {
+            color: transparent !important;
+            font-size: 0 !important;
+        }
+
+        .goog-te-gadget .goog-te-combo {
+            color: #ffffff !important;
+            background: #222222 !important;
+            border: 1px solid var(--gold) !important;
+            padding: 5px !important;
+            font-size: 13px !important;
+        }
+
+        /* --- ANIMATIONEN --- */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInGold {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulseGold {
+            0% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(212, 175, 55, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+            }
+        }
+
+        /* --- VORSCHALTSEITE (OVERLAY) --- */
+        #welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 9999;
+            background-color: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1.5s ease, visibility 1.5s;
+        }
+
+        .overlay-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .overlay-content {
+            text-align: center;
+            max-width: 900px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            margin: 20px;
+            z-index: 2;
+        }
+
+        .gold-accent {
+            display: block;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            animation: fadeIn 2s ease forwards;
+        }
+
+        .overlay-content h1 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            line-height: 1.2;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .enter-button {
+            margin-top: 40px;
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            padding: 20px 40px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.5s;
+            opacity: 0;
+            animation: fadeIn 2s ease forwards 2.5s;
+        }
+
+        .enter-button:hover {
+            background: var(--gold);
+            color: #000000;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        }
+
+        .overlay-hidden {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none;
+        }
+
+        /* --- POPUPS / MODALS --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 8000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(15px);
+        }
+
+        .modal-content {
+            background: #111111;
+            border: 2px solid var(--gold);
+            padding: 50px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--gold);
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .modal-content h2 {
+            color: var(--gold);
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .modal-content input, .modal-content select {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #222222;
+            border: 1px solid #444444;
+            color: #ffffff;
+            outline: none;
+            font-size: 1rem;
+            border-radius: 0;
+        }
+
+        .submit-btn {
+            background: var(--gold);
+            color: #000000;
+            border: none;
+            padding: 15px 30px;
+            text-transform: uppercase;
+            font-weight: 900;
+            cursor: pointer;
+            width: 100%;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        /* --- BROADCAST PUSH POPUP (Fix: Safari Word-Break & Box-Sizing) --- */
+        .push-overlay {
+            display: none;
+            position: fixed;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: rgba(0, 0, 0, 0.95) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            z-index: 1000000 !important;
+        }
+
+        .push-overlay.active {
+            display: block !important;
+        }
+
+        #push-popup {
+            display: none;
+            position: fixed;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 95% !important;
+            max-width: 650px !important;
+            background: #0a0a0a !important;
+            border: 5px solid #d4af37 !important;
+            border-radius: 50px !important;
+            z-index: 1000001 !important;
+            padding: 90px 60px !important;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            box-shadow: 0 0 150px rgba(212, 175, 55, 1) !important;
+            /* Safari & Solara Fix */
+            overflow-wrap: break-word;
+            word-break: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+
+        #push-popup.active {
+            display: block !important;
+            opacity: 1 !important;
+            transform: translate(-50%, -50%) scale(1) !important;
+        }
+
+        .push-badge {
+            background: #d4af37 !important;
+            color: #000000 !important;
+            padding: 15px 50px !important;
+            border-radius: 60px !important;
+            font-size: 1.1rem !important;
+            font-weight: 900 !important;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            display: inline-block;
+            margin-bottom: 50px;
+            box-shadow: 0 0 45px rgba(212, 175, 55, 1);
+        }
+
+        #push-title {
+            color: #ffffff !important;
+            font-size: 3.5rem !important;
+            font-weight: 900 !important;
+            margin-bottom: 10px !important;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            line-height: 1.1;
+            text-shadow: 0 0 35px rgba(212, 175, 55, 0.7);
+            /* Safari & Solara Fix */
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        #push-time {
+            color: #ffffff !important;
+            font-size: 0.9rem !important;
+            font-weight: 400 !important;
+            margin-bottom: 30px !important;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        #push-text {
+            color: #d4af37 !important;
+            font-size: 2rem !important;
+            line-height: 1.5;
+            margin-bottom: 70px;
+            font-style: italic;
+            font-weight: 700;
+            /* Safari & Solara Fix */
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        .btn-push-close {
+            background: #d4af37 !important;
+            color: #000000 !important;
+            border: none !important;
+            padding: 30px !important;
+            border-radius: 35px !important;
+            font-weight: 900 !important;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            width: 100% !important;
+            font-size: 1.4rem !important;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9);
+        }
+
+        /* --- QUALIFIKATIONS LISTE --- */
+        .criteria-list {
+            text-align: left;
+            margin: 30px 0;
+            list-style: none;
+        }
+
+        .criteria-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .criteria-icon {
+            color: var(--gold);
+            margin-right: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .criteria-text b {
+            color: var(--gold);
+            display: block;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .criteria-text p {
+            color: #cccccc;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        /* --- HAUPTSEITE & LOGO --- */
+        .site-logo {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 5000;
+            width: 120px;
+            height: auto;
+        }
+
+        .page-segment {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: #000000;
+        }
+
+        .hero-wrapper {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 1;
+        }
+
+        .hero-content-layer {
+            position: relative;
+            z-index: 10;
+            padding-left: 8%;
+            width: 100%;
+        }
+
+        .hero-animation {
+            opacity: 0;
+            animation: slideInGold 1.8s forwards ease-out;
+            max-width: 800px;
+        }
+
+        .branding-title {
+            display: block;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: #ffffff;
+            max-width: 550px;
+            font-weight: 300;
+            border-left: 2px solid var(--gold);
+            padding-left: 20px;
+        }
+
+        .tour-button {
+            display: inline-block;
+            margin-top: 35px;
+            padding: 18px 45px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .tour-button:hover {
+            background: var(--gold);
+            color: #000000;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+        }
+
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 6500;
+            background: var(--gold);
+            color: #000000;
+            width: 160px;
+            height: 140px;
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.4s ease;
+        }
+
+        #back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #back-to-top span {
+            font-size: 0.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.1;
+        }
+
+        .footer-exit {
+            background: #000000;
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .exit-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            transition: 0.4s;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.3rem !important;
+            }
+
+            .hero-content-layer {
+                padding-left: 5%;
+                padding-right: 5%;
+                padding-top: 100px;
+            }
+
+            .site-logo {
+                width: 85px !important;
+                top: 15px;
+                left: 15px;
+            }
+
+            #push-popup {
+                padding: 60px 25px !important;
+                width: 92% !important;
+            }
+
+            #push-title {
+                font-size: 2.2rem !important;
+            }
+
+            #push-text {
+                font-size: 1.4rem !important;
+            }
+        }
+        
+        iframe {
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            position: absolute;
+            left: -9999px;
+        }
+    </style>
+</head>
+<body>
+    <div id="google_translate_element"></div>
+
+    <div class="push-overlay" id="push-overlay" onclick="closePushPopup()"></div>
+    <div id="push-popup">
+        <div class="push-badge">LIVE TRANSMISSION</div>
+        <h2 id="push-title">...</h2>
+        <div id="push-time"></div>
+        <p id="push-text">DATEN WERDEN EMPFANGEN...</p>
+        <button class="btn-push-close" onclick="closePushPopup()">BESTÄTIGEN & WEITER</button>
+    </div>
+
+    <div id="event-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('event-modal')">&times;</span>
+            <div id="form-container-reg">
+                <h2>Wettbewerbs-Anmeldung</h2>
+                <form id="reg-form">
+                    <input type="hidden" name="Typ" value="Wettbewerb-Anmeldung">
+                    <input type="text" id="reg-name" name="Name" placeholder="Vollständiger Name" required>
+                    <input type="email" name="Email" placeholder="E-Mail Adresse" required>
+                    <input type="tel" name="Telefon" placeholder="Telefonnummer" required>
+                    <select name="Erreichbarkeit" required>
+                        <option value="" disabled selected>Beste Erreichbarkeit</option>
+                        <option value="Vormittags">Vormittags</option>
+                        <option value="Nachmittags">Nachmittags</option>
+                        <option value="Abends">Abends</option>
+                    </select>
+                    <button type="submit" class="submit-btn" id="submit-reg-btn">Teilnahme bestätigen</button>
+                </form>
+            </div>
+            <div id="thank-you-reg" style="display:none; padding: 30px 10px;">
+                <h2 style="color: var(--gold);">Anmeldung erfolgreich!</h2>
+                <p style="color: #ffffff; margin-top: 20px;">Vielen Dank, <span class='user-name'></span>. Dein Commitment wurde registriert.</p>
+                <button onclick="closeModal('event-modal')" class="tour-button">Schließen</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="strategy-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('strategy-modal')">&times;</span>
+            <div id="form-container-strat">
+                <h2>Strategy Call Anfrage</h2>
+                <form id="strategy-form">
+                    <input type="hidden" name="Typ" value="Strategy-Call">
+                    <input type="text" id="strat-name" name="Name" placeholder="Name" required>
+                    <input type="email" name="Email" placeholder="Email" required>
+                    <input type="tel" name="Telefon" placeholder="Telefonnummer" required>
+                    <select name="Erreichbarkeit" required>
+                        <option value="" disabled selected>Beste Erreichbarkeit</option>
+                        <option value="Vormittags">Vormittags</option>
+                        <option value="Nachmittags">Nachmittags</option>
+                        <option value="Abends">Abends</option>
+                    </select>
+                    <button type="submit" class="submit-btn" id="submit-strat-btn">Termin anfragen</button>
+                </form>
+            </div>
+            <div id="thank-you-strat" style="display:none; padding: 30px 10px;">
+                <h2 style="color: var(--gold);">Anfrage erfolgreich gesendet!</h2>
+                <p style="color: #ffffff; margin-top: 20px;">Vielen Dank, <span class='user-name'></span>.</p>
+                <button onclick="closeModal('strategy-modal')" class="tour-button">Schließen</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="criteria-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('criteria-modal')">&times;</span>
+            <h2>Qualifikations-Kriterien</h2>
+            <div class="criteria-list">
+                <div class="criteria-item">
+                    <div class="criteria-icon">01</div>
+                    <div class="criteria-text"><b>Mindest-Rang</b><p>Erreiche mindestens Rang 3.</p></div>
+                </div>
+                <div class="criteria-item">
+                    <div class="criteria-icon">02</div>
+                    <div class="criteria-text"><b>Direkt-Partner</b><p>Sponsere 10 neue direkte Partner.</p></div>
+                </div>
+                <div class="criteria-item">
+                    <div class="criteria-icon">03</div>
+                    <div class="criteria-text"><b>Team-Umsatz</b><p>50.000 € Gesamtumsatz.</p></div>
+                </div>
+            </div>
+            <button onclick="closeModal('criteria-modal')" class="submit-btn">Verstanden</button>
+        </div>
+    </div>
+
+   <div id="welcome-overlay">
+        <picture>
+            <source srcset="vipmobil.png" media="(max-width: 768px)">
+            <img src="vip.png" alt="VIP Entrance" class="overlay-bg">
+        </picture>
+        <div class="overlay-content">
+            <span class="gold-accent">Herzlichen Glückwunsch!</span>
+            <h1>Willkommen im VIP-Club von Room 3 the international</h1>
+            <button class="enter-button" onclick="unlockExperience()">Öffne die Tür und tritt ein</button>
+        </div>
+    </div>
+
+    <a href="index.html"><img src="room3logo.png" alt="Room 3 Logo" class="site-logo"></a>
+
+    <iframe id="sc-jet" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/m-sol-records/elegant-deep-house-luxurious-chill-lounge-vibes-mix-2025&auto_play=false" frameborder="no" allow="autoplay"></iframe>
+    <iframe id="sc-monaco" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/dj-quercus/vibey-house-tech-house-deep-house-melodic-house-mix-1&auto_play=false" frameborder="no" allow="autoplay"></iframe>
+    <iframe id="sc-mexico" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/arminvanbuuren/sonic-samba-rising-star-remix&auto_play=false" frameborder="no" allow="autoplay"></iframe>
+    <iframe id="sc-paddock" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/noisysoundss/all-i-need-best-of-vocal-deep-house-chillout-summer-music-mix-2018&auto_play=false" frameborder="no" allow="autoplay"></iframe>
+    <iframe id="sc-coming" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/tryptology/cloud-surfing-deep-trance-chill-out-downtempo-slowprogressive-psytrance-mix&auto_play=false" frameborder="no" allow="autoplay"></iframe>
+
+    <div id="smart-sound-toggle" onclick="handleSound()" style="position: fixed; bottom: 30px; right: 30px; z-index: 5000; width: 60px; height: 60px; border-radius: 50%; background: rgba(0, 0, 0, 0.8); border: 2px solid var(--gold); cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.5s;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#d4af37"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+    </div>
+
+    <div id="back-to-top" onclick="teleportToJet()">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M21,16.5L12,21.5L3,16.5V7.5L12,2.5L21,7.5V16.5M12,4.1L5,8V16L12,19.9L19,16V8L12,4.1M12,11A2,2 0 0,1 10,9A2,2 0 0,1 12,7A2,2 0 0,1 14,9A2,2 0 0,1 12,11Z"/></svg>
+        <span>RE-BOARD THE PRIVATE JET</span>
+    </div>
+
+    <div class="page-segment" id="seg-jet">
+        <div class="hero-wrapper">
+            <picture>
+                <source srcset="jetmobil.png" media="(max-width: 768px)">
+                <img src="jet.png" class="hero-image" alt="Jet">
+            </picture>
+            <div class="hero-content-layer">
+                <div class="hero-animation">
+                    <span class="branding-title">Member of Room 3 the international</span>
+                    <h1>Über den <span style="color: var(--gold);">Wolken</span></h1>
+                    <p class="hero-description">Wo Zeit zur Nebensache wird und Komfort keine Grenzen kennt.</p>
+                    <button onclick="goTo('seg-monaco')" class="tour-button">Destination: Monaco</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-segment" id="seg-monaco">
+        <div class="hero-wrapper">
+            <picture>
+                <source srcset="monacomobilneu.png" media="(max-width: 768px)">
+                <img src="monaco.png" class="hero-image" alt="Monaco">
+            </picture>
+            <div class="hero-content-layer">
+                <div class="hero-animation">
+                    <span class="branding-title">Member of Room 3 the international</span>
+                    <h1>Die Monaco <span style="color: var(--gold);">Elite</span></h1>
+                    <p class="hero-description">Wo Legenden vor Anker gehen und Diskretion zur Kunstform wird.</p>
+                    <button onclick="goTo('seg-mexico')" class="tour-button">Fühle die Energie</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-segment" id="seg-mexico">
+        <div class="hero-wrapper">
+            <picture>
+                <source srcset="stadionmobilneu.png" media="(max-width: 768px)">
+                <img src="stadion.png" class="hero-image" alt="Aztec">
+            </picture>
+            <div class="hero-content-layer">
+                <div class="hero-animation">
+                    <span class="branding-title">Member of Room 3 the international</span>
+                    <h1>Aztec <span style="color: var(--gold);">Legacy</span></h1>
+                    <p class="hero-description">Wenn die Energie von 80.000 Menschen zur Kulisse Ihrer Suite wird.</p>
+                    <button onclick="goTo('seg-paddock')" class="tour-button">In den Paddock Club</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-segment" id="seg-paddock">
+        <div class="hero-wrapper">
+            <picture>
+                <source srcset="boxmobil.png" media="(max-width: 768px)">
+                <img src="box.png" class="hero-image" alt="Paddock">
+            </picture>
+            <div class="hero-content-layer">
+                <div class="hero-animation">
+                    <span class="branding-title">Member of Room 3 the international</span>
+                    <h1>The Paddock <span style="color: var(--gold);">Club</span></h1>
+                    <p class="hero-description">Erleben Sie die Formel 1 aus der exklusivsten Perspektive der Welt.</p>
+                    <button onclick="goTo('seg-coming')" class="tour-button">Deine Chance</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-segment" id="seg-coming">
+        <div class="hero-wrapper">
+            <picture>
+                <source srcset="wettbewerbmobil.png" media="(max-width: 768px)">
+                <img src="wettbewerb.png" class="hero-image" alt="Coming Next">
+            </picture>
+            <div class="hero-content-layer">
+                <div class="hero-animation">
+                    <span class="branding-title">Member of Room 3 the international</span>
+                    <h1>Das nächste <span style="color: var(--gold);">Level</span></h1>
+                    <p class="hero-description">Exklusive Incentives für unsere Top-Partner.</p>
+                    <button onclick="goTo('details-area')" class="tour-button" style="animation: pulseGold 2s infinite;">Details & Planung</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="details-area" style="background: #000000; padding: 100px 8%; border-top: 1px solid var(--gold);">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 style="color: var(--gold); text-transform: uppercase; margin-bottom: 50px; font-size: 2.5rem;">Wettbewerb & Qualifikation</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
+                <div style="background: #111111; padding: 40px; border: 1px solid rgba(212, 175, 55, 0.2);">
+                    <h3 style="color: var(--white); margin-bottom: 15px;">São Paulo 2026</h3>
+                    <p style="color: #cccccc; margin-bottom: 25px;">VIP-Wochenende in Brasilien.</p>
+                    <a href="javascript:void(0)" onclick="openModal('criteria-modal')" style="color: var(--gold); font-weight: bold; text-decoration: none; display: block; margin-bottom: 20px;">&rarr; QUALIFIKATIONS-KRITERIEN</a>
+                    <button onclick="openModal('event-modal')" class="submit-btn">Teilnahme registrieren</button>
+                </div>
+                <div style="background: #111111; padding: 40px; border: 2px solid var(--gold);">
+                    <h3 style="color: var(--gold); margin-bottom: 15px;">Executive Strategy Call</h3>
+                    <button onclick="openModal('strategy-modal')" class="submit-btn" style="background: transparent; border: 1px solid var(--gold); color: var(--gold);">Termin anfragen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-exit">
+        <a href="index.html" class="exit-btn">Zurück zur Hauptseite</a>
+    </footer>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'de', includedLanguages: 'de,en,fr,el,it,pl,pt,es,tr', autoDisplay: false }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script src="https://w.soundcloud.com/player/api.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyD_CBo-q85-OC5WjSr-2MwaBybMCOde0R8",
+            authDomain: "room-3-the-international.firebaseapp.com",
+            databaseURL: "https://room-3-the-international-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "room-3-the-international",
+            storageBucket: "room-3-the-international.firebasestorage.app",
+            messagingSenderId: "823235896788",
+            appId: "1:823235896788:web:bff060409e3f8c9bb2e2241"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const broadcastRef = database.ref('globalBroadcast');
+        let lastReceivedTimestamp = 0;
+
+        broadcastRef.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data && data.timestamp) {
+                // Monaco-Fix: Absender dynamisch aus Firebase beziehen
+                const currentSender = (data.sender || "Room 3 Command Center").trim();
+                
+                // Zeit-Formatierung
+                const date = new Date(data.timestamp);
+                const formattedTime = date.toLocaleDateString('de-DE', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                }) + ' | ' + date.toLocaleTimeString('de-DE', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }) + ' Uhr';
+
+                if (lastReceivedTimestamp === 0) { 
+                    showPushPopup(currentSender, data.message, formattedTime);
+                    lastReceivedTimestamp = data.timestamp; 
+                } 
+                else if (data.timestamp > lastReceivedTimestamp) { 
+                    showPushPopup(currentSender, data.message, formattedTime); 
+                    lastReceivedTimestamp = data.timestamp; 
+                }
+            }
+        });
+
+        function showPushPopup(title, text, time) {
+            document.getElementById('push-title').innerText = title;
+            document.getElementById('push-time').innerText = time;
+            document.getElementById('push-text').innerText = text;
+            document.getElementById('push-overlay').classList.add('active');
+            document.getElementById('push-popup').classList.add('active');
+        }
+
+        function closePushPopup() {
+            document.getElementById('push-overlay').classList.remove('active');
+            document.getElementById('push-popup').classList.remove('active');
+        }
+
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzxgKU7rfG_LxIY5gqsUYrLwm9c5lFcsg3qFiEa6U4pIwCTY-zWvtsTNI_fWQ_FBvb2/exec';
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; document.body.style.overflow = 'auto'; }
+
+        const regForm = document.getElementById('reg-form');
+        regForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const btn = document.getElementById('submit-reg-btn');
+            const nameVal = document.getElementById('reg-name').value;
+            btn.innerText = "Wird gesendet...";
+            fetch(scriptURL, { method: 'POST', body: new FormData(regForm)})
+                .then(() => {
+                    document.getElementById('form-container-reg').style.display = 'none';
+                    document.querySelectorAll('.user-name').forEach(el => el.innerText = nameVal);
+                    document.getElementById('thank-you-reg').style.display = 'block';
+                });
+        });
+
+        const stratForm = document.getElementById('strategy-form');
+        stratForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const btn = document.getElementById('submit-strat-btn');
+            const nameVal = document.getElementById('strat-name').value;
+            btn.innerText = "Wird gesendet...";
+            fetch(scriptURL, { method: 'POST', body: new FormData(stratForm)})
+                .then(() => {
+                    document.getElementById('form-container-strat').style.display = 'none';
+                    document.querySelectorAll('.user-name').forEach(el => el.innerText = nameVal);
+                    document.getElementById('thank-you-strat').style.display = 'block';
+                });
+        });
+
+        var widgets = {
+            'jet': SC.Widget(document.getElementById('sc-jet')),
+            'monaco': SC.Widget(document.getElementById('sc-monaco')),
+            'mexico': SC.Widget(document.getElementById('sc-mexico')),
+            'paddock': SC.Widget(document.getElementById('sc-paddock')),
+            'coming': SC.Widget(document.getElementById('sc-coming'))
+        };
+        var isPlaying = false;
+        var currentArea = 'jet';
+        var experienceUnlocked = false;
+
+        function unlockExperience() {
+            Object.values(widgets).forEach(w => { w.play(); w.pause(); });
+            document.getElementById('welcome-overlay').classList.add('overlay-hidden');
+            document.getElementById('smart-sound-toggle').style.opacity = "1";
+            setTimeout(() => { widgets.jet.play(); isPlaying = true; experienceUnlocked = true; }, 300);
+        }
+
+        function forceMusic(target) {
+            if (!isPlaying || !experienceUnlocked) return;
+            if (currentArea === target) return;
+            currentArea = target;
+            Object.keys(widgets).forEach(key => { if (key === target) widgets[key].play(); else widgets[key].pause(); });
+        }
+
+        function goTo(id) {
+            let targetArea = 'jet';
+            if (id.includes('monaco')) targetArea = 'monaco';
+            else if (id.includes('mexico')) targetArea = 'mexico';
+            else if (id.includes('paddock')) targetArea = 'paddock';
+            else if (id.includes('coming') || id.includes('details')) targetArea = 'coming';
+            forceMusic(targetArea);
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function teleportToJet() {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            Object.keys(widgets).forEach(key => widgets[key].pause());
+            currentArea = 'jet';
+            if (isPlaying) widgets.jet.play();
+        }
+
+        function handleSound() {
+            if (!isPlaying) { widgets[currentArea].play(); isPlaying = true; } 
+            else { Object.values(widgets).forEach(w => w.pause()); isPlaying = false; }
+        }
+
+        window.addEventListener('scroll', function() {
+            const btn = document.getElementById('back-to-top');
+            if (window.scrollY > 500) btn.classList.add('show'); else btn.classList.remove('show');
+            if (experienceUnlocked && isPlaying) {
+                let scrollPos = window.scrollY + (window.innerHeight / 2);
+                let active = 'jet';
+                if (scrollPos >= document.getElementById('details-area').offsetTop) active = 'coming';
+                else if (scrollPos >= document.getElementById('seg-coming').offsetTop) active = 'coming';
+                else if (scrollPos >= document.getElementById('seg-paddock').offsetTop) active = 'paddock';
+                else if (scrollPos >= document.getElementById('seg-mexico').offsetTop) active = 'mexico';
+                else if (scrollPos >= document.getElementById('seg-monaco').offsetTop) active = 'monaco';
+                if (active !== currentArea) forceMusic(active);
+            }
+        });
+    </script>
+</body>
+</html>
