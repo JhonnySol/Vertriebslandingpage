@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <title>Room 3 STUDIO | Dein Maschinenraum</title>
+
+    <link rel="icon" type="image/png" href="room3logo.png">
+    
+    <script src="https://w.soundcloud.com/player/api.js" type="text/javascript"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <style>
+        /* --- DESIGN SYSTEM & VARIABLEN --- */
+        :root {
+            --primary-gold: #d4af37;
+            --glass-bg: rgba(0, 0, 0, 0.4); 
+            --border-gold: rgba(212, 175, 55, 0.4);
+            --status-red: #ff4b2b;
+            --status-yellow: #ffcc00;
+            --status-green: #00ff41;
+            
+            --gold-light: #fff9ab;
+            --gold-mid: #d4af37;
+            --gold-dark: #8a6d3b;
+            --gold-shadow: rgba(212, 175, 55, 0.3);
+        }
+
+        /* --- PRÄZISE GOOGLE TRANSLATE SPERRE & OVERRIDE --- */
+        html { 
+            padding-top: 0 !important; 
+            margin-top: 0 !important; 
+        }
+        
+        body { 
+            top: 0px !important; 
+            position: static !important; 
+            padding-top: 0 !important;
+            margin-top: 0 !important;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #ffffff;
+            overflow: hidden !important;
+            text-align: center;
+        }
+
+        .goog-te-banner-frame, 
+        .goog-te-banner,
+        .VIpgJd-Zvi9ab-OR9sP-bgnd,
+        iframe[id*=':1.container'],
+        iframe[id*=':2.container'],
+        iframe.goog-te-menu-frame {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            opacity: 0 !important;
+        }
+
+        .skiptranslate:not(#google_translate_element) {
+            display: none !important;
+        }
+
+        #google_translate_element { 
+            position: fixed; 
+            top: 25px; 
+            right: 25px; 
+            z-index: 10001 !important; 
+            display: block !important;
+            visibility: visible !important;
+        }
+
+        .goog-te-gadget-simple {
+            background-color: rgba(0,0,0,0.85) !important;
+            border: 1px solid var(--primary-gold) !important;
+            padding: 10px 15px !important;
+            border-radius: 12px !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease;
+        }
+
+        .goog-te-gadget-simple span {
+            color: #fff !important;
+            font-weight: bold !important;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        /* --- GLOBALE RESETS --- */
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* --- MOBILE SPERRE SCREEN --- */
+        #mobile-blocker {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000 url('studio.png') no-repeat center center / cover;
+            z-index: 99999999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+        }
+
+        #mobile-blocker::before {
+            content: '';
+            position: absolute;
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: -1;
+        }
+
+        .blocker-content {
+            background: rgba(0,0,0,0.95);
+            border: 2px solid #8B2323;
+            padding: 50px 30px;
+            border-radius: 35px;
+            box-shadow: 0 0 60px rgba(139, 35, 35, 0.6);
+            max-width: 500px;
+            position: relative;
+        }
+
+        /* --- HAUPTBEREICH & HINTERGRUND --- */
+        section#main-studio {
+            width: 100%;
+            height: 100vh;
+            background: url('studio.png') no-repeat center center / cover;
+            background-attachment: fixed;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            opacity: 1;
+            transition: opacity 1s ease;
+        }
+
+        .studio-logo-fixed {
+            position: absolute;
+            top: 20px;
+            left: 40px; 
+            width: 350px;
+            height: 100px;
+            background: url('room3logo.png') no-repeat left center;
+            background-size: contain;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 20px 0px;
+            z-index: 10;
+        }
+
+        header h1 {
+            font-size: 4rem;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            font-weight: 900;
+            text-shadow: 0 10px 40px rgba(0,0,0,1);
+            margin-bottom: 10px;
+        }
+
+        .white-text { 
+            color: #ffffff !important; 
+        }
+
+        .gold-text { 
+            color: var(--primary-gold) !important; 
+        }
+
+        .subtitle {
+            font-size: 2.2rem;
+            letter-spacing: 8px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            color: #000000;
+            font-weight: 950;
+            text-shadow: 1.5px 1.5px 0px #fff, -1.5px -1.5px 0px #fff, 1.5px -1.5px 0px #fff, -1.5px 1.5px 0px #fff;
+            display: inline-block;
+            padding: 5px 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        /* --- ADMIN RESET BUTTON --- */
+        .admin-reset-btn {
+            position: fixed;
+            top: 25px;
+            right: 180px;
+            z-index: 10001;
+            background: #8B2323;
+            color: #fff;
+            border: 2px solid var(--primary-gold);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 950;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-size: 0.75rem;
+            box-shadow: 0 0 20px rgba(139, 35, 35, 0.6);
+            transition: all 0.3s;
+            display: none; 
+        }
+        .admin-reset-btn:hover { background: #ff0000; transform: scale(1.05); }
+
+        /* --- REAKTOR BEREICH --- */
+        .reaktor-center {
+            position: absolute;
+            top: 55%; 
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+        }
+
+        .reaktor-label-top {
+            font-size: 1.6rem;
+            letter-spacing: 10px;
+            color: #000000;
+            text-transform: uppercase;
+            font-weight: 950;
+            margin-bottom: 130px; 
+            text-shadow: 1px 1px 0px #fff, -1px -1px 0px #fff, 1px 1px 0px #fff, -1px 1px 0px #fff;
+        }
+
+        .reaktor-count {
+            font-size: 13rem;
+            font-weight: 950;
+            font-family: 'Arial Black', Gadget, sans-serif;
+            background: linear-gradient(
+                to bottom, 
+                #8a6d3b 0%, 
+                #d4af37 22%, 
+                #fff9ab 45%, 
+                #ffcc00 50%, 
+                #d4af37 55%, 
+                #8a6d3b 78%, 
+                #5e4c25 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,1));
+            line-height: 0.85;
+            position: relative;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .reaktor-label-bottom {
+            font-size: 2.2rem;
+            letter-spacing: 12px;
+            color: #000000;
+            text-transform: uppercase;
+            font-weight: 950;
+            margin-top: 10px;
+            text-shadow: 1px 1px 0px #fff, -1px -1px 0px #fff, 1px 1px 0px #fff, -1px 1px 0px #fff;
+        }
+
+        /* --- DASHBOARD GRID --- */
+        .dashboard-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1800px;
+            margin: auto;
+            padding: 0 50px;
+            z-index: 5;
+            position: absolute;
+            top: 58%; 
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .control-card {
+            width: 410px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border-gold);
+            border-radius: 40px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            text-align: center;
+        }
+
+        #meeting-card {
+            padding: 15px 25px 30px 25px;
+            transform: translateY(-5px); 
+            margin-bottom: 20px; 
+            margin-top: 20px;
+        }
+
+        #profile-card {
+            padding: 25px 25px 35px 25px;
+            transform: translateY(-50px);
+        }
+
+        /* --- UI KOMPONENTEN --- */
+        .card-icon { 
+            font-size: 1.8rem; 
+            color: var(--primary-gold); 
+            margin-bottom: 10px; 
+            display: block; 
+        }
+        
+        .status-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 0 auto 15px auto;
+            padding: 6px 15px;
+            border-radius: 12px;
+            width: fit-content;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .status-dot { 
+            width: 10px; 
+            height: 10px; 
+            border-radius: 50%; 
+        }
+
+        .dot-red { 
+            background: var(--status-red); 
+            box-shadow: 0 0 10px var(--status-red); 
+            animation: pulse 2s infinite; 
+        }
+
+        .dot-green { 
+            background: var(--status-green); 
+            box-shadow: 0 0 10px var(--status-green); 
+            animation: pulse 2s infinite; 
+        }
+
+        @keyframes pulse { 
+            0% { opacity: 1; } 
+            50% { opacity: 0.4; } 
+            100% { opacity: 1; } 
+        }
+
+        .status-label { 
+            font-size: 0.7rem; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+        }
+        
+        .input-group { 
+            margin-bottom: 12px; 
+            text-align: center; 
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.65rem;
+            color: var(--primary-gold);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 900;
+        }
+
+        .studio-input {
+            width: 100%;
+            background: rgba(0,0,0,0.8);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 10px;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border 0.3s;
+            text-align: center;
+        }
+
+        .studio-input:focus { 
+            border: 1px solid var(--primary-gold); 
+        }
+
+        .push-type-selector {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .type-btn {
+            flex: 1;
+            padding: 8px;
+            font-size: 0.6rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: 900;
+            transition: all 0.3s;
+        }
+
+        .type-btn.active {
+            background: var(--primary-gold);
+            color: #000;
+            border-color: var(--primary-gold);
+        }
+
+        .btn-gold {
+            background: linear-gradient(145, #d4af37, #b8860b);
+            color: #000;
+            border: none;
+            padding: 14px;
+            border-radius: 15px;
+            font-weight: 950;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            margin-top: 5px;
+            transition: all 0.3s;
+        }
+
+        .btn-gold:hover { 
+            transform: scale(1.02); 
+            box-shadow: 0 0 15px var(--gold-shadow); 
+        }
+
+        .btn-stop {
+            background: #ff8c00;
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: 15px;
+            font-weight: 950;
+            text-transform: uppercase;
+            width: 100%;
+            display: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            margin-top: 8px;
+            transition: all 0.3s;
+        }
+
+        .broadcast-textarea {
+            width: 100%;
+            height: 60px;
+            background: rgba(0,0,0,0.8);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 10px;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.85rem;
+            outline: none;
+            resize: none;
+            font-family: inherit;
+            text-align: center;
+        }
+
+        .premium-buzzer-box {
+            background: rgba(212, 175, 55, 0.05);
+            border: 1.5px solid var(--primary-gold);
+            padding: 10px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .gold-buzzer-btn {
+            display: block;
+            background: linear-gradient(145, #d4af37, #b8860b);
+            color: #000;
+            padding: 8px;
+            border-radius: 10px;
+            font-weight: 950;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            margin-top: 6px;
+        }
+
+        /* --- POPUPS --- */
+        #big-popup {
+            display: none;
+            position: fixed;
+            top: 50%; 
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 450px;
+            background: #000;
+            border: 2px solid var(--primary-gold);
+            border-radius: 40px;
+            z-index: 2000001;
+            padding: 50px;
+            text-align: center;
+        }
+        
+        .popup-overlay { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.9); 
+            z-index: 2000000; 
+            backdrop-filter: blur(8px);
+        }
+
+        /* --- CREW LISTEN MODAL & TABELLE --- */
+        #crew-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1000px; 
+            max-height: 85vh;
+            background: #000000;
+            border: 2px solid var(--primary-gold);
+            border-radius: 40px;
+            z-index: 3000001;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 0 100px rgba(212, 175, 55, 0.2);
+            flex-direction: column;
+        }
+
+        .crew-filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-shrink: 0;
+        }
+
+        .filter-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--primary-gold);
+            color: var(--primary-gold);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active {
+            background: var(--primary-gold);
+            color: #000;
+        }
+
+        .crew-scroll-container {
+            width: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            flex-grow: 1;
+            margin-bottom: 20px;
+            padding-right: 5px;
+        }
+
+        .crew-scroll-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .crew-scroll-container::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.3);
+        }
+        .crew-scroll-container::-webkit-scrollbar-thumb {
+            background: var(--primary-gold);
+            border-radius: 10px;
+        }
+
+        .crew-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #fff;
+        }
+
+        .crew-table th {
+            color: var(--primary-gold);
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            padding: 15px 10px;
+            border-bottom: 1px solid var(--primary-gold);
+            text-align: left;
+            position: sticky;
+            top: 0;
+            background: #000;
+            z-index: 5;
+        }
+
+        .crew-table td {
+            padding: 15px 10px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            font-size: 0.85rem;
+            text-align: left;
+        }
+
+        .music-btn-circle {
+            width: 55px; 
+            height: 55px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.9);
+            border: 2px solid var(--primary-gold);
+            color: var(--primary-gold);
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            cursor: pointer; 
+            font-size: 1.3rem;
+        }
+
+        .btn-exit-studio {
+            height: 55px;
+            padding: 0 30px;
+            background: rgba(0,0,0,0.9);
+            border: 2px solid var(--primary-gold);
+            border-radius: 50px;
+            color: var(--primary-gold);
+            display: flex; 
+            align-items: center;
+            text-decoration: none;
+            font-weight: 950;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* MONACO: ADMIN ONLY CSS HIDE */
+        .admin-only-feature {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="google_translate_element"></div>
+
+    <button id="admin-reset-main" class="admin-reset-btn" onclick="hardDataReset()">Reset Daten (Admin)</button>
+
+    <div id="mobile-blocker">
+        <div class="blocker-content">
+            <h2 style="color:#8B2323; font-size: 2.2rem; margin-bottom: 20px; font-weight: 900;">DESKTOP ONLY</h2>
+            <p style="color:#fff; margin-bottom: 25px;">Der Maschinenraum erfordert ein Desktop-Interface für die administrative Steuerung.</p>
+            <a href="index.html" style="display:inline-block; padding:15px 30px; background:#8B2323; color:#fff; text-decoration:none; font-weight:900; border-radius:15px;">ZURÜCK</a>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="overlay" onclick="closePopup()"></div>
+    <div id="big-popup">
+        <h2 id="popup-title" style="color: var(--primary-gold); font-size: 1.8rem; margin-bottom: 15px;">MELDUNG</h2>
+        <p id="popup-text" style="color:#fff; font-size: 1.1rem; line-height:1.4;"></p>
+        <button class="btn-gold" onclick="closePopup()" style="margin-top: 25px;">OK</button>
+    </div>
+
+    <div id="crew-modal">
+        <h2 style="color: var(--primary-gold); font-size: 2rem; letter-spacing: 5px; margin-bottom: 10px;">MEINE CREW</h2>
+        
+        <div class="crew-filter-bar">
+            <button id="filter-l1" class="filter-btn active" onclick="setCrewFilter('L1')">Level 1 (Direkt)</button>
+            <button id="filter-all" class="filter-btn" onclick="setCrewFilter('ALL')">Level 1-100 (Struktur)</button>
+        </div>
+
+        <div style="height: 1px; background: var(--primary-gold); opacity: 0.3; margin-bottom: 20px; flex-shrink: 0;"></div>
+        
+        <div class="crew-scroll-container">
+            <table class="crew-table">
+                <thead>
+                    <tr>
+                        <th>Partner Name</th>
+                        <th>WhatsApp Nummer</th>
+                        <th>E-Mail Adresse</th>
+                        <th>Sponsor (Datenbank)</th>
+                        <th>Level</th>
+                        <th>Beitritt</th>
+                    </tr>
+                </thead>
+                <tbody id="crew-body">
+                    <tr>
+                        <td colspan="6" style="padding: 40px; text-align: center; opacity: 0.5;">Lade Crew-Daten...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="flex-shrink: 0;">
+            <button class="btn-gold" onclick="closeCrewModal()" style="margin-top: 15px; width: 200px;">Schließen</button>
+        </div>
+    </div>
+
+    <div class="studio-logo-fixed"></div>
+
+    <section id="main-studio">
+        <header>
+            <h1><span class="white-text">Room 3</span> <span class="gold-text">Studio</span></h1>
+            <p class="subtitle" onclick="adminUnlock()">Maschinenraum</p>
+        </header>
+
+        <div class="reaktor-center">
+            <div class="reaktor-label-top">THE MAGIC CYCLONE</div>
+            <div class="reaktor-count" id="partner-count-display">0</div>
+            <div id="team-split-label" style="color: rgba(212,175,55,0.6); font-weight: 900; letter-spacing: 2px; margin-top: -20px; font-size: 0.8rem;">L1: 0 | L2-L100: 0</div>
+            <div class="reaktor-label-bottom">CYCLONE</div>
+        </div>
+
+        <div class="dashboard-grid">
+            
+            <div class="control-card" id="meeting-card">
+                
+                <div class="card-content-wrapper">
+                    <span class="card-icon">📡</span>
+                    <div class="status-box">
+                        <div id="status-dot" class="status-dot dot-red"></div>
+                        <span id="status-text" class="status-label" style="color:var(--status-red);">Standby</span>
+                    </div>
+
+                    <h3 style="margin-bottom:12px; letter-spacing:2px; font-weight:900;">Meetingpoint</h3>
+
+                    <div id="admin-sender-identity" class="input-group admin-only-feature">
+                        <label>Absender Identität</label>
+                        <div class="push-type-selector">
+                            <button id="type-admin" class="type-btn active" onclick="setPushType('admin')">System</button>
+                            <button id="type-team" class="type-btn" onclick="setPushType('team')">Laden...</button>
+                        </div>
+                        <input type="text" id="sender-display" class="studio-input" value="Systemadministrator" readonly style="opacity: 0.7; font-size: 0.7rem;">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Broadcast Nachricht</label>
+                        <textarea id="broadcast-msg" class="broadcast-textarea" placeholder="Nachricht an alle..."></textarea>
+                    </div>
+                    <button id="broadcast-btn" class="btn-gold" onclick="sendBroadcast()" style="background:var(--gold-dark); color:#fff; font-size:0.75rem;">Signal Senden</button>
+
+                    <div style="margin: 15px 0; height: 1px; background: rgba(212,175,55,0.15);"></div>
+
+                    <div class="input-group">
+                        <label>Google Meet URL</label>
+                        <input type="text" id="meet-code" class="studio-input" placeholder="Wird geladen..." oninput="autoSave('room3_meetCode', this.value)">
+                    </div>
+                    <button class="btn-gold" id="start-btn" onclick="startMeeting()">Call starten</button>
+                    <button class="btn-stop" id="stop-btn" onclick="stopMeeting()">Beenden</button>
+
+                    <div style="margin: 15px 0; height: 1px; background: rgba(212,175,55,0.15);"></div>
+
+                    <div class="input-group">
+                        <label>YouTube Live Stream</label>
+                        <input type="text" id="youtube-link" class="studio-input" placeholder="https://..." oninput="autoSave('room3_youtubeLink', this.value)">
+                    </div>
+                    <button id="youtube-btn" class="btn-gold" onclick="sendYoutube()" style="background:#ff0000; color:#fff;">Signal senden</button>
+                </div>
+            </div>
+
+            <div class="control-card" id="profile-card">
+                
+                <div class="card-content-wrapper">
+                    <span class="card-icon">🔐</span>
+                    <h3 style="margin-bottom:12px; letter-spacing:2px; font-weight:900;">Executive <span class="gold-text">Terminal</span></h3>
+                    
+                    <div class="premium-buzzer-box">
+                        <span style="font-size:0.55rem; color:#fff; display:block; font-weight:900; letter-spacing:1px;">AUTORISIERTER ZUGANG:</span>
+                        <span id="display-name-label" style="font-size:1.1rem; font-weight:950; color:var(--primary-gold); display:block; margin:5px 0;">SYSTEM-USER</span>
+                        <a href="#" id="backoffice-btn" class="gold-buzzer-btn" target="_blank">Dashboard öffnen</a>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Öffentlicher Name</label>
+                        <input type="text" id="user-name" class="studio-input" placeholder="Vorname Nachname" style="background: rgba(255,255,255,0.02);">
+                    </div>
+
+                    <button id="save-profile-btn" class="btn-gold" onclick="saveProfile()">Profil speichern</button>
+                    <button id="copy-link-btn" class="btn-outline" onclick="copyLink()">Marketing Link kopieren</button>
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <button class="btn-gold" style="font-size: 0.65rem; padding: 10px;" onclick="openCrewModal()">Crew Liste</button>
+                        <button class="btn-outline" style="font-size: 0.65rem; padding: 10px; margin-top: 0;" onclick="showStats()">Statistik</button>
+                    </div>
+
+                    <input type="hidden" id="mark-link">
+                </div>
+            </div>
+        </div>
+
+        <div style="position:fixed; bottom:25px; right:40px; display:flex; gap:20px; z-index:1000;">
+            <a href="index.html" class="btn-exit-studio">Maschinenraum verlassen</a>
+            <div id="music-toggle" class="music-btn-circle" onclick="toggleAudio()">🎵</div>
+        </div>
+
+        <div style="position:fixed; bottom:15px; width:100%; text-align:center; font-size:0.6rem; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:1px; z-index:100;">
+            <p>&copy; 2026 ROOM 3 PROJECT GROUP | SYSTEM STATUS: OPTIMAL</p>
+        </div>
+    </section>
+
+    <div style="display:none;">
+        <iframe id="sc-widget" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
+            src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/astateoftrance/a-state-of-trance-2025-mix-2-in-the-club&auto_play=false&show_artwork=false&visual=false">
+        </iframe>
+    </div>
+
+    <script>
+        // FIREBASE INITIALISIERUNG
+        const firebaseConfig = {
+            apiKey: "AIzaSyD_CBo-q85-OC5WjSr-2MwaBybMCOde0R8",
+            authDomain: "room-3-the-international.firebaseapp.com",
+            databaseURL: "https://room-3-the-international-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "room-3-the-international",
+            storageBucket: "room-3-the-international.firebasestorage.app",
+            messagingSenderId: "823235896788",
+            appId: "1:823235896788:web:bff060409e3f8c9bb2e2241"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // GLOBALE VARIABLEN
+        let isMusicPlaying = false;
+        let meetWindow = null;
+        let currentPushType = 'admin';
+        let currentCrewFilter = 'L1';
+        let globalL1 = 0;
+        let globalTotal = 0;
+        const MASTER_KEY = "ROOM 3 MASTER";
+
+        // UI FUNKTIONEN
+        function showPopup(title, msg) { 
+            document.getElementById('popup-title').innerText = title; 
+            document.getElementById('popup-text').innerText = msg; 
+            document.getElementById('overlay').style.display = 'block'; 
+            document.getElementById('big-popup').style.display = 'block'; 
+        }
+
+        function closePopup() { 
+            document.getElementById('overlay').style.display = 'none'; 
+            document.getElementById('big-popup').style.display = 'none'; 
+        }
+
+        function openCrewModal() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('crew-modal').style.display = 'flex';
+            loadCrewData();
+        }
+
+        function closeCrewModal() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('crew-modal').style.display = 'none';
+        }
+
+        function setCrewFilter(filter) {
+            currentCrewFilter = filter;
+            document.getElementById('filter-l1').classList.toggle('active', filter === 'L1');
+            document.getElementById('filter-all').classList.toggle('active', filter === 'ALL');
+            loadCrewData();
+        }
+
+        function normalizeStr(str) {
+            if(!str) return "";
+            return str.toString().toLowerCase().replace(/\s+/g, '').trim();
+        }
+
+        function isNameMatch(savedName, databaseSponsor) {
+            if (!databaseSponsor || !savedName) return false;
+            let nSaved = normalizeStr(savedName);
+            let nDb = normalizeStr(databaseSponsor);
+            if (nSaved === "room3master" || nSaved === "johnny" || nSaved === "jhonny" || nSaved === "bruno") {
+                return (nDb === "johnny" || nDb === "jhonny" || nDb === "bruno" || nDb === "room3master");
+            }
+            return nDb === nSaved;
+        }
+
+        // MONACO: SOLARA FIX - HIERARCHIE LEVEL FIX & PERFORMANCE (BILD 2 + 10)
+        async function getPartnerLevel(targetLeadKey, myLeadName, allLeads) {
+
+            if (!targetLeadKey || !myLeadName || !allLeads) return null;
+
+            let level = 1;
+            let currentKey = targetLeadKey;
+
+            while (level <= 100) {
+
+                const lead = allLeads[currentKey];
+                if (!lead) return null;
+
+                const sponsorName = lead.sponsor;
+                if (!sponsorName) return null;
+
+                // Wenn Sponsor mein Name ist → Level gefunden
+                if (normalizeStr(sponsorName) === normalizeStr(myLeadName)) {
+                    return level;
+                }
+
+                // Suche den Firebase-Key des Sponsors anhand des Namens (BILD 8)
+                let nextKey = null;
+                for (const key in allLeads) {
+                    if (normalizeStr(allLeads[key].name) === normalizeStr(sponsorName)) {
+                        nextKey = key;
+                        break;
+                    }
+                }
+
+                if (!nextKey) return null;
+                currentKey = nextKey;
+                level++;
+            }
+
+            return null;
+        }
+
+        function adminUnlock() {
+            document.getElementById('user-name').readOnly = false;
+            document.getElementById('user-name').focus();
+            showPopup("ADMIN", "Namensfeld freigeschaltet.");
+        }
+
+        function hardDataReset() {
+            if(confirm("Daten wirklich löschen?")) {
+                localStorage.clear();
+                window.location.reload();
+            }
+        }
+
+        async function updateSystemState() {
+            let leadName = (localStorage.getItem('room3_leadName') || "").trim();
+            const nName = normalizeStr(leadName);
+            const isMaster = (nName === "johnny" || nName === "jhonny" || nName === "bruno" || nName === "room3master");
+            
+            const adminReset = document.getElementById('admin-reset-main');
+            const adminSender = document.getElementById('admin-sender-identity');
+
+            if (isMaster) {
+                if(adminReset) adminReset.style.display = 'block';
+                if(adminSender) adminSender.style.display = 'block';
+                document.getElementById('display-name-label').innerText = "ADMINISTRATOR-ACCOUNT";
+            } else {
+                if(adminReset) adminReset.style.display = 'none';
+                if(adminSender) adminSender.style.display = 'none';
+                document.getElementById('display-name-label').innerText = leadName.toUpperCase() || "SYSTEM-USER";
+            }
+
+            document.getElementById('user-name').value = leadName;
+            
+            const baseUrl = window.location.href.split('studio.html')[0];
+            document.getElementById('mark-link').value = `${baseUrl}index.html?ref=${encodeURIComponent(leadName || 'captain')}`;
+            
+            initDownlineCounter();
+        }
+
+        async function initDownlineCounter() {
+            const myLeadName = (localStorage.getItem('room3_leadName') || "").trim();
+            const nMyName = normalizeStr(myLeadName);
+            const isMaster = (nMyName === "johnny" || nMyName === "jhonny" || nMyName === "bruno" || nMyName === "room3master");
+            
+            db.ref('leads').on('value', async (snapshot) => { 
+                let tempL1Count = 0;
+                let tempTotalStructure = 0;
+
+                if(snapshot.exists()) {
+                    const allData = snapshot.val();
+                    for (let key in allData) {
+                        const data = allData[key];
+                        
+                        // MONACO: SOLARA FIX - MASTER ZÄHLUNG (BILD 10)
+                        if(isMaster) {
+                            tempTotalStructure++;
+                            // tempL1Count NICHT erhöhen laut Anweisung
+                        } else if (myLeadName) {
+                            const level = await getPartnerLevel(key, myLeadName, allData);
+                            if (level === 1) {
+                                tempL1Count++;
+                                tempTotalStructure++;
+                            } else if (level > 1) {
+                                tempTotalStructure++;
+                            }
+                        }
+                    }
+                }
+                
+                globalTotal = tempTotalStructure; 
+                globalL1 = tempL1Count;
+                document.getElementById('partner-count-display').innerText = globalTotal;
+                
+                const splitEl = document.getElementById('team-split-label');
+                if(splitEl) {
+                    splitEl.innerText = isMaster ? "GLOBALER MASTER-MODUS AKTIV" : `L1: ${globalL1} | L2-L100: ${globalTotal - globalL1}`;
+                }
+            });
+        }
+
+        // MONACO: SOLARA FIX - CREW STRUKTUR PHYSIKALISCHE TRENNUNG & MASTER FIX (BILD 5, 7, 9)
+        async function loadCrewData() {
+
+            const myLeadName = (localStorage.getItem('room3_leadName') || "").trim();
+            const nMyName = normalizeStr(myLeadName);
+
+            const isMaster =
+                nMyName === "johnny" ||
+                nMyName === "jhonny" ||
+                nMyName === "bruno" ||
+                nMyName === "room3master";
+
+            const tbody = document.getElementById('crew-body');
+
+            tbody.innerHTML =
+                "<tr><td colspan='6' style='padding:40px; text-align:center;'>Synchronisiere Struktur...</td></tr>";
+
+            const snapshot = await db.ref('leads').once('value');
+
+            tbody.innerHTML = "";
+
+            if (!snapshot.exists()) return;
+
+            let leadsArray = [];
+            const allData = snapshot.val();
+
+            for (const key in allData) {
+
+                const data = allData[key];
+                let level = null;
+
+                // SOLARA FIX: CREW LEVEL MASTER FIX (BILD 9)
+                if (isMaster) {
+                    // MASTER lässt Level korrekt berechnen
+                    level = await getPartnerLevel(key, myLeadName, allData);
+                    // Falls kein Level bestimmbar ist (Master selbst), setze neutrales Level
+                    if (level === null) {
+                        level = 99;
+                    }
+                } else {
+                    level = await getPartnerLevel(key, myLeadName, allData);
+                }
+
+                if (level === null) continue;
+
+                // SOLARA FIX: STRUKTURELLE TRENNUNG (BILD 7 + 8)
+                // NUR L1 (Direkt) - Erscheint nur im L1 Tab
+                if (currentCrewFilter === 'L1' && level === 1) {
+                    leadsArray.push({ ...data, level: level });
+                }
+
+                // NUR L2 bis L100 (Struktur) - Level 1 darf hier NICHT erscheinen
+                if (currentCrewFilter === 'ALL' && level >= 2 && level <= 100) {
+                    leadsArray.push({ ...data, level: level });
+                }
+            }
+
+            leadsArray.sort((a, b) =>
+                (b.timestamp || 0) - (a.timestamp || 0)
+            );
+
+            if (leadsArray.length === 0) {
+                tbody.innerHTML =
+                    "<tr><td colspan='6' style='padding:40px; text-align:center; opacity:0.5;'>Keine Partner in dieser Ebene gefunden.</td></tr>";
+                return;
+            }
+
+            leadsArray.forEach(data => {
+                const date = data.timestamp ? new Date(data.timestamp).toLocaleDateString('de-DE') : "---";
+                tbody.innerHTML += `
+                    <tr>
+                        <td style="font-weight:bold;">${data.name || "---"}</td>
+                        <td style="color:var(--primary-gold);">${data.phone || "---"}</td>
+                        <td>${data.email || "---"}</td>
+                        <td style="font-size:0.75rem;">${data.sponsor || "---"}</td>
+                        <td style="color:var(--primary-gold);">L${data.level}</td>
+                        <td style="font-size:0.7rem;">${date}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function showStats() {
+            const isMaster = (normalizeStr(localStorage.getItem('room3_leadName')) === "johnny" || normalizeStr(localStorage.getItem('room3_leadName')) === "jhonny" || normalizeStr(localStorage.getItem('room3_leadName')) === "bruno");
+            showPopup(isMaster ? "MASTER-STATUS" : "STATISTIK", `Partner: ${globalTotal}\nLevel 1: ${globalL1}\nStruktur: ${globalTotal - globalL1}`);
+        }
+
+        function saveProfile() {
+            const name = document.getElementById('user-name').value.trim();
+            if(!name) return;
+            localStorage.setItem('room3_leadName', name);
+            updateSystemState();
+            showPopup("IDENTITÄT", "Profil gespeichert.");
+        }
+
+        function copyLink() {
+            const linkVal = document.getElementById('mark-link').value;
+            if(!linkVal) return;
+            navigator.clipboard.writeText(linkVal).then(() => showPopup("KOPIERT", "Link bereit."));
+        }
+
+        function setPushType(type) {
+            currentPushType = type;
+            const btnA = document.getElementById('type-admin');
+            const btnT = document.getElementById('type-team');
+            if(btnA) btnA.classList.toggle('active', type === 'admin');
+            if(btnT) btnT.classList.toggle('active', type === 'team');
+            if (type === 'admin') {
+                document.getElementById('sender-display').value = "Systemadministrator";
+            } else {
+                document.getElementById('sender-display').value = document.getElementById('type-team').innerText;
+            }
+        }
+
+        function sendBroadcast() {
+            const msg = document.getElementById('broadcast-msg').value.trim();
+            if(!msg) return;
+            let leadName = (localStorage.getItem('room3_leadName') || "").trim();
+            db.ref('globalBroadcast').set({ 
+                message: msg, 
+                sender: leadName || "System-Partner", 
+                timestamp: firebase.database.ServerValue.TIMESTAMP 
+            }).then(() => { 
+                showPopup("SIGNAL", "Nachricht gesendet."); 
+                document.getElementById('broadcast-msg').value = ""; 
+            });
+        }
+
+        function sendYoutube() {
+            const ytLink = document.getElementById('youtube-link').value.trim();
+            if(!ytLink) return;
+            db.ref('youtubeLive').set({ 
+                link: ytLink, 
+                active: true, 
+                timestamp: firebase.database.ServerValue.TIMESTAMP 
+            }).then(() => showPopup("LIVE", "YT Stream aktiv."));
+        }
+
+        function startMeeting() {
+            const url = document.getElementById('meet-code').value.trim();
+            if(!url) return;
+            document.getElementById('status-dot').className = "status-dot dot-green";
+            document.getElementById('status-text').innerText = "LIVE";
+            document.getElementById('status-text').style.color = "var(--status-green)";
+            document.getElementById('start-btn').style.display = "none";
+            document.getElementById('stop-btn').style.display = "block";
+            meetWindow = window.open(url, '_blank');
+        }
+
+        function stopMeeting() {
+            if(meetWindow) meetWindow.close();
+            document.getElementById('status-dot').className = "status-dot dot-red";
+            document.getElementById('status-text').innerText = "STANDBY";
+            document.getElementById('status-text').style.color = "var(--status-red)";
+            document.getElementById('start-btn').style.display = "block";
+            document.getElementById('stop-btn').style.display = "none";
+        }
+
+        function toggleAudio() {
+            const widget = SC.Widget(document.getElementById('sc-widget'));
+            if (!isMusicPlaying) { 
+                widget.play(); 
+                isMusicPlaying = true; 
+                document.getElementById('music-toggle').innerText = "🎧"; 
+            } else { 
+                widget.pause(); 
+                isMusicPlaying = false; 
+                document.getElementById('music-toggle').innerText = "🎵"; 
+            }
+        }
+
+        function autoSave(key, val) { localStorage.setItem(key, val); }
+
+        window.onload = () => {
+            if(window.innerWidth < 1025) document.getElementById('mobile-blocker').style.display = 'flex';
+            document.getElementById('meet-code').value = localStorage.getItem('room3_meetCode') || "";
+            document.getElementById('youtube-link').value = localStorage.getItem('room3_youtubeLink') || "";
+            updateSystemState();
+        };
+
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'de', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
